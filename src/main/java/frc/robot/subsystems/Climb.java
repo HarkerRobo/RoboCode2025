@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -59,6 +60,15 @@ public class Climb extends SubsystemBase
     public void moveToPosition(double desired)
     {
         master.setControl(new PositionVoltage(desired));
+    }
+
+    /**
+     * 
+     * @param desired [-1, 1] of voltage
+     */
+    public void setSpeed (double desired)
+    {
+        master.setControl(new DutyCycleOut(desired));
     }
 
     public void zeroClimb() 

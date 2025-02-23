@@ -186,5 +186,9 @@ public class RobotMap
         public static final double STATOR_CURRENT_LIMIT = 90; // TODO
 
         public static final double SUPPLY_CURRENT_LIMIT = 90; // TODO
+
+        public static final double RESET_POSITION = 1; // TODO
+
+        public static final double CLIMB_VELOCITY = -0.5; // TODO
     }
 }
