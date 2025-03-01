@@ -41,12 +41,12 @@ public class Constants {
     public static final double ROBOT_LOOP = 0.02;
 
     public static class Vision {
-        public static final String kCamera1Name = "limelight4"; // right limelight
+        public static final String kCamera1Name = "limelight"; // right limelight
         public static final Transform3d kRobotToCam1 = new Transform3d(
                 new Translation3d(Units.inchesToMeters(10.5), Units.inchesToMeters(-5.472), Units.inchesToMeters(7.482)), // TODO
                 new Rotation3d(Units.degreesToRadians(180), 0, Units.degreesToRadians(26.1))); // TODO
 
-        public static final String kCamera2Name = "limelight3"; // left limelight
+        public static final String kCamera2Name = "limelight-upper"; // left limelight
         public static final Transform3d kRobotToCam2 = new Transform3d(
             new Translation3d(Units.inchesToMeters(2.725), Units.inchesToMeters(2.507), Units.inchesToMeters(36.425)), // TODO
             new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(20.55))); // TODO
@@ -75,19 +75,19 @@ public class Constants {
         public static final double MAX_TRANSLATION_SPEED = 1.0; // m/s
         public static final double MAX_ROTATION_SPEED = 1.0; // rad/s
 
-        public static final double xAlignKP = 0.8; // Forward/backward control gain
+        public static final double xAlignKP = 1.0; // Forward/backward control gain
         public static final double xAlignKI = 0; // Integral gain
         public static final double xAlignKD = 0; // Derivative gain for smoothing
 
-        public static final double yAlignKP = 0.8; // Side-to-side control gain
+        public static final double yAlignKP = 0.3; // Side-to-side control gain
         public static final double yAlignKI = 0; // Integral gain
         public static final double yAlignKD = 0; // Derivative gain for smoothing
 
-        public static final double rotAlignKP = 0.7; // Rotation control gain
+        public static final double rotAlignKP = 0.1; // Rotation control gain (radians)
         public static final double rotAlignKI = 0; // Integral gain
         public static final double rotAlignKD = 0; // Derivative gain for smoothing
 
-        public static final double CORAL_TARGET_DISTANCE = 0; // meters from coral face
+        public static final double REEF_TARGET_DISTANCE = 0; // meters from reef face
         public static final double BARGE_TARGET_DISTANCE = 2.0; // meters from speaker
         public static final double DEFAULT_TARGET_DISTANCE = 1.0; // default approach distance
 
@@ -96,10 +96,9 @@ public class Constants {
         public static final double CORAL_POLE_TX_OFFSET = 12.0; // approximate tx value offset for poles
 
         // Target ty values for different game elements (for tx/ty fallback mode)
-        public static final double CORAL_TARGET_TY = 5.0; // ty value for coral approach
-        public static final double SPEAKER_TARGET_TY = 15.0; // ty value for speaker approach
-        public static final double TRAP_TARGET_TY = 20.0; // ty value for trap approach
-        public static final double SOURCE_TARGET_TY = 10.0; // ty value for source approach
+        public static final double REEF_TARGET_TY = -14.0; // ty value for reef approach
+
+        public static final double ALIGN_ERROR = 0.2;
     }
 
     /**
@@ -111,7 +110,7 @@ public class Constants {
     public static class Swerve { // ALL THESE IN THIS SUB-CLASS NEED TO BE RE-TUNED (get from running
                                  // swervegenerator again)
         public static final Slot0Configs steerGains = new Slot0Configs()
-                .withKP(50).withKI(0).withKD(0.5)
+                .withKP(30).withKI(0).withKD(0.5)
                 .withKS(0.1).withKV(0).withKA(0.047118)
                 .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign);
         // When using closed-loop control, the drive motor uses the control

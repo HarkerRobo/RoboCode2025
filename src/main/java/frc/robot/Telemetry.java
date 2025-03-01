@@ -49,8 +49,6 @@ public class Telemetry {
     private final StructArrayPublisher<SwerveModuleState> driveModuleStates = driveStateTable.getStructArrayTopic("ModuleStates", SwerveModuleState.struct).publish();
     private final StructArrayPublisher<SwerveModuleState> driveModuleTargets = driveStateTable.getStructArrayTopic("ModuleTargets", SwerveModuleState.struct).publish();
     private final StructArrayPublisher<SwerveModulePosition> driveModulePositions = driveStateTable.getStructArrayTopic("ModulePositions", SwerveModulePosition.struct).publish();
-    private final DoublePublisher driveTimestamp = driveStateTable.getDoubleTopic("Timestamp").publish();
-    private final DoublePublisher driveOdometryFrequency = driveStateTable.getDoubleTopic("OdometryFrequency").publish();
 
     private final double[] m_poseArray = new double[3];
     private final double[] m_moduleStatesArray = new double[8];
@@ -64,8 +62,6 @@ public class Telemetry {
         driveModuleStates.set(state.ModuleStates);
         driveModuleTargets.set(state.ModuleTargets);
         driveModulePositions.set(state.ModulePositions);
-        driveTimestamp.set(state.Timestamp);
-        driveOdometryFrequency.set(1.0 / state.OdometryPeriod);
 
         /* Also write to log file */
         m_poseArray[0] = state.Pose.getX();
@@ -81,7 +77,6 @@ public class Telemetry {
         SignalLogger.writeDoubleArray("DriveState/Pose", m_poseArray);
         SignalLogger.writeDoubleArray("DriveState/ModuleStates", m_moduleStatesArray);
         SignalLogger.writeDoubleArray("DriveState/ModuleTargets", m_moduleTargetsArray);
-        SignalLogger.writeDouble("DriveState/OdometryPeriod", state.OdometryPeriod, "seconds");
     }
 
     public void telemeterize(Elevator elevator, EndEffector endEffector) {

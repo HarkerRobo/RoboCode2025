@@ -101,7 +101,7 @@ public class RobotContainer {
                 .andThen(new MoveToPosition(0)
                         .andThen(new ZeroElevator())));
 
-        driver.rightTrigger().onTrue(new AutoAlign(drivetrain, AutoAlign.AlignmentTarget.CORAL, AutoAlign.AlignmentMode.LEFT_POLE)); // TODO CHANGE ALIGNMENT MODE
+        driver.a().onTrue(new AutoAlign(drivetrain, AutoAlign.AlignmentTarget.REEF, AutoAlign.AlignmentMode.CENTER)); // TODO CHANGE ALIGNMENT MODE
 
         driver.x().onTrue(new Score());
 

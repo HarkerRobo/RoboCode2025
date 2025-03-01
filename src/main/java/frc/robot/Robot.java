@@ -35,6 +35,8 @@ public class Robot extends TimedRobot {
       SmartDashboard.putData("LL1 Field", limelightSim.getField2d());
       SmartDashboard.putData("LL2 Field", limelight2Sim.getField2d());
     }
+
+    Limelight.setCameraPose(Constants.Vision.kRobotToCam2);
   }
 
   @Override
