@@ -64,11 +64,11 @@ public class RobotContainer {
     public RobotContainer() {
         NamedCommands.registerCommand("ZeroElevator", new ZeroElevator());
         NamedCommands.registerCommand("ElevatorHeight1",
-                new MoveToPosition(Constants.Elevator.LEVEL_HEIGHTS[1]));
+                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]));
         NamedCommands.registerCommand("ElevatorHeight2",
-                new MoveToPosition(Constants.Elevator.LEVEL_HEIGHTS[2]));
+                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
         NamedCommands.registerCommand("ElevatorHeight3",
-                new MoveToPosition(Constants.Elevator.LEVEL_HEIGHTS[3]));
+                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
         NamedCommands.registerCommand("Score", new Score());
 
         autoChooser = AutoBuilder.buildAutoChooser("auton1");
@@ -85,9 +85,9 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
                 // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(() -> drive
-                        .withVelocityX((driver.getRightTriggerAxis() > 0.5) ? -driver.getLeftY() * MaxSpeedSlow : -driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                        .withVelocityY((driver.getRightTriggerAxis() > 0.5) ? -driver.getLeftX() * MaxSpeedSlow : -driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                        .withRotationalRate((driver.getRightTriggerAxis() > 0.5) ? -driver.getRightX() * MaxAngularRateSlow : -driver.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                        .withVelocityX((driver.getLeftTriggerAxis() > 0.5) ? -driver.getLeftY() * MaxSpeedSlow : -driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                        .withVelocityY((driver.getLeftTriggerAxis() > 0.5) ? -driver.getLeftX() * MaxSpeedSlow : -driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                        .withRotationalRate((driver.getLeftTriggerAxis() > 0.5) ? -driver.getRightX() * MaxAngularRateSlow : -driver.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
                 ));
 
         elevator.setDefaultCommand(new ElevatorManual());
@@ -110,9 +110,9 @@ public class RobotContainer {
         driver.y().whileTrue(new ZeroElevator());
 
         operator.x().onTrue(new MoveToPosition(0).andThen(new ZeroElevator()));
-        operator.y().onTrue(new MoveToPosition(Constants.Elevator.LEVEL_HEIGHTS[3]));
-        operator.b().onTrue(new MoveToPosition(Constants.Elevator.LEVEL_HEIGHTS[2]));
-        operator.a().onTrue(new MoveToPosition(Constants.Elevator.LEVEL_HEIGHTS[1]));
+        operator.y().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
+        operator.b().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
+        operator.a().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]));
 
         operator.leftBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0]));
         operator.rightBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]));

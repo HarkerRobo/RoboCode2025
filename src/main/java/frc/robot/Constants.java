@@ -235,11 +235,11 @@ public class Constants {
         public static final double MAX_ERROR = 0.05; // TODO rotations
 
         public static final double kP = 10;
-        public static final double kI = 0; //1;
-        public static final double kD = 0; //1;
+        public static final double kI = 0;
+        public static final double kD = 0.2;
 
         public static final double kG = 0.41279; // TODO
-        public static final double kV = 0.79985;
+        public static final double kV = 0.59985;
         public static final double kS = 0.19926;
 
         public static final InvertedValue MASTER_INVERTED = InvertedValue.Clockwise_Positive; // TODO
@@ -251,7 +251,7 @@ public class Constants {
 
         public static final double STATOR_CURRENT_LIMIT = 90; // TODO
         public static final double SUPPLY_CURRENT_LIMIT = 90;
-        public static final double FORWARD_SOFT_LIMIT = 4.8; // TODO rotations
+        public static final double FORWARD_SOFT_LIMIT = 4.7; // TODO rotations
         public static final double REVERSE_SOFT_LIMIT = -0.1; // TODO rotations
 
         public static final double ZERO_SPEED = -0.1;
@@ -260,12 +260,12 @@ public class Constants {
 
         public static final double ELEVATOR_GEAR_RATIO = 6.22; // TODO
 
-        public static final double[] LEVEL_HEIGHTS = { 0, 1.45, 2.85, 4.75 }; // TODO rotations
+        public static final double[] CORAL_HEIGHTS = { 0, 1.45, 2.85, 4.69 }; // TODO rotations
         public static final double[] ALGAE_HEIGHTS = { 1.993, 3.149 }; // TODO low, high
 
-        public static final double MM_CRUISE_VELOCITY = 10; // TODO rps
-        public static final double MM_ACCELERATION = 50; // TODO rps/s
-        public static final double MM_JERK = 100; // TODO rps/s/s
+        public static final double MM_CRUISE_VELOCITY = 40; // TODO rps
+        public static final double MM_ACCELERATION = 60; // TODO rps/s
+        public static final double MM_JERK = 240; // TODO rps/s/s
     }
 
     public static final class EndEffector // positive output = out, negative = in
