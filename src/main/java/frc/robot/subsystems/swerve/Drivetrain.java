@@ -298,7 +298,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         );
         // LimelightHelpers.SetIMUMode(Constants.LimelightConstants.lowerLimelightName, 0);
         LimelightHelpers.PoseEstimate EELimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera1Name);
-        LimelightHelpers.PoseEstimate intakeLimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera2Name);
+        LimelightHelpers.PoseEstimate intakeLimelightEstimate = null; // LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera2Name);
 
         LimelightHelpers.PoseEstimate lastValidPose = null;
 
@@ -328,7 +328,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
 
         //Debug Values
         SmartDashboard.putNumber("Drive/EELimelight TID", LimelightHelpers.getLimelightNTDouble(Constants.Vision.kCamera1Name, "tid"));
-        SmartDashboard.putNumber("Drive/IntakeLimelight TID", LimelightHelpers.getLimelightNTDouble(Constants.Vision.kCamera2Name, "tid"));
+        // SmartDashboard.putNumber("Drive/IntakeLimelight TID", LimelightHelpers.getLimelightNTDouble(Constants.Vision.kCamera2Name, "tid"));
         SmartDashboard.putNumber("Drive/Robot Yaw", this.getPigeon2().getYaw().getValueAsDouble());
         SmartDashboard.putNumber("Drive/Limelight Yaw", LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera1Name).pose.getRotation().getDegrees());
     }
