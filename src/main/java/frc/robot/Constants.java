@@ -33,6 +33,7 @@ import com.ctre.phoenix6.swerve.SwerveModuleConstants.ClosedLoopOutputType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants.DriveMotorArrangement;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants.SteerFeedbackType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants.SteerMotorArrangement;
+import com.pathplanner.lib.path.PathConstraints;
 
 public class Constants {
 
@@ -41,15 +42,19 @@ public class Constants {
     public static final double ROBOT_LOOP = 0.02;
 
     public static class Vision {
-        public static final String kCamera1Name = "limelight"; // right limelight
+        public static final String kCamera1Name = "limelight-EE";
         public static final Transform3d kRobotToCam1 = new Transform3d(
-                new Translation3d(Units.inchesToMeters(10.5), Units.inchesToMeters(-5.472), Units.inchesToMeters(7.482)), // TODO
-                new Rotation3d(Units.degreesToRadians(180), 0, Units.degreesToRadians(26.1))); // TODO
+                new Translation3d(Units.inchesToMeters(-12.905), Units.inchesToMeters(-1.715), Units.inchesToMeters(16.07)),
+                new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(0))); // old mount
+        
+        // public static final Transform3d kRobotToCam1 = new Transform3d(
+        //         new Translation3d(Units.inchesToMeters(10.5), Units.inchesToMeters(-5.472), Units.inchesToMeters(7.482)),
+        //         new Rotation3d(Units.degreesToRadians(180), 0, Units.degreesToRadians(26.1))); // new mount
 
-        public static final String kCamera2Name = "limelight-upper"; // left limelight
+        public static final String kCamera2Name = "limelight-intake";
         public static final Transform3d kRobotToCam2 = new Transform3d(
             new Translation3d(Units.inchesToMeters(2.725), Units.inchesToMeters(2.507), Units.inchesToMeters(36.425)), // TODO
-            new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(20.55))); // TODO
+            new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(20.55))); // new mount
 
         // The layout of the AprilTags on the field
         public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout
@@ -58,8 +63,12 @@ public class Constants {
         // The standard deviations of our vision estimated poses, which affect
         // correction rate
         // (Fake values. Experiment and determine estimation noise on an actual robot.)
-        public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
-        public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
+        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(0.7, 0.7, 0.7);
+        // public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
+
+        public static final PathConstraints constraints = new PathConstraints(
+        2.0, 2.0,
+            Units.degreesToRadians(360), Units.degreesToRadians(540));
     }
 
     public static class Sim {
@@ -237,50 +246,46 @@ public class Constants {
         public static final double kI = 0;
         public static final double kD = 0.2;
 
-        public static final double kG = 0.41279; // TODO
+        public static final double kG = 0.41279;
         public static final double kV = 0.59985;
         public static final double kS = 0.19926;
 
-        public static final InvertedValue MASTER_INVERTED = InvertedValue.Clockwise_Positive; // TODO
-        public static final InvertedValue FOLLOWER_INVERTED = InvertedValue.Clockwise_Positive; // TODO
+        public static final InvertedValue MASTER_INVERTED = InvertedValue.Clockwise_Positive;
+        public static final InvertedValue FOLLOWER_INVERTED = InvertedValue.Clockwise_Positive;
 
         public static final int MASTER_ID = 14;
         public static final int FOLLOWER_ID = 15;
-        public static final int LIMIT_SWITCH_ID = 0; // TODO
+        public static final int LIMIT_SWITCH_ID = 0;
 
-        public static final double STATOR_CURRENT_LIMIT = 90; // TODO
+        public static final double STATOR_CURRENT_LIMIT = 90;
         public static final double SUPPLY_CURRENT_LIMIT = 90;
-        public static final double FORWARD_SOFT_LIMIT = 4.7; // TODO rotations
-        public static final double REVERSE_SOFT_LIMIT = -0.1; // TODO rotations
+        public static final double FORWARD_SOFT_LIMIT = 4.7; // otations
+        public static final double REVERSE_SOFT_LIMIT = -0.1; // rotations
 
         public static final double ZERO_SPEED = -0.1;
 
         public static final double ELEVATOR_STALLING_CURRENT = 80;
 
-        public static final double ELEVATOR_GEAR_RATIO = 6.22; // TODO
+        public static final double ELEVATOR_GEAR_RATIO = 6.22;
 
-        public static final double[] CORAL_HEIGHTS = { 0, 1.45, 2.85, 4.69 }; // TODO rotations
-        public static final double[] ALGAE_HEIGHTS = { 1.993, 3.149 }; // TODO low, high
+        public static final double[] CORAL_HEIGHTS = { 0, 1.45, 2.85, 4.69 }; // rotations
+        public static final double[] ALGAE_HEIGHTS = { 1.993, 3.149 }; // low, high
 
-        public static final double MM_CRUISE_VELOCITY = 40; // TODO rps
-        public static final double MM_ACCELERATION = 60; // TODO rps/s
-        public static final double MM_JERK = 240; // TODO rps/s/s
+        public static final double MM_CRUISE_VELOCITY = 40; // rps
+        public static final double MM_ACCELERATION = 60; // rps/s
+        public static final double MM_JERK = 240; // rps/s/s
     }
 
     public static final class EndEffector // positive output = out, negative = in
     {
-        public static final int ID = 16; // TODO
-        public static final InvertedValue INVERTED = InvertedValue.Clockwise_Positive; // TODO
-        public static final int BACK_CANANDCOLOR_ID = 1; // TODO
-        public static final int FRONT_CANANDCOLOR_ID = 2; // TODO
+        public static final int ID = 16;
+        public static final InvertedValue INVERTED = InvertedValue.Clockwise_Positive;
+        public static final int BACK_CANANDCOLOR_ID = 1;
+        public static final int FRONT_CANANDCOLOR_ID = 2;
 
-        public static final double kP = 2; // TODO
-        public static final double kI = 0; // TODO
-        public static final double kD = 0; // TODO
+        public static final double STATOR_CURRENT_LIMIT = 80;
 
-        public static final double STATOR_CURRENT_LIMIT = 80; // TODO A
-
-        public static final double PROXIMITY_LIMIT_FRONT = 0.23; // TODO
+        public static final double PROXIMITY_LIMIT_FRONT = 0.23;
         public static final double PROXIMITY_LIMIT_BACK = 0.15;
 
         public static final double INTAKE_ALGAE_SPEED = 0.4;
@@ -304,5 +309,9 @@ public class Constants {
         public static final double STATOR_CURRENT_LIMIT = 90; // TODO
 
         public static final double SUPPLY_CURRENT_LIMIT = 90; // TODO
+
+        public static final double CLIMB_POSITION = 1.0;  // rotations // TODO
+
+        public static final double MAX_ERROR = 0.1;
     }
 }

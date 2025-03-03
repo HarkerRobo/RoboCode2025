@@ -33,9 +33,6 @@ public class EndEffector extends SubsystemBase
         TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.MotorOutput.Inverted = Constants.EndEffector.INVERTED;
-        config.Slot0.kP = Constants.EndEffector.kP;
-        config.Slot0.kI = Constants.EndEffector.kI;
-        config.Slot0.kD = Constants.EndEffector.kD;
 
         config.Voltage.PeakForwardVoltage = Constants.MAX_VOLTAGE;
         config.Voltage.PeakReverseVoltage = -Constants.MAX_VOLTAGE;
@@ -61,7 +58,6 @@ public class EndEffector extends SubsystemBase
      */
     public void setSpeed (double speed)
     {
-        // motor.setControl(new VelocityVoltage(speed));
         motor.setControl(new DutyCycleOut(speed));
     }
 

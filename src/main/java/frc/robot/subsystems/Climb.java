@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -35,6 +36,10 @@ public class Climb extends SubsystemBase {
 
     public void zeroClimb() {
         master.setSensorPosition(0);
+    }
+
+    public void setVelocity(double velocity) {
+        master.setControl(new DutyCycleOut(velocity));
     }
 
     public static Climb getInstance() {

@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.BooleanPublisher;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StringPublisher;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import frc.robot.subsystems.Elevator;
@@ -41,7 +42,7 @@ public class Telemetry {
     private final NetworkTable endEffectorStateTable = defaultTable.getSubTable("EndEffectorState");
     private final BooleanPublisher frontCanandcolorHit = endEffectorStateTable.getBooleanTopic("EE Front Canandcolor Hit").publish();
     private final BooleanPublisher backCanandcolorHit = endEffectorStateTable.getBooleanTopic("EE Back Canandcolor Hit").publish();
-
+    
     /* Robot swerve drive state */
     private final NetworkTable driveStateTable = defaultTable.getSubTable("DriveState");
     private final StructPublisher<Pose2d> drivePose = driveStateTable.getStructTopic("Robot Pose", Pose2d.struct).publish();

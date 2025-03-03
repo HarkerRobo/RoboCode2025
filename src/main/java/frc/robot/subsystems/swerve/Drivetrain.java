@@ -23,10 +23,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.swerve.Modules.TunerSwerveDrivetrain;
 
 /**
@@ -285,6 +287,50 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
                 m_hasAppliedOperatorPerspective = true;
             });
         }
+
+        //Pose Estimation using AprilTags
+        double redAllianceYaw = this.getPigeon2().getYaw().getValueAsDouble();
+        
+        LimelightHelpers.SetRobotOrientation(
+            Constants.Vision.kCamera1Name,
+            redAllianceYaw,
+            0, 0, 0, 0, 0
+        );
+        // LimelightHelpers.SetIMUMode(Constants.LimelightConstants.lowerLimelightName, 0);
+        LimelightHelpers.PoseEstimate EELimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera1Name);
+        LimelightHelpers.PoseEstimate intakeLimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera2Name);
+
+        LimelightHelpers.PoseEstimate lastValidPose = null;
+
+
+       // Only run vision updates if we see a tag
+        if ((EELimelightEstimate != null && EELimelightEstimate.tagCount > 0) ||
+            (intakeLimelightEstimate != null && intakeLimelightEstimate.tagCount > 0)) {
+
+            LimelightHelpers.PoseEstimate bestEstimate = selectBestEstimate(EELimelightEstimate, intakeLimelightEstimate);
+
+            if (bestEstimate != null && bestEstimate.tagCount > 0) {
+                lastValidPose = bestEstimate;
+            }
+            // If it's updating to an older position, use && lastValidPose.timestampSeconds > Timer.getFPGATimestamp() - 0.5
+            if (lastValidPose != null) {
+                addVisionMeasurement(lastValidPose.pose, lastValidPose.timestampSeconds, Constants.Vision.kTagStdDevs);
+            }
+        }
+        //Switch to only one limelight for pose estimation
+        // LimelightHelpers.PoseEstimate lowerLimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.LimelightConstants.lowerLimelightName);
+
+        // if (lowerLimelightEstimate != null && lowerLimelightEstimate.tagCount > 0) {
+        //     m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 0.7));
+        //     m_poseEstimator.addVisionMeasurement(lowerLimelightEstimate.pose, lowerLimelightEstimate.timestampSeconds);
+        // }
+
+
+        //Debug Values
+        SmartDashboard.putNumber("Drive/EELimelight TID", LimelightHelpers.getLimelightNTDouble(Constants.Vision.kCamera1Name, "tid"));
+        SmartDashboard.putNumber("Drive/IntakeLimelight TID", LimelightHelpers.getLimelightNTDouble(Constants.Vision.kCamera2Name, "tid"));
+        SmartDashboard.putNumber("Drive/Robot Yaw", this.getPigeon2().getYaw().getValueAsDouble());
+        SmartDashboard.putNumber("Drive/Limelight Yaw", LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera1Name).pose.getRotation().getDegrees());
     }
 
     private void startSimThread() {
@@ -343,4 +389,36 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds),
                 visionMeasurementStdDevs);
     }
+
+    private LimelightHelpers.PoseEstimate selectBestEstimate(LimelightHelpers.PoseEstimate upper, LimelightHelpers.PoseEstimate lower) {
+
+        // Case: Both are null, return null
+        if ((upper == null || upper.tagCount == 0) && (lower == null || lower.tagCount == 0)) {
+            return null;
+        }
+
+        //  if (upper.avgTagDist > 3 && lower.avgTagDist > 3) {
+        //     return null; // Use odometry-only if no Limelight sees a tag within 3m
+        // }
+
+        // Case: One is null or has no valid tags, return the other
+        if (upper == null || upper.tagCount == 0) {
+            return lower;
+        }
+        if (lower == null || lower.tagCount == 0) {
+            return upper;
+        }
+
+        // Case: Favor closer estimate
+        if (upper.avgTagDist < lower.avgTagDist) {
+            return upper;
+        } 
+        if (lower.avgTagDist < upper.avgTagDist) {
+            return lower;
+        }
+
+        // Case: Same distance, use most recent timestamp
+        return (upper.timestampSeconds > lower.timestampSeconds) ? upper : lower;
+    }
+
 }

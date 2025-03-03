@@ -22,11 +22,13 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.EE.IntakeAlgae;
 import frc.robot.commands.EE.IntakeCoral;
 import frc.robot.commands.EE.Score;
-import frc.robot.commands.drivetrain.AutoAlign;
+import frc.robot.commands.climb.ClimbManual;
+import frc.robot.commands.drivetrain.DriveToPoseCommand;
 import frc.robot.commands.elevator.ElevatorManual;
 import frc.robot.commands.elevator.MoveToPosition;
 import frc.robot.commands.elevator.ZeroElevator;
 import frc.robot.subsystems.swerve.Drivetrain;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.swerve.Modules;
@@ -58,6 +60,7 @@ public class RobotContainer {
     public final Drivetrain drivetrain = Modules.createDrivetrain();
     private final Elevator elevator = Elevator.getInstance();
     private final EndEffector endEffector = EndEffector.getInstance();
+    private final Climb climb = Climb.getInstance();
 
     private final SendableChooser<Command> autoChooser;
 
@@ -94,6 +97,8 @@ public class RobotContainer {
 
         endEffector.setDefaultCommand(new IntakeCoral());
 
+        climb.setDefaultCommand(new ClimbManual());
+
         // reset the field-centric heading on button b press
         driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
@@ -101,13 +106,13 @@ public class RobotContainer {
                 .andThen(new MoveToPosition(0)
                         .andThen(new ZeroElevator())));
 
-        driver.a().onTrue(new AutoAlign(drivetrain, AutoAlign.AlignmentTarget.REEF, AutoAlign.AlignmentMode.CENTER)); // TODO CHANGE ALIGNMENT MODE
+        driver.a().whileTrue(new DriveToPoseCommand(drivetrain, "Left"));
 
         driver.x().onTrue(new Score());
 
         driver.leftBumper().onTrue(new IntakeAlgae());
 
-        driver.y().whileTrue(new ZeroElevator());
+        driver.y().onTrue(climb.runOnce(() -> climb.zeroClimb()));
 
         operator.x().onTrue(new MoveToPosition(0).andThen(new ZeroElevator()));
         operator.y().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
@@ -139,6 +144,10 @@ public class RobotContainer {
 
     public HSXboxController getOperator() {
         return operator;
+    }
+
+    public HSXboxController getDriver() {
+        return driver;
     }
 
     public static RobotContainer getInstance() {
