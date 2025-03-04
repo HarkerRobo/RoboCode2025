@@ -12,16 +12,14 @@ public class ClimbManual extends Command {
 
     public void execute () {
         if (RobotContainer.getInstance().getDriver().getUpDPadState()) {
-            Climb.getInstance().moveToPosition(Climb.getInstance().getPosition()+0.2);
+            Climb.getInstance().setPower(0.2);;
         }
         else if (RobotContainer.getInstance().getDriver().getDownDPadState())
         {
-            Climb.getInstance().moveToPosition(Climb.getInstance().getPosition()-0.2);
+            Climb.getInstance().setPower(-0.2);
         }
-
-        else
-        {
-            Climb.getInstance().moveToPosition(Climb.getInstance().getPosition());
+        else {
+            Climb.getInstance().setPower(0);
         }
     }
 
@@ -32,6 +30,6 @@ public class ClimbManual extends Command {
 
     public void end (boolean interrupted) 
     {
-        Climb.getInstance().setVelocity(0);
+        Climb.getInstance().setPower(0);
     }
 }

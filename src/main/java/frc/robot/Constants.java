@@ -42,7 +42,7 @@ public class Constants {
     public static final double ROBOT_LOOP = 0.02;
 
     public static class Vision {
-        public static final String kCamera1Name = "limelight-EE";
+        public static final String kCamera1Name = "limelight";
         public static final Transform3d kRobotToCam1 = new Transform3d(
                 new Translation3d(Units.inchesToMeters(-12.905), Units.inchesToMeters(-1.715), Units.inchesToMeters(16.07)),
                 new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(0))); // old mount
@@ -51,10 +51,13 @@ public class Constants {
         //         new Translation3d(Units.inchesToMeters(10.5), Units.inchesToMeters(-5.472), Units.inchesToMeters(7.482)),
         //         new Rotation3d(Units.degreesToRadians(180), 0, Units.degreesToRadians(26.1))); // new mount
 
-        public static final String kCamera2Name = "limelight-intake";
+        public static final String kCamera2Name = "limelight-upper";
         public static final Transform3d kRobotToCam2 = new Transform3d(
-            new Translation3d(Units.inchesToMeters(2.725), Units.inchesToMeters(2.507), Units.inchesToMeters(36.425)), // TODO
-            new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(20.55))); // new mount
+            new Translation3d(Units.inchesToMeters(10.834), Units.inchesToMeters(-4.82), Units.inchesToMeters(9.07)), // TODO
+            new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(11.642))); // old mount
+        // public static final Transform3d kRobotToCam2 = new Transform3d(
+        //     new Translation3d(Units.inchesToMeters(2.725), Units.inchesToMeters(2.507), Units.inchesToMeters(36.425)), // TODO
+        //     new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(20.55))); // new mount
 
         // The layout of the AprilTags on the field
         public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout
@@ -63,8 +66,8 @@ public class Constants {
         // The standard deviations of our vision estimated poses, which affect
         // correction rate
         // (Fake values. Experiment and determine estimation noise on an actual robot.)
-        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(0.7, 0.7, 0.7);
-        // public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
+        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(1.0, 1.0, 5);
+        public static final Matrix<N3, N1> kOdometryStdDevs = VecBuilder.fill(0.01, 0.01, 1);
 
         public static final PathConstraints constraints = new PathConstraints(
         2.0, 2.0,
@@ -246,7 +249,7 @@ public class Constants {
         public static final double kI = 0;
         public static final double kD = 0.2;
 
-        public static final double kG = 0.41279;
+        public static final double kG = 0.42279;
         public static final double kV = 0.59985;
         public static final double kS = 0.19926;
 

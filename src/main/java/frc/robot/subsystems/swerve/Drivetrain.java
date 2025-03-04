@@ -296,9 +296,9 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             redAllianceYaw,
             0, 0, 0, 0, 0
         );
-        // LimelightHelpers.SetIMUMode(Constants.LimelightConstants.lowerLimelightName, 0);
+        // LimelightHelpers.SetIMUMode(Constants.Vision.kCamera1Name);
         LimelightHelpers.PoseEstimate EELimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera1Name);
-        LimelightHelpers.PoseEstimate intakeLimelightEstimate = null; // LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera2Name);
+        LimelightHelpers.PoseEstimate intakeLimelightEstimate = null; // not LL4: LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera2Name);
 
         LimelightHelpers.PoseEstimate lastValidPose = null;
 

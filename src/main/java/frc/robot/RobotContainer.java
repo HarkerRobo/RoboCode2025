@@ -14,6 +14,9 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -100,8 +103,8 @@ public class RobotContainer {
         climb.setDefaultCommand(new ClimbManual());
 
         // reset the field-centric heading on button b press
+        // driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(2.85, 4.25), new Rotation2d(0)))));
         driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-
         driver.rightBumper().onTrue(new Score()
                 .andThen(new MoveToPosition(0)
                         .andThen(new ZeroElevator())));
@@ -111,8 +114,6 @@ public class RobotContainer {
         driver.x().onTrue(new Score());
 
         driver.leftBumper().onTrue(new IntakeAlgae());
-
-        driver.y().onTrue(climb.runOnce(() -> climb.zeroClimb()));
 
         operator.x().onTrue(new MoveToPosition(0).andThen(new ZeroElevator()));
         operator.y().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));

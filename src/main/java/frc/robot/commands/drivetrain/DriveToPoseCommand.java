@@ -121,7 +121,7 @@ public class DriveToPoseCommand extends Command {
                         return; 
                     }
                 //if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) bargePath = bargePath.flipPath();
-                pathCommand = AutoBuilder.pathfindThenFollowPath(bargePath, Constants.Vision.constraints);
+                // pathCommand = AutoBuilder.pathfindThenFollowPath(bargePath, Constants.Vision.constraints);
 
             } else {
 
@@ -129,7 +129,7 @@ public class DriveToPoseCommand extends Command {
                 Constants.Vision.constraints, null, 
                 new GoalEndState(0, targetPose.getRotation()));
                 generatedPath.preventFlipping = true;
-                pathCommand = AutoBuilder.followPath(generatedPath);
+                // pathCommand = AutoBuilder.followPath(generatedPath);
             }
 
             if (pathCommand == null) {
