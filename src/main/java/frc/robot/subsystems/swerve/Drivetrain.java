@@ -297,7 +297,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         );
         // LimelightHelpers.SetIMUMode(Constants.Vision.kCamera1Name);
         LimelightHelpers.PoseEstimate EELimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera1Name);
-        LimelightHelpers.PoseEstimate intakeLimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera2Name);
+        LimelightHelpers.PoseEstimate intakeLimelightEstimate = null; // LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera2Name);
 
 
        // Only run vision updates if we see a tag
@@ -308,7 +308,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
 
             if (bestEstimate != null && bestEstimate.tagCount > 0) {
                 if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist < 3.0 && bestEstimate.rawFiducials[0].ambiguity < 0.7)) {
-                    addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
+                    // addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
                 }
             }
         }

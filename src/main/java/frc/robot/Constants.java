@@ -43,21 +43,15 @@ public class Constants {
 
     public static class Vision {
         public static final String kCamera1Name = "limelight";
-        public static final Transform3d kRobotToCam1 = new Transform3d(
-                new Translation3d(Units.inchesToMeters(-12.905), Units.inchesToMeters(-1.715), Units.inchesToMeters(16.07)),
-                new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(0))); // old mount
         
-        // public static final Transform3d kRobotToCam1 = new Transform3d(
-        //         new Translation3d(Units.inchesToMeters(10.5), Units.inchesToMeters(-5.472), Units.inchesToMeters(7.482)),
-        //         new Rotation3d(Units.degreesToRadians(180), 0, Units.degreesToRadians(26.1))); // new mount
+        public static final Transform3d kRobotToCam1 = new Transform3d(
+                new Translation3d(Units.inchesToMeters(10.5), Units.inchesToMeters(-5.472), Units.inchesToMeters(7.482)),
+                new Rotation3d(Units.degreesToRadians(180), 0, Units.degreesToRadians(26.1))); // new mount
 
         public static final String kCamera2Name = "limelight-upper";
         public static final Transform3d kRobotToCam2 = new Transform3d(
-            new Translation3d(Units.inchesToMeters(10.834), Units.inchesToMeters(-4.82), Units.inchesToMeters(9.07)), // TODO
-            new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(11.642))); // old mount
-        // public static final Transform3d kRobotToCam2 = new Transform3d(
-        //     new Translation3d(Units.inchesToMeters(2.725), Units.inchesToMeters(2.507), Units.inchesToMeters(36.425)), // TODO
-        //     new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(20.55))); // new mount
+            new Translation3d(Units.inchesToMeters(2.725), Units.inchesToMeters(2.507), Units.inchesToMeters(36.425)), // TODO
+            new Rotation3d(Units.degreesToRadians(0), 0, Units.degreesToRadians(20.55))); // new mount
 
         // The layout of the AprilTags on the field
         public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout

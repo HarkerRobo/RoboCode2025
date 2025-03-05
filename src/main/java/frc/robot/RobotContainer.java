@@ -103,8 +103,9 @@ public class RobotContainer {
         climb.setDefaultCommand(new ClimbManual());
 
         // reset the field-centric heading on button b press
-        // driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(2.85, 4.25), new Rotation2d(0)))));
-        driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
+        .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(2.85, 4.25), new Rotation2d(0))))));
+        // driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
         driver.rightBumper().onTrue(new Score()
                 .andThen(new MoveToPosition(0)
                         .andThen(new ZeroElevator())));

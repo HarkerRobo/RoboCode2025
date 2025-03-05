@@ -72,11 +72,7 @@ public class DriveToPoseCommand extends Command {
             pathCommand = null; 
             return;
         }
-        if (EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered()) {  
-            aprilTagId = LimelightHelpers.getFiducialID(Constants.Vision.kCamera1Name);
-        } else {
-            aprilTagId = LimelightHelpers.getFiducialID(Constants.Vision.kCamera2Name);
-        }
+        aprilTagId = LimelightHelpers.getFiducialID(Constants.Vision.kCamera1Name);
         
         if (aprilTagId == -1) {
             System.out.println("No valid AprilTag detected.");
