@@ -112,7 +112,7 @@ public class RobotContainer {
                 .andThen(new MoveToPosition(0)
                         .andThen(new ZeroElevator())));
 
-        driver.a().whileTrue(new DriveToPoseCommand(drivetrain, direction));
+        driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain, direction));
 
         driver.x().onTrue(new Score());
 
