@@ -46,6 +46,8 @@ public class RobotContainer {
     private double MaxSpeedSlow = MaxSpeed * 0.2;
     private double MaxAngularRateSlow = MaxAngularRate * 0.6;
 
+    private String direction = "left";
+
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
@@ -110,7 +112,7 @@ public class RobotContainer {
                 .andThen(new MoveToPosition(0)
                         .andThen(new ZeroElevator())));
 
-        driver.a().whileTrue(new DriveToPoseCommand(drivetrain, "Left"));
+        driver.a().whileTrue(new DriveToPoseCommand(drivetrain, direction));
 
         driver.x().onTrue(new Score());
 
@@ -123,6 +125,14 @@ public class RobotContainer {
 
         operator.leftBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0]));
         operator.rightBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]));
+
+        if (operator.getLeftDPadState()) {
+            direction = "left";
+        } else if (operator.getUpDPadState()) {
+            direction = "center";
+        } else if (operator.getRightDPadState()) {
+            direction = "right";
+        }
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
