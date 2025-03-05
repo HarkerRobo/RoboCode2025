@@ -130,6 +130,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             startSimThread();
         }
         configureAutoBuilder();
+        setStateStdDevs(Constants.Vision.stateStdDevs);
     }
 
     /**
@@ -156,6 +157,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             startSimThread();
         }
         configureAutoBuilder();
+        setStateStdDevs(Constants.Vision.stateStdDevs);
     }
 
     /**
@@ -197,6 +199,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             startSimThread();
         }
         configureAutoBuilder();
+        setStateStdDevs(Constants.Vision.stateStdDevs);
     }
 
     private void configureAutoBuilder() {
@@ -308,7 +311,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
 
             if (bestEstimate != null && bestEstimate.tagCount > 0) {
                 if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist < 3.0 && bestEstimate.rawFiducials[0].ambiguity < 0.7)) {
-                    // addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
+                    addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
                 }
             }
         }
