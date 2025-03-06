@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.EE.IntakeAlgae;
-import frc.robot.commands.EE.IntakeCoral;
+import frc.robot.commands.EE.IntakeCoralPassive;
 import frc.robot.commands.EE.Score;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.drivetrain.DriveToPoseCommand;
@@ -100,7 +100,7 @@ public class RobotContainer {
 
         elevator.setDefaultCommand(new ElevatorManual());
 
-        endEffector.setDefaultCommand(new IntakeCoral());
+        endEffector.setDefaultCommand(new IntakeCoralPassive());
 
         climb.setDefaultCommand(new ClimbManual());
 
