@@ -115,7 +115,7 @@ public class RobotContainer {
 
         // reset the field-centric heading on button b press
         driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
-        .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.210, 4.09), new Rotation2d(0))))));
+        .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
         // driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
         driver.rightBumper().onTrue(new Score()
                 .andThen(new MoveToPosition(0)

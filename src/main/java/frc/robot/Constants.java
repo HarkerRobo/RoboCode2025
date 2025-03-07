@@ -60,8 +60,8 @@ public class Constants {
         // The standard deviations of our vision estimated poses, which affect
         // correction rate
         // (Fake values. Experiment and determine estimation noise on an actual robot.)
-        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(1.0, 1.0, 5);
-        public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 1);
+        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(1.0, 1.0, 0.5);
+        public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
 
         public static final PathConstraints constraints = new PathConstraints(
         2.0, 2.0,
