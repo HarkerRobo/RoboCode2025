@@ -38,6 +38,15 @@ import frc.robot.subsystems.swerve.Modules;
 import harkerrobolib.joysticks.HSXboxController;
 
 public class RobotContainer {
+    public enum AlignDirection
+    {
+        Left,
+        Right,
+        Algae,
+        LeftBarge,
+        MidBarge,
+        RightBarge
+    }
     private static RobotContainer instance = RobotContainer.getInstance();
 
     private double MaxSpeed = Constants.Swerve.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -46,7 +55,7 @@ public class RobotContainer {
     private double MaxSpeedSlow = MaxSpeed * 0.2;
     private double MaxAngularRateSlow = MaxAngularRate * 0.6;
 
-    private String direction = "Left";
+    private AlignDirection direction = AlignDirection.Left;
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -112,7 +121,7 @@ public class RobotContainer {
                 .andThen(new MoveToPosition(0)
                         .andThen(new ZeroElevator())));
 
-        // driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain, direction));
+        driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
         driver.x().onTrue(new Score());
 
@@ -126,16 +135,16 @@ public class RobotContainer {
         operator.leftBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0]));
         operator.rightBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]));
 
-        operator.getLeftDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Left"));
-        operator.getUpDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Algae"));
-        operator.getRightDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Right"));
-        // if (operator.getLeftDPadState()) {
-        //     direction = "Left";
-        // } else if (operator.getUpDPadState()) {
-        //     direction = "Center";
-        // } else if (operator.getRightDPadState()) {
-        //     direction = "Right";
-        // }
+        // operator.getLeftDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Left"));
+        // operator.getUpDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Algae"));
+        // operator.getRightDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Right"));
+        if (operator.getLeftDPadState()) {
+            direction = AlignDirection.Left;
+        } else if (operator.getUpDPadState()) {
+            direction = AlignDirection.Algae;
+        } else if (operator.getRightDPadState()) {
+            direction = AlignDirection.Right;
+        }
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -163,6 +172,11 @@ public class RobotContainer {
 
     public HSXboxController getDriver() {
         return driver;
+    }
+
+    public AlignDirection getAlignDirection ()
+    {
+        return direction;
     }
 
     public static RobotContainer getInstance() {

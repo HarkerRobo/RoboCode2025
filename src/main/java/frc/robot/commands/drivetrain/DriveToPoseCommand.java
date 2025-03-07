@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.AlignmentConstants;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.RobotContainer;
+import frc.robot.RobotContainer.AlignDirection;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.swerve.Drivetrain;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -20,21 +22,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveToPoseCommand extends Command {
     private final Drivetrain drivetrain;
-    private final String direction;
     private Pose2d targetPose;
     private Command pathCommand;
     private boolean isBarge;
     private double aprilTagId;
 
-    public DriveToPoseCommand(Drivetrain drivetrain, String direction) {
+    public DriveToPoseCommand(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
-        this.direction = direction;
         addRequirements(drivetrain);
 }
 
     @Override
     public void initialize() {
-        isBarge = direction.equals("MidBarge") || direction.equals("LeftBarge") || direction.equals("RightBarge");
+        AlignDirection direction = RobotContainer.getInstance().getAlignDirection();
+        isBarge = direction == AlignDirection.MidBarge || direction == AlignDirection.LeftBarge || direction == AlignDirection.RightBarge;
         System.out.println("Starting DriveToPoseCommand...");
         updateTargetPose();
         startPath();
@@ -46,7 +47,7 @@ public class DriveToPoseCommand extends Command {
             pathCommand.execute(); 
         }
 
-        SmartDashboard.putString("Drive/direction", direction);
+        SmartDashboard.putString("Drive/direction", RobotContainer.getInstance().getAlignDirection().toString());
         SmartDashboard.putBoolean("Drive/isBarge", isBarge);
         SmartDashboard.putNumber("Drive/aprilTagId", aprilTagId);
     }
@@ -145,8 +146,8 @@ public class DriveToPoseCommand extends Command {
     /** Returns the correct target pose based on AprilTag ID and direction */
     private Pose2d getTargetPose(int aprilTagId) {
 
-        return switch (direction) {
-            case "Left" -> switch (aprilTagId) {
+        return switch (RobotContainer.getInstance().getAlignDirection()) {
+            case Left -> switch (aprilTagId) {
                 case 18, 7 -> AlignmentConstants.REEF_A;
                 case 19, 6 -> AlignmentConstants.REEF_K;
                 case 20, 11 -> AlignmentConstants.REEF_I;
@@ -161,7 +162,7 @@ public class DriveToPoseCommand extends Command {
                     yield drivetrain.getState().Pose;
                 }
             };
-            case "Right" -> switch (aprilTagId) {
+            case Right -> switch (aprilTagId) {
                 case 18, 7 -> AlignmentConstants.REEF_B;
                 case 19, 6 -> AlignmentConstants.REEF_L;
                 case 20, 11 -> AlignmentConstants.REEF_J;
@@ -176,7 +177,7 @@ public class DriveToPoseCommand extends Command {
                     yield drivetrain.getState().Pose;
                 }
             };
-            case "Algae" -> switch (aprilTagId) {
+            case Algae -> switch (aprilTagId) {
                 case 18, 7 -> AlignmentConstants.ALGAE_AB;
                 case 19, 6 -> AlignmentConstants.ALGAE_KL;
                 case 20, 11 -> AlignmentConstants.ALGAE_IJ;
@@ -192,11 +193,12 @@ public class DriveToPoseCommand extends Command {
         };
     }
    private PathPlannerPath getBargePath(){
+        AlignDirection direction = RobotContainer.getInstance().getAlignDirection();
         try {
             return switch (direction) {
-                case "MidBarge" -> PathPlannerPath.fromPathFile("MidBarge");
-                case "LeftBarge" -> PathPlannerPath.fromPathFile("LeftBarge");
-                case "RightBarge" -> PathPlannerPath.fromPathFile("RightBarge");
+                case MidBarge -> PathPlannerPath.fromPathFile("MidBarge");
+                case LeftBarge -> PathPlannerPath.fromPathFile("LeftBarge");
+                case RightBarge -> PathPlannerPath.fromPathFile("RightBarge");
                 default -> throw new IllegalStateException("Invalid barge direction: " + direction);
             };
         } catch (Exception e) {
