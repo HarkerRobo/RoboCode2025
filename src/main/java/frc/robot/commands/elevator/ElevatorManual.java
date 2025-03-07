@@ -12,10 +12,10 @@ public class ElevatorManual extends Command {
 
     @Override
     public void execute() {
-        if (RobotContainer.getInstance().getOperator().getUpDPadState()) {
+        if (RobotContainer.getInstance().getOperator().getLeftY() < -0.5) {
             Elevator.getInstance().moveToPosition(Elevator.getInstance().getPosition()+0.2);
         }
-        else if (RobotContainer.getInstance().getOperator().getDownDPadState())
+        else if (RobotContainer.getInstance().getOperator().getLeftY() > 0.5)
         {
             Elevator.getInstance().moveToPosition(Elevator.getInstance().getPosition()-0.2);
         }

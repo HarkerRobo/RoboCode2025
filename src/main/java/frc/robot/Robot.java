@@ -18,7 +18,7 @@ public class Robot extends TimedRobot {
   private final RobotContainer m_robotContainer;
 
   public Robot() {
-    m_robotContainer = new RobotContainer();
+    m_robotContainer = RobotContainer.getInstance();
   }
 
   @Override
@@ -32,9 +32,17 @@ public class Robot extends TimedRobot {
                 Constants.Vision.kCamera2Name, Constants.Vision.kRobotToCam2);
 
       // Show field visualizations
-      SmartDashboard.putData("LL1 Field", limelightSim.getField2d());
-      SmartDashboard.putData("LL2 Field", limelight2Sim.getField2d());
+      // SmartDashboard.putData("LL1 Field", limelightSim.getField2d());
+      // SmartDashboard.putData("LL2 Field", limelight2Sim.getField2d());
     }
+
+    LimelightHelpers.setCameraPose_RobotSpace(Constants.Vision.kCamera1Name, 
+      Constants.Vision.kRobotToCam1.getX(), Constants.Vision.kRobotToCam1.getY(), Constants.Vision.kRobotToCam1.getZ(),
+      Constants.Vision.kRobotToCam1.getRotation().getX(), Constants.Vision.kRobotToCam1.getRotation().getY(), Constants.Vision.kRobotToCam1.getRotation().getZ());
+
+    LimelightHelpers.setCameraPose_RobotSpace(Constants.Vision.kCamera2Name, 
+      Constants.Vision.kRobotToCam2.getX(), Constants.Vision.kRobotToCam2.getY(), Constants.Vision.kRobotToCam2.getZ(),
+      Constants.Vision.kRobotToCam2.getRotation().getX(), Constants.Vision.kRobotToCam2.getRotation().getY(), Constants.Vision.kRobotToCam2.getRotation().getZ());
   }
 
   @Override

@@ -14,25 +14,39 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.EE.IntakeAlgae;
-import frc.robot.commands.EE.IntakeCoral;
+import frc.robot.commands.EE.IntakeCoralPassive;
 import frc.robot.commands.EE.Score;
-import frc.robot.commands.drivetrain.AutoAlign;
+import frc.robot.commands.climb.ClimbManual;
+import frc.robot.commands.drivetrain.DriveToPoseCommand;
 import frc.robot.commands.elevator.ElevatorManual;
 import frc.robot.commands.elevator.MoveToPosition;
 import frc.robot.commands.elevator.ZeroElevator;
 import frc.robot.subsystems.swerve.Drivetrain;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.swerve.Modules;
 import harkerrobolib.joysticks.HSXboxController;
 
 public class RobotContainer {
+    public enum AlignDirection
+    {
+        Left,
+        Right,
+        Algae,
+        LeftBarge,
+        MidBarge,
+        RightBarge
+    }
     private static RobotContainer instance = RobotContainer.getInstance();
 
     private double MaxSpeed = Constants.Swerve.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -40,6 +54,8 @@ public class RobotContainer {
 
     private double MaxSpeedSlow = MaxSpeed * 0.2;
     private double MaxAngularRateSlow = MaxAngularRate * 0.6;
+
+    private AlignDirection direction = AlignDirection.Left;
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -58,6 +74,7 @@ public class RobotContainer {
     public final Drivetrain drivetrain = Modules.createDrivetrain();
     private final Elevator elevator = Elevator.getInstance();
     private final EndEffector endEffector = EndEffector.getInstance();
+    private final Climb climb = Climb.getInstance();
 
     private final SendableChooser<Command> autoChooser;
 
@@ -92,22 +109,23 @@ public class RobotContainer {
 
         elevator.setDefaultCommand(new ElevatorManual());
 
-        endEffector.setDefaultCommand(new IntakeCoral());
+        endEffector.setDefaultCommand(new IntakeCoralPassive());
+
+        climb.setDefaultCommand(new ClimbManual());
 
         // reset the field-centric heading on button b press
-        driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-
+        driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
+        .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
+        // driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
         driver.rightBumper().onTrue(new Score()
                 .andThen(new MoveToPosition(0)
                         .andThen(new ZeroElevator())));
 
-        driver.rightTrigger().onTrue(new AutoAlign(drivetrain, AutoAlign.AlignmentTarget.CORAL, AutoAlign.AlignmentMode.LEFT_POLE)); // TODO CHANGE ALIGNMENT MODE
+        driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
         driver.x().onTrue(new Score());
 
         driver.leftBumper().onTrue(new IntakeAlgae());
-
-        driver.y().whileTrue(new ZeroElevator());
 
         operator.x().onTrue(new MoveToPosition(0).andThen(new ZeroElevator()));
         operator.y().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
@@ -116,6 +134,17 @@ public class RobotContainer {
 
         operator.leftBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0]));
         operator.rightBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]));
+
+        // operator.getLeftDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Left"));
+        // operator.getUpDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Algae"));
+        // operator.getRightDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Right"));
+        if (operator.getLeftDPadState()) {
+            direction = AlignDirection.Left;
+        } else if (operator.getUpDPadState()) {
+            direction = AlignDirection.Algae;
+        } else if (operator.getRightDPadState()) {
+            direction = AlignDirection.Right;
+        }
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -139,6 +168,15 @@ public class RobotContainer {
 
     public HSXboxController getOperator() {
         return operator;
+    }
+
+    public HSXboxController getDriver() {
+        return driver;
+    }
+
+    public AlignDirection getAlignDirection ()
+    {
+        return direction;
     }
 
     public static RobotContainer getInstance() {

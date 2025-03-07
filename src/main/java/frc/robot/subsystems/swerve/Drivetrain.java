@@ -21,12 +21,14 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.swerve.Modules.TunerSwerveDrivetrain;
 
 /**
@@ -129,6 +131,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             startSimThread();
         }
         configureAutoBuilder();
+        setStateStdDevs(Constants.Vision.stateStdDevs);
     }
 
     /**
@@ -155,6 +158,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             startSimThread();
         }
         configureAutoBuilder();
+        setStateStdDevs(Constants.Vision.stateStdDevs);
     }
 
     /**
@@ -196,6 +200,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             startSimThread();
         }
         configureAutoBuilder();
+        setStateStdDevs(Constants.Vision.stateStdDevs);
     }
 
     private void configureAutoBuilder() {
@@ -285,6 +290,44 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
                 m_hasAppliedOperatorPerspective = true;
             });
         }
+
+        //Pose Estimation using AprilTags
+        double redAllianceYaw = this.getPigeon2().getYaw().getValueAsDouble();
+        
+        // DEBUG THIS!! shows as reflection on the other side of the april tag
+        LimelightHelpers.SetRobotOrientation(
+            Constants.Vision.kCamera1Name,
+            redAllianceYaw,
+            0, 0, 0, 0, 0
+        );
+        // LimelightHelpers.SetIMUMode(Constants.Vision.kCamera1Name);
+        LimelightHelpers.PoseEstimate EELimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera1Name);
+        LimelightHelpers.PoseEstimate intakeLimelightEstimate = null; // LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera2Name);
+
+
+       // Only run vision updates if we see a tag
+        if ((EELimelightEstimate != null && EELimelightEstimate.tagCount > 0) ||
+            (intakeLimelightEstimate != null && intakeLimelightEstimate.tagCount > 0)) {
+
+            LimelightHelpers.PoseEstimate bestEstimate = selectBestEstimate(EELimelightEstimate, intakeLimelightEstimate);
+
+            SmartDashboard.putNumber("Drive/bestEstimateX", bestEstimate.pose.getX());
+            SmartDashboard.putNumber("Drive/bestEstimateY", bestEstimate.pose.getY());
+            SmartDashboard.putNumber("Drive/bestEstimateYaw", bestEstimate.pose.getRotation().getDegrees());
+            if (bestEstimate != null && bestEstimate.tagCount > 0) {
+                if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist > 0.1 && bestEstimate.avgTagDist < 3.0 && bestEstimate.rawFiducials[0].ambiguity < 0.7)) {
+                    addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
+                }
+            }
+        }
+        // Switch to only one limelight for pose estimation
+        // LimelightHelpers.PoseEstimate lowerLimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.LimelightConstants.lowerLimelightName);
+
+        // if (lowerLimelightEstimate != null && lowerLimelightEstimate.tagCount > 0) {
+        //     m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 0.7));
+        //     m_poseEstimator.addVisionMeasurement(lowerLimelightEstimate.pose, lowerLimelightEstimate.timestampSeconds);
+        // }
+
     }
 
     private void startSimThread() {
@@ -343,4 +386,36 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds),
                 visionMeasurementStdDevs);
     }
+
+    private LimelightHelpers.PoseEstimate selectBestEstimate(LimelightHelpers.PoseEstimate upper, LimelightHelpers.PoseEstimate lower) {
+
+        // Case: Both are null, return null
+        if ((upper == null || upper.tagCount == 0) && (lower == null || lower.tagCount == 0)) {
+            return null;
+        }
+
+        //  if (upper.avgTagDist > 3 && lower.avgTagDist > 3) {
+        //     return null; // Use odometry-only if no Limelight sees a tag within 3m
+        // }
+
+        // Case: One is null or has no valid tags, return the other
+        if (upper == null || upper.tagCount == 0) {
+            return lower;
+        }
+        if (lower == null || lower.tagCount == 0) {
+            return upper;
+        }
+
+        // Case: Favor closer estimate
+        if (upper.avgTagDist < lower.avgTagDist) {
+            return upper;
+        } 
+        if (lower.avgTagDist < upper.avgTagDist) {
+            return lower;
+        }
+
+        // Case: Same distance, use most recent timestamp
+        return (upper.timestampSeconds > lower.timestampSeconds) ? upper : lower;
+    }
+
 }
