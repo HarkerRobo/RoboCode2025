@@ -17,9 +17,9 @@ public class AlignmentConstants {
     private static final Rotation2d BARGE = new Rotation2d(Math.toRadians(180));
     private static final Rotation2d PROCESSORANGLE = new Rotation2d(Math.toRadians(-90));
 
-    public static final Pose2d REEF_A = new Pose2d(3.210, 3.924, AB);
+    public static final Pose2d REEF_A = new Pose2d(3.210+0.2, 3.924+0.07, AB);
    
-    public static final Pose2d REEF_B = new Pose2d(3.210, 3.595, AB);
+    public static final Pose2d REEF_B = new Pose2d(3.210+0.2, 3.595+0.07, AB);
    
     public static final Pose2d REEF_C = new Pose2d(3.938, 2.867, CD);
    
@@ -54,7 +54,7 @@ public class AlignmentConstants {
     public static final Pose2d PROCESSOR = new Pose2d(5.979, 0.541, PROCESSORANGLE);
 
     // Algae center positions
-    public static final Pose2d ALGAE_AB = new Pose2d(3.210, 3.759, AB);
+    public static final Pose2d ALGAE_AB = new Pose2d(3.210+0.02, 3.759+0.07, AB);
 
     public static final Pose2d ALGAE_CD = new Pose2d(4.081, 2.784, CD);
 

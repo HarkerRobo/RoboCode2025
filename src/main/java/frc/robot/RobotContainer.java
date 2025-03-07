@@ -46,7 +46,7 @@ public class RobotContainer {
     private double MaxSpeedSlow = MaxSpeed * 0.2;
     private double MaxAngularRateSlow = MaxAngularRate * 0.6;
 
-    private String direction = "left";
+    private String direction = "Left";
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -106,13 +106,13 @@ public class RobotContainer {
 
         // reset the field-centric heading on button b press
         driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
-        .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(2.85, 4.25), new Rotation2d(0))))));
+        .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.210, 4.09), new Rotation2d(0))))));
         // driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
         driver.rightBumper().onTrue(new Score()
                 .andThen(new MoveToPosition(0)
                         .andThen(new ZeroElevator())));
 
-        driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain, direction));
+        // driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain, direction));
 
         driver.x().onTrue(new Score());
 
@@ -126,13 +126,16 @@ public class RobotContainer {
         operator.leftBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0]));
         operator.rightBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]));
 
-        if (operator.getLeftDPadState()) {
-            direction = "left";
-        } else if (operator.getUpDPadState()) {
-            direction = "center";
-        } else if (operator.getRightDPadState()) {
-            direction = "right";
-        }
+        operator.getLeftDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Left"));
+        operator.getUpDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Algae"));
+        operator.getRightDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Right"));
+        // if (operator.getLeftDPadState()) {
+        //     direction = "Left";
+        // } else if (operator.getUpDPadState()) {
+        //     direction = "Center";
+        // } else if (operator.getRightDPadState()) {
+        //     direction = "Right";
+        // }
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.

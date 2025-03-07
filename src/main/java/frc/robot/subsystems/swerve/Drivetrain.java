@@ -21,6 +21,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -293,13 +294,14 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         //Pose Estimation using AprilTags
         double redAllianceYaw = this.getPigeon2().getYaw().getValueAsDouble();
         
+        // DEBUG THIS!! shows as reflection on the other side of the april tag
         LimelightHelpers.SetRobotOrientation(
             Constants.Vision.kCamera1Name,
             redAllianceYaw,
             0, 0, 0, 0, 0
         );
         // LimelightHelpers.SetIMUMode(Constants.Vision.kCamera1Name);
-        LimelightHelpers.PoseEstimate EELimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Vision.kCamera1Name);
+        LimelightHelpers.PoseEstimate EELimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera1Name);
         LimelightHelpers.PoseEstimate intakeLimelightEstimate = null; // LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera2Name);
 
 
@@ -309,8 +311,11 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
 
             LimelightHelpers.PoseEstimate bestEstimate = selectBestEstimate(EELimelightEstimate, intakeLimelightEstimate);
 
+            SmartDashboard.putNumber("Drive/bestEstimateX", bestEstimate.pose.getX());
+            SmartDashboard.putNumber("Drive/bestEstimateY", bestEstimate.pose.getY());
+            SmartDashboard.putNumber("Drive/bestEstimateYaw", bestEstimate.pose.getRotation().getDegrees());
             if (bestEstimate != null && bestEstimate.tagCount > 0) {
-                if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist < 3.0 && bestEstimate.rawFiducials[0].ambiguity < 0.7)) {
+                if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist > 0.1 && bestEstimate.avgTagDist < 3.0 && bestEstimate.rawFiducials[0].ambiguity < 0.7)) {
                     addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
                 }
             }
