@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix6.Utils;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,7 +39,7 @@ public class Robot extends TimedRobot {
 
     LimelightHelpers.setCameraPose_RobotSpace(Constants.Vision.kCamera1Name, 
       Constants.Vision.kRobotToCam1.getX(), Constants.Vision.kRobotToCam1.getY(), Constants.Vision.kRobotToCam1.getZ(),
-      Constants.Vision.kRobotToCam1.getRotation().getX(), Constants.Vision.kRobotToCam1.getRotation().getY(), Constants.Vision.kRobotToCam1.getRotation().getZ());
+      Units.radiansToDegrees(Constants.Vision.kRobotToCam1.getRotation().getX()), Units.radiansToDegrees(Constants.Vision.kRobotToCam1.getRotation().getY()), Units.radiansToDegrees(Constants.Vision.kRobotToCam1.getRotation().getZ()));
 
     LimelightHelpers.setCameraPose_RobotSpace(Constants.Vision.kCamera2Name, 
       Constants.Vision.kRobotToCam2.getX(), Constants.Vision.kRobotToCam2.getY(), Constants.Vision.kRobotToCam2.getZ(),

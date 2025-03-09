@@ -45,13 +45,13 @@ public class Constants {
         public static final String kCamera1Name = "limelight";
         
         public static final Transform3d kRobotToCam1 = new Transform3d(
-                new Translation3d(Units.inchesToMeters(10.5), Units.inchesToMeters(5.472), Units.inchesToMeters(7.482)),
-                new Rotation3d(Units.degreesToRadians(180), Units.degreesToRadians(26.1), 0)); // new mount
+                new Translation3d(Units.inchesToMeters(5.472), Units.inchesToMeters(10.5), Units.inchesToMeters(7.482)),
+                new Rotation3d(Units.degreesToRadians(180), Units.degreesToRadians(-26.1), 0)); // new mount
 
         public static final String kCamera2Name = "limelight-upper";
         public static final Transform3d kRobotToCam2 = new Transform3d(
-            new Translation3d(Units.inchesToMeters(2.725), Units.inchesToMeters(-2.507), Units.inchesToMeters(36.425)), // TODO
-            new Rotation3d(0, Units.degreesToRadians(20.55), 180)); // new mount
+            new Translation3d(Units.inchesToMeters(-2.507), Units.inchesToMeters(2.725), Units.inchesToMeters(36.425)), // TODO
+            new Rotation3d(0, Units.degreesToRadians(-20.55), 180)); // new mount
 
         // The layout of the AprilTags on the field
         public static final AprilTagFieldLayout kTagLayout = AprilTagFieldLayout
@@ -60,8 +60,8 @@ public class Constants {
         // The standard deviations of our vision estimated poses, which affect
         // correction rate
         // (Fake values. Experiment and determine estimation noise on an actual robot.)
-        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(1.0, 1.0, 0.5);
-        public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
+        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(0.1, 0.1, 0.5);
+        public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.05, 0.05, 0.1);
 
         public static final PathConstraints constraints = new PathConstraints(
         2.0, 2.0,
