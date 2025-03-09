@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
+import java.util.function.Function;
+
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -138,13 +140,22 @@ public class RobotContainer {
         // operator.getLeftDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Left"));
         // operator.getUpDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Algae"));
         // operator.getRightDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Right"));
-        if (operator.getLeftDPadState()) {
-            direction = AlignDirection.Left;
-        } else if (operator.getUpDPadState()) {
-            direction = AlignDirection.Algae;
-        } else if (operator.getRightDPadState()) {
-            direction = AlignDirection.Right;
-        }
+
+        Function<RobotContainer.AlignDirection, Command> setDirectionFactory = ((AlignDirection direction) ->
+        new Command() {
+            public void execute () {System.out.println(direction); RobotContainer.getInstance().setAlignDirection(direction);}
+            public boolean isFinished () {return true;}});
+        operator.getLeftDPad().onTrue(setDirectionFactory.apply(AlignDirection.Left));       
+        operator.getUpDPad().onTrue(setDirectionFactory.apply(AlignDirection.Algae));
+        operator.getRightDPad().onTrue(setDirectionFactory.apply(AlignDirection.Right));
+
+        // if (operator.getLeftDPadState()) {
+        //     direction = AlignDirection.Left;
+        // } else if (operator.getUpDPadState()) {
+        //     direction = AlignDirection.Algae;
+        // } else if (operator.getRightDPadState()) {
+        //     direction = AlignDirection.Right;
+        // }
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -177,6 +188,11 @@ public class RobotContainer {
     public AlignDirection getAlignDirection ()
     {
         return direction;
+    }
+
+    public void setAlignDirection (AlignDirection direction)
+    {
+        this.direction = direction;
     }
 
     public static RobotContainer getInstance() {
