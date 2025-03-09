@@ -170,6 +170,11 @@ public class Elevator extends SubsystemBase
         return desiredPosition;
     }
 
+    public void setDesiredPosition(double position)
+    {
+        desiredPosition = position;
+    }
+
     public void resetEncoders() 
     {
         master.getConfigurator().setPosition(0);
