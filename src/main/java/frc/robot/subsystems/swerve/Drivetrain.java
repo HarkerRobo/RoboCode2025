@@ -292,12 +292,12 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         }
 
         //Pose Estimation using AprilTags
-        double redAllianceYaw = this.getPigeon2().getYaw().getValueAsDouble();
+        double redAllianceYaw = this.getPigeon2().getRotation2d().getDegrees();
         
         // DEBUG THIS!! shows as reflection on the other side of the april tag
         LimelightHelpers.SetRobotOrientation(
             Constants.Vision.kCamera1Name,
-            redAllianceYaw,
+            180+redAllianceYaw,
             0, 0, 0, 0, 0
         );
         // LimelightHelpers.SetIMUMode(Constants.Vision.kCamera1Name);

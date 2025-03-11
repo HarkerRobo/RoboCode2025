@@ -57,7 +57,7 @@ def includeDesktopSupport = false
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 5.
 dependencies {
-    implementation 'com.github.benjaminxiaa:HarkerRoboLib:-SNAPSHOT'
+    // implementation 'com.github.benjaminxiaa:BX-HRL:1.0.1'
 
     annotationProcessor wpi.java.deps.wpilibAnnotations()
     implementation wpi.java.deps.wpilib()

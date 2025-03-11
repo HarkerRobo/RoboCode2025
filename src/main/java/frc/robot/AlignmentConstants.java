@@ -17,8 +17,8 @@ public class AlignmentConstants {
     private static final Rotation2d BARGE = new Rotation2d(Math.toRadians(180));
     private static final Rotation2d PROCESSORANGLE = new Rotation2d(Math.toRadians(-90));
 
-    private static final double LEFT_OFFSET = 0.125;
-    private static final double RIGHT_OFFSET = 0.12;
+    private static final double LEFT_OFFSET = 0; //0.125;
+    private static final double RIGHT_OFFSET = 0; //0.12;
     private static final double ROOT_3_2 = Math.sqrt(3)/2.0;
 
 

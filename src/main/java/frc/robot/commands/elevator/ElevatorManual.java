@@ -2,9 +2,10 @@ package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.MathUtil;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Elevator;
-import harkerrobolib.util.MathUtil;
+// import harkerrobolib.util.MathUtil;
 
 public class ElevatorManual extends Command {
 
@@ -18,7 +19,7 @@ public class ElevatorManual extends Command {
     @Override
     public void execute() {
         if (Math.abs(-RobotContainer.getInstance().getOperator().getLeftY()) > 0.2) {
-            Elevator.getInstance().setVoltage(Constants.Elevator.kG + MathUtil.mapJoystickOutput(-RobotContainer.getInstance().getOperator().getLeftY(), 0.2)*0.2);
+            Elevator.getInstance().setVoltage(Constants.Elevator.kG + MathUtil.mapJoystickOutput(-RobotContainer.getInstance().getOperator().getLeftY(), 0.2));
             holdPos = true;
         }
         else if (holdPos)

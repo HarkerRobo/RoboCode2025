@@ -37,7 +37,7 @@ import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.swerve.Modules;
-import harkerrobolib.joysticks.HSXboxController;
+// import harkerrobolib.joysticks.XboxGamepad;
 
 public class RobotContainer {
     public enum AlignDirection
