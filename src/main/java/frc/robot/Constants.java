@@ -201,8 +201,8 @@ public class Constants {
         public static final boolean kFrontLeftSteerMotorInverted = true;
         public static final boolean kFrontLeftEncoderInverted = false;
 
-        public static final Distance kFrontLeftXPos = Inches.of(14);
-        public static final Distance kFrontLeftYPos = Inches.of(15);
+        public static final Distance kFrontLeftXPos = Inches.of(15);
+        public static final Distance kFrontLeftYPos = Inches.of(14);
 
         // Front Right
         public static final int kFrontRightDriveMotorId = 6;
@@ -212,8 +212,8 @@ public class Constants {
         public static final boolean kFrontRightSteerMotorInverted = true;
         public static final boolean kFrontRightEncoderInverted = false;
 
-        public static final Distance kFrontRightXPos = Inches.of(14);
-        public static final Distance kFrontRightYPos = Inches.of(-15);
+        public static final Distance kFrontRightXPos = Inches.of(15);
+        public static final Distance kFrontRightYPos = Inches.of(-14);
 
         // Back Left
         public static final int kBackLeftDriveMotorId = 13;
@@ -223,8 +223,8 @@ public class Constants {
         public static final boolean kBackLeftSteerMotorInverted = true;
         public static final boolean kBackLeftEncoderInverted = false;
 
-        public static final Distance kBackLeftXPos = Inches.of(-14);
-        public static final Distance kBackLeftYPos = Inches.of(15);
+        public static final Distance kBackLeftXPos = Inches.of(-15);
+        public static final Distance kBackLeftYPos = Inches.of(14);
 
         // Back Right
         public static final int kBackRightDriveMotorId = 9;
@@ -234,8 +234,8 @@ public class Constants {
         public static final boolean kBackRightSteerMotorInverted = true;
         public static final boolean kBackRightEncoderInverted = false;
 
-        public static final Distance kBackRightXPos = Inches.of(-14);
-        public static final Distance kBackRightYPos = Inches.of(-15);
+        public static final Distance kBackRightXPos = Inches.of(-15);
+        public static final Distance kBackRightYPos = Inches.of(-14);
     }
 
     public static final class Elevator {
