@@ -11,7 +11,7 @@ public class ScoreManual extends Command {
     }
 
     public void execute () {
-        EndEffector.getInstance().setSpeed(Constants.EndEffector.OUTTAKE_SPEED_L1);
+        EndEffector.getInstance().setMainSpeed(Constants.EndEffector.OUTTAKE_SPEED_L1);
     }
 
     public boolean isFinished () {
@@ -19,6 +19,6 @@ public class ScoreManual extends Command {
     }
 
     public void end (boolean interrupted) {
-        EndEffector.getInstance().setSpeed(0);
+        EndEffector.getInstance().setMainSpeed(0);
     }
 }

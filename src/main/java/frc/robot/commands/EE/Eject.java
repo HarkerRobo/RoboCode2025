@@ -10,7 +10,7 @@ public class Eject extends Command {
     }
 
     public void execute () {
-        EndEffector.getInstance().setSpeed(Constants.EndEffector.EJECT_SPEED);
+        EndEffector.getInstance().setMainSpeed(Constants.EndEffector.EJECT_SPEED);
     }
 
     public boolean isFinished () {
@@ -18,6 +18,6 @@ public class Eject extends Command {
     }
 
     public void end (boolean interrupted) {
-        EndEffector.getInstance().setSpeed(0);
+        EndEffector.getInstance().setMainSpeed(0);
     }
 }

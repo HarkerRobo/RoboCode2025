@@ -277,8 +277,10 @@ public class Constants {
 
     public static final class EndEffector // positive output = out, negative = in
     {
-        public static final int ID = 16;
-        public static final InvertedValue INVERTED = InvertedValue.Clockwise_Positive;
+        public static final int MAIN_ID = 16;
+        public static final int TUSK_ID = 18;
+        public static final InvertedValue MAIN_INVERTED = InvertedValue.Clockwise_Positive;
+        public static final InvertedValue TUSK_INVERTED = InvertedValue.CounterClockwise_Positive;
         public static final int BACK_CANANDCOLOR_ID = 1;
         public static final int FRONT_CANANDCOLOR_ID = 2;
 
@@ -295,6 +297,18 @@ public class Constants {
         public static final double EJECT_SPEED = 0.1;
 
         public static final double ALGAE_HOLD_SPEED = 0.15;
+
+        public static final double TUSK_STALLING_CURRENT = 80;
+        public static final double TUSK_ZERO_SPEED = 0.1;
+        public static final double TUSK_GEAR_RATIO = 62.5;
+        public static final double TUSK_MAX_ERROR = 0.1;
+
+        public static final double FORWARD_SOFT_LIMIT = 2.0; // TODO
+        public static final double REVERSE_SOFT_LIMIT = -0.1;
+
+        public static final double kP = 2;
+        public static final double kI = 0;
+        public static final double kD = 0;
     }
 
     public static final class Climb {

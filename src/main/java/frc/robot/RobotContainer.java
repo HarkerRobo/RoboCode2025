@@ -26,9 +26,11 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.EE.IntakeAlgae;
+import frc.robot.commands.EE.IntakeCoralActive;
 import frc.robot.commands.EE.IntakeCoralPassive;
 import frc.robot.commands.EE.Score;
 import frc.robot.commands.EE.ScoreManual;
+import frc.robot.commands.EE.TuskManual;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.drivetrain.DriveToPoseCommand;
 import frc.robot.commands.elevator.ElevatorManual;
@@ -113,21 +115,24 @@ public class RobotContainer {
 
         elevator.setDefaultCommand(new ElevatorManual());
 
-        endEffector.setDefaultCommand(new IntakeCoralPassive());
+        endEffector.setDefaultCommand(new TuskManual());
 
         climb.setDefaultCommand(new ClimbManual());
 
         // reset the field-centric heading on button b press
         driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
         .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
-        // driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
         driver.rightBumper().onTrue(new Score()
                 .andThen(new MoveToPosition(0)
                         .andThen(new ZeroElevator())));
 
         driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
-        driver.x().onTrue(new ScoreManual().alongWith(elevator.run( () -> elevator.setVoltage(1.2))).raceWith(new WaitCommand(2)).andThen(new ZeroElevator()));
+        driver.x().onTrue(new ScoreManual().raceWith(new WaitCommand(0.5))
+                .andThen(new ScoreManual().alongWith(elevator.run( () -> elevator.setVoltage(1.2)))).raceWith(new WaitCommand(2))
+                .andThen(new ZeroElevator()));
+
+        driver.y().onTrue(new IntakeCoralActive());
 
         driver.leftBumper().onTrue(new IntakeAlgae());
 

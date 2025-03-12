@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.reduxrobotics.sensors.canandcolor.Canandcolor;
@@ -12,14 +14,16 @@ import frc.robot.Constants;
 public class EndEffector extends SubsystemBase 
 {
     private static EndEffector instance;
-    private TalonFX motor;
+    private TalonFX mainMotor;
+    private TalonFX tuskMotor;
 
     private Canandcolor frontCanandcolor;
     private Canandcolor backCanandcolor;
     
     private EndEffector ()
     {
-        motor = new TalonFX(Constants.EndEffector.ID, Constants.CAN_CHAIN);
+        mainMotor = new TalonFX(Constants.EndEffector.MAIN_ID, Constants.CAN_CHAIN);
+        tuskMotor = new TalonFX(Constants.EndEffector.TUSK_ID, Constants.CAN_CHAIN);
         config();
 
         frontCanandcolor = new Canandcolor(Constants.EndEffector.FRONT_CANANDCOLOR_ID);
@@ -28,37 +32,62 @@ public class EndEffector extends SubsystemBase
 
     private void config ()
     {
-        motor.clearStickyFaults();
+        mainMotor.clearStickyFaults();
+        tuskMotor.clearStickyFaults();
 
-        TalonFXConfiguration config = new TalonFXConfiguration();
+        TalonFXConfiguration mainConfig = new TalonFXConfiguration();
 
-        config.MotorOutput.Inverted = Constants.EndEffector.INVERTED;
+        mainConfig.MotorOutput.Inverted = Constants.EndEffector.MAIN_INVERTED;
 
-        config.Voltage.PeakForwardVoltage = Constants.MAX_VOLTAGE;
-        config.Voltage.PeakReverseVoltage = -Constants.MAX_VOLTAGE;
+        mainConfig.Voltage.PeakForwardVoltage = Constants.MAX_VOLTAGE;
+        mainConfig.Voltage.PeakReverseVoltage = -Constants.MAX_VOLTAGE;
 
-        config.CurrentLimits.StatorCurrentLimit = Constants.EndEffector.STATOR_CURRENT_LIMIT;
-        config.CurrentLimits.StatorCurrentLimitEnable = true;
+        mainConfig.CurrentLimits.StatorCurrentLimit = Constants.EndEffector.STATOR_CURRENT_LIMIT;
+        mainConfig.CurrentLimits.StatorCurrentLimitEnable = true;
         
-        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        mainConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
-        motor.getConfigurator().apply(config);
+        TalonFXConfiguration tuskConfig = new TalonFXConfiguration();
+
+        tuskConfig.MotorOutput.Inverted = Constants.EndEffector.TUSK_INVERTED;
+
+        tuskConfig.Feedback.SensorToMechanismRatio = Constants.EndEffector.TUSK_GEAR_RATIO;
+
+        tuskConfig.Slot0.kP = Constants.EndEffector.kP;
+        tuskConfig.Slot0.kI = Constants.EndEffector.kI;
+        tuskConfig.Slot0.kD = Constants.EndEffector.kD;
+
+        tuskConfig.Voltage.PeakForwardVoltage = Constants.MAX_VOLTAGE;
+        tuskConfig.Voltage.PeakReverseVoltage = -Constants.MAX_VOLTAGE;
+
+        tuskConfig.CurrentLimits.StatorCurrentLimit = Constants.EndEffector.STATOR_CURRENT_LIMIT;
+        tuskConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+
+        tuskConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.EndEffector.FORWARD_SOFT_LIMIT;
+        tuskConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+
+        tuskConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.EndEffector.REVERSE_SOFT_LIMIT;
+        tuskConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        
+        tuskConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
+        tuskMotor.getConfigurator().apply(tuskConfig);
     }
 
     /**
      * @return rotations per second
      */
-    public double getSpeed ()
+    public double getMainSpeed ()
     {
-        return motor.getVelocity().getValueAsDouble();
+        return mainMotor.getVelocity().getValueAsDouble();
     }
 
     /**
      * @param speed rotations per second
      */
-    public void setSpeed (double speed)
+    public void setMainSpeed (double speed)
     {
-        motor.setControl(new DutyCycleOut(speed));
+        mainMotor.setControl(new DutyCycleOut(speed));
     }
 
     public boolean isBackTriggered ()
@@ -69,6 +98,51 @@ public class EndEffector extends SubsystemBase
     public boolean isFrontTriggered ()
     {
         return frontCanandcolor.getProximity() < Constants.EndEffector.PROXIMITY_LIMIT_FRONT;
+    }
+
+    public boolean isStalling()
+    {
+        return tuskMotor.getStatorCurrent().getValueAsDouble() >= Constants.EndEffector.TUSK_STALLING_CURRENT;
+    }
+
+    public void setTuskVoltage(double power)
+    {
+        tuskMotor.setControl(new VoltageOut(power));
+    }
+
+    public void setTuskSensorPosition(double position)
+    {
+        tuskMotor.getConfigurator().setPosition(position);
+    }
+
+    // pid control
+    public void moveToPosition(double desiredPosition)
+    {
+        tuskMotor.setControl(new PositionVoltage(desiredPosition));
+    }
+
+    /**
+     * @return rotations
+     */
+    public double getTuskPosition() 
+    {
+        return tuskMotor.getPosition().getValueAsDouble();
+    }
+    
+    /**
+     * @return rotations per second
+     */
+    public double getTuskVelocity()
+    {
+        return tuskMotor.getVelocity().getValueAsDouble();
+    }
+
+    /**
+     * @param power range [-1, 1]
+     */
+    public void setTuskPower(double power) 
+    {
+        tuskMotor.setControl(new DutyCycleOut(power));
     }
 
     public static EndEffector getInstance ()

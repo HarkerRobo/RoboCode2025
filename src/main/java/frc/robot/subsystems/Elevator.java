@@ -175,12 +175,6 @@ public class Elevator extends SubsystemBase
         desiredPosition = position;
     }
 
-    public void resetEncoders() 
-    {
-        master.getConfigurator().setPosition(0);
-        follower.getConfigurator().setPosition(0);
-    }
-
     public boolean isLimitHit() 
     {
         return !limitSwitch.get();

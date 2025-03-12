@@ -12,15 +12,15 @@ public class IntakeCoralPassive extends Command {
     public void execute () {
         if (EndEffector.getInstance().isBackTriggered() && !EndEffector.getInstance().isFrontTriggered())
         {
-            EndEffector.getInstance().setSpeed(Constants.EndEffector.INTAKE_CORAL_SPEED);
+            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.INTAKE_CORAL_SPEED);
         }
         else if (!EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
         {
-            EndEffector.getInstance().setSpeed(Constants.EndEffector.EJECT_SPEED);
+            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.EJECT_SPEED);
         }
         else
         {
-            EndEffector.getInstance().setSpeed(0);
+            EndEffector.getInstance().setMainSpeed(0);
         }
     }
 
@@ -31,6 +31,6 @@ public class IntakeCoralPassive extends Command {
 
     public void end (boolean interrupted)
     {
-        EndEffector.getInstance().setSpeed(0);
+        EndEffector.getInstance().setMainSpeed(0);
     }
 }

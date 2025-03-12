@@ -10,7 +10,7 @@ public class IntakeAlgae extends Command {
     }
 
     public void execute () {
-        EndEffector.getInstance().setSpeed(Constants.EndEffector.INTAKE_ALGAE_SPEED);
+        EndEffector.getInstance().setMainSpeed(Constants.EndEffector.INTAKE_ALGAE_SPEED);
     }
 
     public boolean isFinished () {
@@ -18,6 +18,6 @@ public class IntakeAlgae extends Command {
     }
 
     public void end (boolean interrupted) {
-        EndEffector.getInstance().setSpeed(Constants.EndEffector.ALGAE_HOLD_SPEED);
+        EndEffector.getInstance().setMainSpeed(Constants.EndEffector.ALGAE_HOLD_SPEED);
     }
 }
