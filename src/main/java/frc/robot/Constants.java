@@ -50,7 +50,7 @@ public class Constants {
 
         public static final String kCamera2Name = "limelight-upper";
         public static final Transform3d kRobotToCam2 = new Transform3d(
-            new Translation3d(Units.inchesToMeters(2.507), Units.inchesToMeters(-2.725), Units.inchesToMeters(36.425)), // TODO
+            new Translation3d(Units.inchesToMeters(-2.507), Units.inchesToMeters(-2.725), Units.inchesToMeters(36.425)), // TODO
             new Rotation3d(0, Units.degreesToRadians(20.55), 180)); // new mount
 
         // The layout of the AprilTags on the field
@@ -60,8 +60,8 @@ public class Constants {
         // The standard deviations of our vision estimated poses, which affect
         // correction rate
         // (Fake values. Experiment and determine estimation noise on an actual robot.)
-        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(0.3, 0.1, 0.5);
-        public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.05, 0.1);
+        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(0.1, 0.1, 0.5);
+        public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.05, 0.05, 0.1);
         // public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(1.0, 0.5, 0.5);
         // public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1,1.0, 0.1);
 
@@ -291,6 +291,7 @@ public class Constants {
         public static final double INTAKE_CORAL_SPEED = -0.3;
         public static final double INTAKE_CORAL_SLOW_SPEED = -0.15;
         public static final double OUTTAKE_SPEED = -0.3;
+        public static final double OUTTAKE_SPEED_L1 = -0.1;
         public static final double EJECT_SPEED = 0.1;
 
         public static final double ALGAE_HOLD_SPEED = 0.15;

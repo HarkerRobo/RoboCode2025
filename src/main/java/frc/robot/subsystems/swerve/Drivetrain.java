@@ -297,12 +297,12 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         // DEBUG THIS!! shows as reflection on the other side of the april tag
         LimelightHelpers.SetRobotOrientation(
             Constants.Vision.kCamera1Name,
-            180+redAllianceYaw,
+            redAllianceYaw,
             0, 0, 0, 0, 0
         );
         // LimelightHelpers.SetIMUMode(Constants.Vision.kCamera1Name);
         LimelightHelpers.PoseEstimate EELimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera1Name);
-        LimelightHelpers.PoseEstimate intakeLimelightEstimate = null; // LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera2Name);
+        LimelightHelpers.PoseEstimate intakeLimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera2Name);
 
 
        // Only run vision updates if we see a tag
@@ -315,7 +315,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             SmartDashboard.putNumber("Drive/bestEstimateY", bestEstimate.pose.getY());
             SmartDashboard.putNumber("Drive/bestEstimateYaw", bestEstimate.pose.getRotation().getDegrees());
             if (bestEstimate != null && bestEstimate.tagCount > 0) {
-                if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist > 0.1 && bestEstimate.avgTagDist < 3.0 && bestEstimate.rawFiducials[0].ambiguity < 0.7)) {
+                if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist < 2.0 && bestEstimate.rawFiducials[0].ambiguity < 0.5)) {
                     addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
                 }
             }

@@ -23,10 +23,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.EE.IntakeAlgae;
 import frc.robot.commands.EE.IntakeCoralPassive;
 import frc.robot.commands.EE.Score;
+import frc.robot.commands.EE.ScoreManual;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.drivetrain.DriveToPoseCommand;
 import frc.robot.commands.elevator.ElevatorManual;
@@ -125,7 +127,7 @@ public class RobotContainer {
 
         driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
-        driver.x().onTrue(new Score());
+        driver.x().onTrue(new ScoreManual().alongWith(elevator.run( () -> elevator.setVoltage(1.2))).raceWith(new WaitCommand(2)).andThen(new ZeroElevator()));
 
         driver.leftBumper().onTrue(new IntakeAlgae());
 
