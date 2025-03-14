@@ -24,13 +24,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.EE.Eject;
 import frc.robot.commands.EE.IntakeAlgae;
 import frc.robot.commands.EE.IntakeCoralActive;
 import frc.robot.commands.EE.IntakeCoralPassive;
 import frc.robot.commands.EE.Score;
 import frc.robot.commands.EE.ScoreManual;
 import frc.robot.commands.EE.TuskManual;
+import frc.robot.commands.EE.TuskMoveToPosition;
+import frc.robot.commands.EE.ZeroTusk;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.drivetrain.DriveToPoseCommand;
 import frc.robot.commands.elevator.ElevatorManual;
@@ -103,15 +107,7 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        // Note that X is defined as forward according to WPILib convention,
-        // and Y is defined as to the left according to WPILib convention.
-        drivetrain.setDefaultCommand(
-                // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(() -> drive
-                        .withVelocityX((driver.getLeftTriggerAxis() > 0.5) ? -driver.getLeftY() * MaxSpeedSlow : -driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                        .withVelocityY((driver.getLeftTriggerAxis() > 0.5) ? -driver.getLeftX() * MaxSpeedSlow : -driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                        .withRotationalRate((driver.getLeftTriggerAxis() > 0.5) ? -driver.getRightX() * MaxAngularRateSlow : -driver.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-                ));
+
 
         elevator.setDefaultCommand(new ElevatorManual());
 
@@ -119,50 +115,37 @@ public class RobotContainer {
 
         climb.setDefaultCommand(new ClimbManual());
 
+        // -- old commands before we changed them --
         // reset the field-centric heading on button b press
-        driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
-        .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
-        driver.rightBumper().onTrue(new Score()
-                .andThen(new MoveToPosition(0)
-                        .andThen(new ZeroElevator())));
+        // driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
+        // .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
+        // // driver.rightBumper().onTrue(new Score()
+        // //         .andThen(new MoveToPosition(0)
+        // //                 .andThen(new ZeroElevator())));
 
-        driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
+        // // driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
-        driver.x().onTrue(new ScoreManual().raceWith(new WaitCommand(0.5))
-                .andThen(new ScoreManual().alongWith(elevator.run( () -> elevator.setVoltage(1.2)))).raceWith(new WaitCommand(2))
-                .andThen(new ZeroElevator()));
+        // // driver.x().onTrue(new ScoreManual().raceWith(new WaitCommand(0.5))
+        // //         .andThen(new ScoreManual().alongWith(elevator.run( () -> elevator.setVoltage(1.2)))).raceWith(new WaitCommand(2))
+        // //         .andThen(new ZeroElevator()));
 
-        driver.y().onTrue(new IntakeCoralActive());
+        // // driver.y().onTrue(new IntakeCoralActive());
 
-        driver.leftBumper().onTrue(new IntakeAlgae());
+        // // driver.leftBumper().onTrue(new IntakeAlgae());
 
-        operator.x().onTrue(new MoveToPosition(0).andThen(new ZeroElevator()));
-        operator.y().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
-        operator.b().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
-        operator.a().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]));
+        // // operator.x().onTrue(new MoveToPosition(0).andThen(new ZeroElevator()));
+        // // operator.y().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
+        // // operator.b().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
+        // // operator.a().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]));
 
-        operator.leftBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0]));
-        operator.rightBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]));
+        // // operator.leftBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0]));
+        // // operator.rightBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]));
 
-        // operator.getLeftDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Left"));
-        // operator.getUpDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Algae"));
-        // operator.getRightDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Right"));
+        // // // operator.getLeftDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Left"));
+        // // // operator.getUpDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Algae"));
+        // // // operator.getRightDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Right"));
 
-        Function<RobotContainer.AlignDirection, Command> setDirectionFactory = ((AlignDirection direction) ->
-        new Command() {
-            public void execute () {System.out.println(direction); RobotContainer.getInstance().setAlignDirection(direction);}
-            public boolean isFinished () {return true;}});
-        operator.getLeftDPad().onTrue(setDirectionFactory.apply(AlignDirection.Left));       
-        operator.getUpDPad().onTrue(setDirectionFactory.apply(AlignDirection.Algae));
-        operator.getRightDPad().onTrue(setDirectionFactory.apply(AlignDirection.Right));
 
-        // if (operator.getLeftDPadState()) {
-        //     direction = AlignDirection.Left;
-        // } else if (operator.getUpDPadState()) {
-        //     direction = AlignDirection.Algae;
-        // } else if (operator.getRightDPadState()) {
-        //     direction = AlignDirection.Right;
-        // }
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -174,6 +157,100 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterizeDrive);
         logger.telemeterize(elevator, endEffector);
         updateTelemetry();
+
+                // Note that X is defined as forward according to WPILib convention,
+        // and Y is defined as to the left according to WPILib convention.
+        drivetrain.setDefaultCommand(
+                // Drivetrain will execute this command periodically
+                drivetrain.applyRequest(() -> {
+                    
+                    boolean slow = driver.getLeftTriggerAxis() > 0.5;
+                    return drive.withVelocityX(-driver.getLeftY() * (slow ? MaxSpeedSlow : MaxSpeed)) // Drive forward with negative Y (forward)
+                                .withVelocityY(-driver.getLeftX() * (slow ? MaxSpeedSlow : MaxSpeed)) // Drive left with negative X (left)
+                                .withRotationalRate(-driver.getRightX()-driver.getRightX() * (slow ? MaxAngularRateSlow : MaxAngularRate)); // Drive counterclockwise with negative X (left)
+                }
+        ));
+
+        Function<RobotContainer.AlignDirection, Command> setDirectionFactory = ((AlignDirection direction) ->
+        new Command() {
+            public void execute () {System.out.println(direction); RobotContainer.getInstance().setAlignDirection(direction);}
+            public boolean isFinished () {return true;}});
+
+        Command alignLeft = setDirectionFactory.apply(AlignDirection.Left);
+        Command alignAlgae = setDirectionFactory.apply(AlignDirection.Algae);
+        Command alignRight = setDirectionFactory.apply(AlignDirection.Right);
+
+        operator.getLeftDPad().onTrue(alignLeft); 
+        // driver left/right bottom button
+        
+        operator.getUpDPad().onTrue(alignAlgae);     
+        operator.getUpDPad().onTrue(alignAlgae);     
+  
+        operator.getRightDPad().onTrue(alignRight);
+
+        configureDriverBindings();
+        configureOperatorBindings();
+
+    }
+
+    public void configureDriverBindings ()
+    {
+        driver.rightBumper().onTrue(new Score());
+
+        driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
+
+        driver.b().onTrue(new Eject());
+
+        // temporary home button for zero
+        driver.button(6).onTrue(
+            drivetrain.runOnce(() -> {System.out.println("home"); drivetrain.seedFieldCentric();})
+            .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
+    }
+
+    private void configureOperatorBindings ()
+    {
+
+        // Levels when left bumper is not pressed
+        operator.x().and(()->!operator.leftBumper().getAsBoolean())
+            .onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])
+            .andThen(new ZeroElevator())
+            );
+
+        operator.y().and(()->!operator.leftBumper().getAsBoolean())
+            .onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3])
+            );
+        
+        operator.b().and(()->!operator.leftBumper().getAsBoolean())
+            .onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2])
+            );
+        
+        operator.a().and(()->!operator.leftBumper().getAsBoolean())
+            .onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1])
+            );
+
+        // Levels when left bumper s pressed
+        operator.x().and(()->operator.leftBumper().getAsBoolean())
+            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0])
+            );
+        
+        operator.a().and(()->operator.leftBumper().getAsBoolean())
+            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1])
+            );
+
+        operator.b().and(()->operator.leftBumper().getAsBoolean())
+            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[2])
+            );
+    
+        operator.y().and(()->operator.leftBumper().getAsBoolean())
+            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3])
+            );
+
+        
+        operator.rightBumper().onTrue(new IntakeAlgae());
+         
+        // menu
+        // home
+        
     }
 
     public void updateTelemetry() {

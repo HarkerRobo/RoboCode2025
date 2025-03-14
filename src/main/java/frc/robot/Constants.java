@@ -268,11 +268,13 @@ public class Constants {
         public static final double ELEVATOR_GEAR_RATIO = 6.22;
 
         public static final double[] CORAL_HEIGHTS = { 0, 1.45, 2.85, 4.69 }; // rotations
-        public static final double[] ALGAE_HEIGHTS = { 1.993, 3.149 }; // low, high
+        public static final double[] ALGAE_HEIGHTS = { 0, /* ground TODO */ 1.993, 3.149, 4.69 /*net TODO */ };
+
 
         public static final double MM_CRUISE_VELOCITY = 40; // rps
         public static final double MM_ACCELERATION = 60; // rps/s
         public static final double MM_JERK = 240; // rps/s/s
+
     }
 
     public static final class EndEffector // positive output = out, negative = in
