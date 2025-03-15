@@ -59,7 +59,7 @@ public class RobotContainer {
     private double MaxSpeed = Constants.Swerve.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second // max angular velocity
 
-    private double MaxSpeedSlow = MaxSpeed * 0.2;
+    private double MaxSpeedSlow = MaxSpeed * 0.3;
     private double MaxAngularRateSlow = MaxAngularRate * 0.6;
 
     private AlignDirection direction = AlignDirection.Left;
@@ -164,7 +164,8 @@ public class RobotContainer {
                     boolean slow = driver.getLeftTriggerAxis() > 0.5;
                     return drive.withVelocityX(-driver.getLeftY() * (slow ? MaxSpeedSlow : MaxSpeed)) // Drive forward with negative Y (forward)
                                 .withVelocityY(-driver.getLeftX() * (slow ? MaxSpeedSlow : MaxSpeed)) // Drive left with negative X (left)
-                                .withRotationalRate(-driver.getRightX()-driver.getRightX() * (slow ? MaxAngularRateSlow : MaxAngularRate)); // Drive counterclockwise with negative X (left)
+                                .withRotationalRate(-driver.getRightX()-driver.getRightX() * (slow ? MaxAngularRateSlow : MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                                .withDeadband(slow ? MaxSpeedSlow * 0.03 : MaxSpeed * 0.05);
                 }
         ));
 
