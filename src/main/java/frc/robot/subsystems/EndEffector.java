@@ -20,6 +20,8 @@ public class EndEffector extends SubsystemBase
     private Canandcolor frontCanandcolor;
     private Canandcolor backCanandcolor;
     
+    private boolean passiveOn;
+    
     private EndEffector ()
     {
         mainMotor = new TalonFX(Constants.EndEffector.MAIN_ID, Constants.CAN_CHAIN);
@@ -28,6 +30,8 @@ public class EndEffector extends SubsystemBase
 
         frontCanandcolor = new Canandcolor(Constants.EndEffector.FRONT_CANANDCOLOR_ID);
         backCanandcolor = new Canandcolor(Constants.EndEffector.BACK_CANANDCOLOR_ID);
+
+        passiveOn = true;
     }
 
     private void config ()
@@ -143,6 +147,16 @@ public class EndEffector extends SubsystemBase
     public void setTuskPower(double power) 
     {
         tuskMotor.setControl(new DutyCycleOut(power));
+    }
+
+    public void togglePassive()
+    {
+        passiveOn = !passiveOn;
+    }
+
+    public boolean getPassive ()
+    {
+        return passiveOn;
     }
 
     public static EndEffector getInstance ()

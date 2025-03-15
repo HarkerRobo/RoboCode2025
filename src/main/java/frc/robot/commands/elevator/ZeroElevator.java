@@ -14,7 +14,7 @@ public class ZeroElevator extends Command {
     }
 
     public boolean isFinished() {
-        return Elevator.getInstance().isLimitHit() || Elevator.getInstance().isStalling();
+        return Elevator.getInstance().isStalling();
     }
 
     public void end(boolean interrupted) {
