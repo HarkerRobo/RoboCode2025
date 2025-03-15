@@ -85,13 +85,15 @@ public class RobotContainer {
 
     public RobotContainer() {
         NamedCommands.registerCommand("ZeroElevator", new ZeroElevator());
-        NamedCommands.registerCommand("ElevatorHeight1",
+        NamedCommands.registerCommand("ZeroTusk", new ZeroTusk());
+        NamedCommands.registerCommand("ElevatorL2",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]));
-        NamedCommands.registerCommand("ElevatorHeight2",
+        NamedCommands.registerCommand("ElevatorL3",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
-        NamedCommands.registerCommand("ElevatorHeight3",
+        NamedCommands.registerCommand("ElevatorL4",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
         NamedCommands.registerCommand("Score", new Score());
+        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0));
 
         autoChooser = AutoBuilder.buildAutoChooser("auton1");
         SmartDashboard.putData("Auton Chooser", autoChooser);

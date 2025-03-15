@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix6.Utils;
+import com.pathplanner.lib.commands.PathfindingCommand;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -44,6 +45,8 @@ public class Robot extends TimedRobot {
     LimelightHelpers.setCameraPose_RobotSpace(Constants.Vision.kCamera2Name, 
       Constants.Vision.kRobotToCam2.getX(), Constants.Vision.kRobotToCam2.getY(), Constants.Vision.kRobotToCam2.getZ(),
       Units.radiansToDegrees(Constants.Vision.kRobotToCam2.getRotation().getX()), Units.radiansToDegrees(Constants.Vision.kRobotToCam2.getRotation().getY()), Units.radiansToDegrees(Constants.Vision.kRobotToCam2.getRotation().getZ()));
+
+    PathfindingCommand.warmupCommand().schedule();
   }
 
   @Override

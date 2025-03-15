@@ -11,34 +11,160 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
+          "data": {
+            "name": "ZeroTusk"
+          }
+        },
+        {
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "1path1"
+                  "pathName": "start1 to J"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "ElevatorHeight1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Score"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ZeroElevator"
+                  "name": "ElevatorL4"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "J to LC"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ZeroElevatorFast"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ZeroElevator"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LC to K"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElevatorL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "K to LC"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ZeroElevatorFast"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ZeroElevator"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LC to L"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElevatorL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
           }
         },
         {
@@ -46,102 +172,9 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "1path2"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
-                  "name": "IntakeCoral"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ZeroElevator"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "1path3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ElevatorHeight2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Score"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ZeroElevator"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "1path2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeCoral"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ZeroElevator"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "1path3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ElevatorHeight3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Score"
+                  "name": "ZeroElevatorFast"
                 }
               },
               {

@@ -13,10 +13,10 @@ public class AlignmentConstants {
     private static final Rotation2d GH = new Rotation2d(Math.toRadians(180));
     private static final Rotation2d IJ = new Rotation2d(Math.toRadians(240));
     private static final Rotation2d KL = new Rotation2d(Math.toRadians(300));
-    private static final Rotation2d RIGHTCORALSTATION = new Rotation2d(Math.toRadians(53));
-    private static final Rotation2d LEFTCORALSTATION = new Rotation2d(Math.toRadians(-53));
-    private static final Rotation2d BARGE = new Rotation2d(Math.toRadians(180));
-    private static final Rotation2d PROCESSORANGLE = new Rotation2d(Math.toRadians(-90));
+    // private static final Rotation2d RIGHTCORALSTATION = new Rotation2d(Math.toRadians(53));
+    // private static final Rotation2d LEFTCORALSTATION = new Rotation2d(Math.toRadians(-53));
+    // private static final Rotation2d BARGE = new Rotation2d(Math.toRadians(180));
+    // private static final Rotation2d PROCESSORANGLE = new Rotation2d(Math.toRadians(-90));
 
 
     private static final double LEFT_X_OFFSET = 0;
@@ -64,17 +64,17 @@ public class AlignmentConstants {
     public static final Pose2d REEF_L = new Pose2d(3.476, 4.918, KL)
         .plus(RIGHT_OFFSET);
     
-    public static final Pose2d CORAL1RIGHT = new Pose2d(1.536, 0.726, RIGHTCORALSTATION);
-    public static final Pose2d CORAL1LEFT = new Pose2d(0.800, 1.258, RIGHTCORALSTATION);
+    // public static final Pose2d CORAL1RIGHT = new Pose2d(1.536, 0.726, RIGHTCORALSTATION);
+    // public static final Pose2d CORAL1LEFT = new Pose2d(0.800, 1.258, RIGHTCORALSTATION);
 
-    public static final Pose2d CORAL3RIGHT = new Pose2d(1.536, 7.277, LEFTCORALSTATION);
-    public static final Pose2d CORAL3LEFT = new Pose2d(0.81, 6.802, LEFTCORALSTATION);
+    // public static final Pose2d CORAL3RIGHT = new Pose2d(1.536, 7.277, LEFTCORALSTATION);
+    // public static final Pose2d CORAL3LEFT = new Pose2d(0.81, 6.802, LEFTCORALSTATION);
 
-    public static final Pose2d BARGERIGHT = new Pose2d(8.510, 5.074, BARGE);
-    public static final Pose2d BARGECENTER = new Pose2d(8.510, 6.168, BARGE);
-    public static final Pose2d BARGELEFT = new Pose2d(8.510, 7.228, BARGE);
+    // public static final Pose2d BARGERIGHT = new Pose2d(8.510, 5.074, BARGE);
+    // public static final Pose2d BARGECENTER = new Pose2d(8.510, 6.168, BARGE);
+    // public static final Pose2d BARGELEFT = new Pose2d(8.510, 7.228, BARGE);
 
-    public static final Pose2d PROCESSOR = new Pose2d(5.979, 0.541, PROCESSORANGLE);
+    // public static final Pose2d PROCESSOR = new Pose2d(5.979, 0.541, PROCESSORANGLE);
 
     // Algae center positions
     public static final Pose2d ALGAE_AB = new Pose2d(3.210, 3.759, AB)
