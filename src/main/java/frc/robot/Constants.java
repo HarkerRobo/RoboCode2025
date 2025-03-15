@@ -263,7 +263,7 @@ public class Constants {
 
         public static final double ZERO_SPEED = -0.1;
 
-        public static final double ELEVATOR_STALLING_CURRENT = 80;
+        public static final double ELEVATOR_STALLING_CURRENT = 50;
 
         public static final double ELEVATOR_GEAR_RATIO = 6.22;
 
@@ -283,30 +283,35 @@ public class Constants {
         public static final int TUSK_ID = 18;
         public static final InvertedValue MAIN_INVERTED = InvertedValue.Clockwise_Positive;
         public static final InvertedValue TUSK_INVERTED = InvertedValue.CounterClockwise_Positive;
-        public static final int BACK_CANANDCOLOR_ID = 1;
-        public static final int FRONT_CANANDCOLOR_ID = 2;
+        public static final int BACK_CANANDCOLOR_ID = 2;
+        public static final int FRONT_CANANDCOLOR_ID = 1;
 
         public static final double STATOR_CURRENT_LIMIT = 80;
 
-        public static final double PROXIMITY_LIMIT_FRONT = 0.23;
-        public static final double PROXIMITY_LIMIT_BACK = 0.15;
+        public static final double PROXIMITY_LIMIT_FRONT = 0.19;
+        public static final double PROXIMITY_LIMIT_BACK = 0.08;
 
         public static final double INTAKE_ALGAE_SPEED = 0.4;
         public static final double INTAKE_CORAL_SPEED = -0.3;
-        public static final double INTAKE_CORAL_SLOW_SPEED = -0.15;
+        public static final double INTAKE_CORAL_SLOW_SPEED = -0.1;
         public static final double OUTTAKE_SPEED = -0.3;
         public static final double OUTTAKE_SPEED_L1 = -0.1;
         public static final double EJECT_SPEED = 0.1;
 
         public static final double ALGAE_HOLD_SPEED = 0.15;
 
-        public static final double TUSK_STALLING_CURRENT = 80;
+        public static final double TUSK_STALLING_CURRENT = 50;
         public static final double TUSK_ZERO_SPEED = 0.1;
         public static final double TUSK_GEAR_RATIO = 62.5;
         public static final double TUSK_MAX_ERROR = 0.1;
 
         public static final double FORWARD_SOFT_LIMIT = 2.0; // TODO
         public static final double REVERSE_SOFT_LIMIT = -0.1;
+
+        public static final double REEF_TUSK_POSTION = 1.0; // TODO
+        public static final double GROUND_TUSK_POSITION = 2.0; // TODO
+        public static final double PROCESSOR_TUSK_POSITION = 1.5; // TODO
+        public static final double BARGE_TUSK_POSITION = 0.5;
 
         public static final double kP = 2;
         public static final double kI = 0;

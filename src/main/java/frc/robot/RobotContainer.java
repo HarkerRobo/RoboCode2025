@@ -28,11 +28,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.EE.Eject;
 import frc.robot.commands.EE.IntakeAlgae;
-import frc.robot.commands.EE.IntakeCoralActive;
-import frc.robot.commands.EE.IntakeCoralPassive;
+import frc.robot.commands.EE.EEManual;
 import frc.robot.commands.EE.Score;
-import frc.robot.commands.EE.ScoreManual;
-import frc.robot.commands.EE.TuskManual;
 import frc.robot.commands.EE.TuskMoveToPosition;
 import frc.robot.commands.EE.ZeroTusk;
 import frc.robot.commands.climb.ClimbManual;
@@ -111,7 +108,7 @@ public class RobotContainer {
 
         elevator.setDefaultCommand(new ElevatorManual());
 
-        endEffector.setDefaultCommand(new TuskManual());
+        endEffector.setDefaultCommand(new EEManual());
 
         climb.setDefaultCommand(new ClimbManual());
 
@@ -201,20 +198,19 @@ public class RobotContainer {
 
         driver.b().onTrue(new Eject());
 
-        // temporary home button for zero
-        driver.button(6).onTrue(
-            drivetrain.runOnce(() -> {System.out.println("home"); drivetrain.seedFieldCentric();})
-            .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
+        driver.x().onTrue(endEffector.runOnce(() -> endEffector.togglePassive()));
+
+
     }
 
     private void configureOperatorBindings ()
     {
 
         // Levels when left bumper is not pressed
-        operator.x().and(()->!operator.leftBumper().getAsBoolean())
-            .onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])
-            .andThen(new ZeroElevator())
-            );
+        // operator.x().and(()->!operator.leftBumper().getAsBoolean())
+        //     .onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])
+        //     .andThen(new ZeroElevator())
+        //     );
 
         operator.y().and(()->!operator.leftBumper().getAsBoolean())
             .onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3])
@@ -230,26 +226,26 @@ public class RobotContainer {
 
         // Levels when left bumper s pressed
         operator.x().and(()->operator.leftBumper().getAsBoolean())
-            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0])
-            );
+            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0]).andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSTION)));
+
         
         operator.a().and(()->operator.leftBumper().getAsBoolean())
-            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1])
-            );
+            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]).andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSTION)));
+            
 
         operator.b().and(()->operator.leftBumper().getAsBoolean())
-            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[2])
-            );
+            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[2]).andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSTION)));
     
         operator.y().and(()->operator.leftBumper().getAsBoolean())
-            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3])
-            );
+            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3]).andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSTION)));
 
         
         operator.rightBumper().onTrue(new IntakeAlgae());
          
-        // menu
-        // home
+        operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()));
+        operator.button(7).onTrue(
+            drivetrain.runOnce(() -> {System.out.println("home"); drivetrain.seedFieldCentric();})
+            .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
         
     }
 
