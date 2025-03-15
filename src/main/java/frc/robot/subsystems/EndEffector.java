@@ -21,9 +21,7 @@ public class EndEffector extends SubsystemBase
     private Canandcolor backCanandcolor;
     
     private boolean passiveOn;
-    private boolean isCoral;
     private double desiredPosition;
-    private boolean hasStalled;
     
     private EndEffector ()
     {
@@ -35,9 +33,7 @@ public class EndEffector extends SubsystemBase
         backCanandcolor = new Canandcolor(Constants.EndEffector.BACK_CANANDCOLOR_ID);
 
         passiveOn = true;
-        isCoral = true;
         desiredPosition = 0;
-        hasStalled = false;
     }
 
     private void config ()
@@ -116,16 +112,6 @@ public class EndEffector extends SubsystemBase
         return Math.abs(mainMotor.getStatorCurrent().getValueAsDouble()) >= Constants.EndEffector.MAIN_STALLING_CURRENT;
     }
 
-    public void setStalling(boolean val)
-    {
-        hasStalled = val;
-    }
-
-    public boolean hasStalled()
-    {
-        return hasStalled;
-    }
-
     public double getMainMotorCurrent()
     {
         return mainMotor.getStatorCurrent().getValueAsDouble();
@@ -182,26 +168,14 @@ public class EndEffector extends SubsystemBase
         passiveOn = !passiveOn;
     }
 
+    public void setPassive(boolean val)
+    {
+        passiveOn = val;
+    }
+
     public boolean getPassive ()
     {
         return passiveOn;
-    }
-
-    public void setCoral()
-    {
-        isCoral = true;
-        hasStalled = false;
-    }
-
-    public void setAlgae()
-    {
-        isCoral = false;
-        hasStalled = false;
-    }
-
-    public boolean isCoral()
-    {
-        return isCoral;
     }
 
     public static EndEffector getInstance ()

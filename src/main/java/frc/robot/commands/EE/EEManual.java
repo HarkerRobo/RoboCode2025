@@ -11,11 +11,6 @@ public class EEManual extends Command {
     }
 
     public void execute () {
-        if (EndEffector.getInstance().isMainStalling())
-        {
-            EndEffector.getInstance().setStalling(true);
-        }
-        
         runTusk();
         runMain();
     }
@@ -34,37 +29,23 @@ public class EEManual extends Command {
     }
 
     private void runMain() {
-        if (EndEffector.getInstance().isCoral())
+        if (EndEffector.getInstance().isBackTriggered() && !EndEffector.getInstance().isFrontTriggered())
         {
-            if (EndEffector.getInstance().isBackTriggered() && !EndEffector.getInstance().isFrontTriggered())
-            {
-                EndEffector.getInstance().setMainSpeed(Constants.EndEffector.INTAKE_CORAL_SPEED);
-            }
-            else if (!EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
-            {
-                EndEffector.getInstance().setMainSpeed(Constants.EndEffector.REVERSE_INTAKE_SPEED);
-            }
-            else if (EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
-            {
-                EndEffector.getInstance().setMainSpeed( 0);
-            }
-            else
-            {
-                EndEffector.getInstance().setMainSpeed(
-                EndEffector.getInstance().getPassive() ? 
-                Constants.EndEffector.INTAKE_CORAL_SLOW_SPEED : 0);
-            }
+            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.INTAKE_CORAL_SPEED);
+        }
+        else if (!EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
+        {
+            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.REVERSE_INTAKE_SPEED);
+        }
+        else if (EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
+        {
+            EndEffector.getInstance().setMainSpeed( 0);
         }
         else
         {
-            if (!EndEffector.getInstance().hasStalled())
-            {
-                EndEffector.getInstance().setMainSpeed(Constants.EndEffector.INTAKE_ALGAE_SPEED);
-            }
-            else 
-            {
-                EndEffector.getInstance().setMainSpeed(Constants.EndEffector.ALGAE_HOLD_SPEED);
-            }
+            EndEffector.getInstance().setMainSpeed(
+            EndEffector.getInstance().getPassive() ? 
+            Constants.EndEffector.INTAKE_CORAL_SLOW_SPEED : 0);
         }
     }
 

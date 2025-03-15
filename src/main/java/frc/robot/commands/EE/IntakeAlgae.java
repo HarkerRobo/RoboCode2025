@@ -14,7 +14,7 @@ public class IntakeAlgae extends Command {
     }
 
     public boolean isFinished () {
-        return EndEffector.getInstance().isFrontTriggered();
+        return EndEffector.getInstance().isMainStalling();
     }
 
     public void end (boolean interrupted) {

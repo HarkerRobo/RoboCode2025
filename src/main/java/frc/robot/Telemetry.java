@@ -44,7 +44,7 @@ public class Telemetry {
     private final DoublePublisher tuskPosition = endEffectorStateTable.getDoubleTopic("Tusk Position").publish();
     private final DoublePublisher tuskDesiredPosition = endEffectorStateTable.getDoubleTopic("Tusk Desired Position").publish();
     private final DoublePublisher mainCurrent = endEffectorStateTable.getDoubleTopic("Main Current").publish();
-    private final BooleanPublisher hasMainStalled = endEffectorStateTable.getBooleanTopic("Has Main Stalled").publish();
+    private final BooleanPublisher isMainStalling = endEffectorStateTable.getBooleanTopic("Is Main Stalling").publish();
     
     /* Robot swerve drive state */
     private final NetworkTable driveStateTable = defaultTable.getSubTable("DriveState");
@@ -90,6 +90,6 @@ public class Telemetry {
         tuskPosition.set(endEffector.getTuskPosition());
         tuskDesiredPosition.set(endEffector.getTuskDesiredPosition());
         mainCurrent.set(endEffector.getMainMotorCurrent());
-        hasMainStalled.set(endEffector.hasStalled());
+        isMainStalling.set(endEffector.isMainStalling());
     }
 }

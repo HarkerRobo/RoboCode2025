@@ -312,7 +312,7 @@ public class Constants {
         public static final double PROCESSOR_TUSK_POSITION = 0.3; // TODO
         public static final double BARGE_TUSK_POSITION = 0.1;
 
-        public static final double kP = 5.0;
+        public static final double kP = 7.0;
         public static final double kI = 0;
         public static final double kD = 0;
 

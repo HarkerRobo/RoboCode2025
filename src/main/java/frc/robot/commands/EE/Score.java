@@ -20,6 +20,6 @@ public class Score extends Command {
 
     public void end (boolean interrupted) {
         EndEffector.getInstance().setMainSpeed(0);
-        EndEffector.getInstance().setCoral();
+        EndEffector.getInstance().setPassive(true);
     }
 }
