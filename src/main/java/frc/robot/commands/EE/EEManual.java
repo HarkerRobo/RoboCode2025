@@ -35,7 +35,7 @@ public class EEManual extends Command {
         }
         else if (!EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
         {
-            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.EJECT_SPEED);
+            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.REVERSE_INTAKE_SPEED);
         }
         else if (EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
         {
