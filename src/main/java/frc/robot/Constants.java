@@ -282,7 +282,7 @@ public class Constants {
         public static final int MAIN_ID = 16;
         public static final int TUSK_ID = 18;
         public static final InvertedValue MAIN_INVERTED = InvertedValue.Clockwise_Positive;
-        public static final InvertedValue TUSK_INVERTED = InvertedValue.CounterClockwise_Positive;
+        public static final InvertedValue TUSK_INVERTED = InvertedValue.Clockwise_Positive;
         public static final int BACK_CANANDCOLOR_ID = 2;
         public static final int FRONT_CANANDCOLOR_ID = 1;
 
@@ -291,7 +291,7 @@ public class Constants {
         public static final double PROXIMITY_LIMIT_FRONT = 0.19;
         public static final double PROXIMITY_LIMIT_BACK = 0.08;
 
-        public static final double INTAKE_ALGAE_SPEED = 0.4;
+        public static final double INTAKE_ALGAE_SPEED = 0.2;
         public static final double INTAKE_CORAL_SPEED = -0.2;
         public static final double INTAKE_CORAL_SLOW_SPEED = -0.1;
         public static final double OUTTAKE_SPEED = -0.2;
@@ -299,24 +299,24 @@ public class Constants {
         public static final double REVERSE_INTAKE_SPEED = 0.1;
         public static final double EJECT_SPEED = -0.1;
 
-        public static final double ALGAE_HOLD_SPEED = 0.15;
+        public static final double ALGAE_HOLD_SPEED = 0.0;
 
         public static final double TUSK_STALLING_CURRENT = 50;
-        public static final double TUSK_ZERO_SPEED = 0.1;
+        public static final double MAIN_STALLING_CURRENT = 50;
+        public static final double TUSK_ZERO_SPEED = -0.1;
         public static final double TUSK_GEAR_RATIO = 62.5;
         public static final double TUSK_MAX_ERROR = 0.1;
 
-        public static final double FORWARD_SOFT_LIMIT = 2.0; // TODO
-        public static final double REVERSE_SOFT_LIMIT = -0.1;
+        public static final double REEF_TUSK_POSITION = 0.243; // TODO
+        public static final double GROUND_TUSK_POSITION = 0.412; // TODO
+        public static final double PROCESSOR_TUSK_POSITION = 0.3; // TODO
+        public static final double BARGE_TUSK_POSITION = 0.1;
 
-        public static final double REEF_TUSK_POSITION = 1.0; // TODO
-        public static final double GROUND_TUSK_POSITION = 2.0; // TODO
-        public static final double PROCESSOR_TUSK_POSITION = 1.5; // TODO
-        public static final double BARGE_TUSK_POSITION = 0.5;
-
-        public static final double kP = 2;
+        public static final double kP = 5.0;
         public static final double kI = 0;
         public static final double kD = 0;
+
+        public static final double kG = 0.6;
     }
 
     public static final class Climb {

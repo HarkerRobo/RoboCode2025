@@ -21,6 +21,9 @@ public class EndEffector extends SubsystemBase
     private Canandcolor backCanandcolor;
     
     private boolean passiveOn;
+    private boolean isCoral;
+    private double desiredPosition;
+    private boolean hasStalled;
     
     private EndEffector ()
     {
@@ -32,6 +35,9 @@ public class EndEffector extends SubsystemBase
         backCanandcolor = new Canandcolor(Constants.EndEffector.BACK_CANANDCOLOR_ID);
 
         passiveOn = true;
+        isCoral = true;
+        desiredPosition = 0;
+        hasStalled = false;
     }
 
     private void config ()
@@ -61,17 +67,13 @@ public class EndEffector extends SubsystemBase
         tuskConfig.Slot0.kI = Constants.EndEffector.kI;
         tuskConfig.Slot0.kD = Constants.EndEffector.kD;
 
+        tuskConfig.Slot0.kG = Constants.EndEffector.kG;
+
         tuskConfig.Voltage.PeakForwardVoltage = Constants.MAX_VOLTAGE;
         tuskConfig.Voltage.PeakReverseVoltage = -Constants.MAX_VOLTAGE;
 
         tuskConfig.CurrentLimits.StatorCurrentLimit = Constants.EndEffector.STATOR_CURRENT_LIMIT;
         tuskConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-
-        tuskConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.EndEffector.FORWARD_SOFT_LIMIT;
-        tuskConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-
-        tuskConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.EndEffector.REVERSE_SOFT_LIMIT;
-        tuskConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         
         tuskConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
@@ -104,9 +106,29 @@ public class EndEffector extends SubsystemBase
         return frontCanandcolor.getProximity() < Constants.EndEffector.PROXIMITY_LIMIT_FRONT;
     }
 
-    public boolean isStalling()
+    public boolean isTuskStalling()
     {
         return tuskMotor.getStatorCurrent().getValueAsDouble() >= Constants.EndEffector.TUSK_STALLING_CURRENT;
+    }
+
+    public boolean isMainStalling()
+    {
+        return Math.abs(mainMotor.getStatorCurrent().getValueAsDouble()) >= Constants.EndEffector.MAIN_STALLING_CURRENT;
+    }
+
+    public void setStalling(boolean val)
+    {
+        hasStalled = val;
+    }
+
+    public boolean hasStalled()
+    {
+        return hasStalled;
+    }
+
+    public double getMainMotorCurrent()
+    {
+        return mainMotor.getStatorCurrent().getValueAsDouble();
     }
 
     public void setTuskVoltage(double power)
@@ -122,6 +144,7 @@ public class EndEffector extends SubsystemBase
     // pid control
     public void moveToPosition(double desiredPosition)
     {
+        this.desiredPosition = desiredPosition;
         tuskMotor.setControl(new PositionVoltage(desiredPosition));
     }
 
@@ -131,6 +154,11 @@ public class EndEffector extends SubsystemBase
     public double getTuskPosition() 
     {
         return tuskMotor.getPosition().getValueAsDouble();
+    }
+
+    public double getTuskDesiredPosition()
+    {
+        return desiredPosition;
     }
     
     /**
@@ -157,6 +185,23 @@ public class EndEffector extends SubsystemBase
     public boolean getPassive ()
     {
         return passiveOn;
+    }
+
+    public void setCoral()
+    {
+        isCoral = true;
+        hasStalled = false;
+    }
+
+    public void setAlgae()
+    {
+        isCoral = false;
+        hasStalled = false;
+    }
+
+    public boolean isCoral()
+    {
+        return isCoral;
     }
 
     public static EndEffector getInstance ()

@@ -14,7 +14,7 @@ public class ZeroTusk extends Command {
     }
 
     public boolean isFinished() {
-        return EndEffector.getInstance().isStalling();
+        return EndEffector.getInstance().isTuskStalling();
     }
 
     public void end(boolean interrupted) {

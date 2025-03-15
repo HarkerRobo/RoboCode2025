@@ -241,13 +241,15 @@ public class RobotContainer {
 
         // Algae High
         operator.a().and(()->operator.leftBumper().getAsBoolean())
-            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1])
+            .onTrue(endEffector.runOnce(() -> endEffector.setAlgae())
+            // .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]))
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
             .andThen(new IntakeAlgae())); // add zero elevator and tusk
 
         // Algae Low
         operator.b().and(()->operator.leftBumper().getAsBoolean())
-            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[2])
+            .onTrue(endEffector.runOnce(() -> endEffector.setAlgae())
+            // .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[2]))
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
             .andThen(new IntakeAlgae())); // add zero elevator and tusk
         

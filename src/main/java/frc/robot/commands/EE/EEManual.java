@@ -11,17 +11,22 @@ public class EEManual extends Command {
     }
 
     public void execute () {
+        if (EndEffector.getInstance().isMainStalling())
+        {
+            EndEffector.getInstance().setStalling(true);
+        }
+        
         runTusk();
         runMain();
     }
 
     private void runTusk() {
         if (RobotContainer.getInstance().getDriver().getRightDPadState()) {
-            EndEffector.getInstance().setTuskPower(0.05);
+            EndEffector.getInstance().setTuskPower(0.1);
         }
         else if (RobotContainer.getInstance().getDriver().getLeftDPadState())
         {
-            EndEffector.getInstance().setTuskPower(-0.05);
+            EndEffector.getInstance().setTuskPower(-0.1);
         }
         else {
             EndEffector.getInstance().setTuskPower(0);
@@ -29,23 +34,37 @@ public class EEManual extends Command {
     }
 
     private void runMain() {
-        if (EndEffector.getInstance().isBackTriggered() && !EndEffector.getInstance().isFrontTriggered())
+        if (EndEffector.getInstance().isCoral())
         {
-            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.INTAKE_CORAL_SPEED);
-        }
-        else if (!EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
-        {
-            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.REVERSE_INTAKE_SPEED);
-        }
-        else if (EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
-        {
-            EndEffector.getInstance().setMainSpeed( 0);
+            if (EndEffector.getInstance().isBackTriggered() && !EndEffector.getInstance().isFrontTriggered())
+            {
+                EndEffector.getInstance().setMainSpeed(Constants.EndEffector.INTAKE_CORAL_SPEED);
+            }
+            else if (!EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
+            {
+                EndEffector.getInstance().setMainSpeed(Constants.EndEffector.REVERSE_INTAKE_SPEED);
+            }
+            else if (EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered())
+            {
+                EndEffector.getInstance().setMainSpeed( 0);
+            }
+            else
+            {
+                EndEffector.getInstance().setMainSpeed(
+                EndEffector.getInstance().getPassive() ? 
+                Constants.EndEffector.INTAKE_CORAL_SLOW_SPEED : 0);
+            }
         }
         else
         {
-            EndEffector.getInstance().setMainSpeed(
-            EndEffector.getInstance().getPassive() ? 
-               Constants.EndEffector.INTAKE_CORAL_SLOW_SPEED : 0);
+            if (!EndEffector.getInstance().hasStalled())
+            {
+                EndEffector.getInstance().setMainSpeed(Constants.EndEffector.INTAKE_ALGAE_SPEED);
+            }
+            else 
+            {
+                EndEffector.getInstance().setMainSpeed(Constants.EndEffector.ALGAE_HOLD_SPEED);
+            }
         }
     }
 
