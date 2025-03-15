@@ -296,7 +296,7 @@ public class Constants {
         public static final double INTAKE_CORAL_SLOW_SPEED = -0.1;
         public static final double OUTTAKE_SPEED = -0.3;
         public static final double OUTTAKE_SPEED_L1 = -0.1;
-        public static final double EJECT_SPEED = 0.1;
+        public static final double EJECT_SPEED = -0.1;
 
         public static final double ALGAE_HOLD_SPEED = 0.15;
 
