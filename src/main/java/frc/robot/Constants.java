@@ -268,7 +268,7 @@ public class Constants {
         public static final double ELEVATOR_GEAR_RATIO = 6.22;
 
         public static final double[] CORAL_HEIGHTS = { 0, 1.45, 2.85, 4.69 }; // rotations
-        public static final double[] ALGAE_HEIGHTS = { 0, /* ground TODO */ 1.993, 3.149, 4.69 /*net TODO */ };
+        public static final double[] ALGAE_HEIGHTS = { 0, 1.993, 3.149, 4.69};
 
 
         public static final double MM_CRUISE_VELOCITY = 40; // rps
@@ -309,7 +309,7 @@ public class Constants {
         public static final double FORWARD_SOFT_LIMIT = 2.0; // TODO
         public static final double REVERSE_SOFT_LIMIT = -0.1;
 
-        public static final double REEF_TUSK_POSTION = 1.0; // TODO
+        public static final double REEF_TUSK_POSITION = 1.0; // TODO
         public static final double GROUND_TUSK_POSITION = 2.0; // TODO
         public static final double PROCESSOR_TUSK_POSITION = 1.5; // TODO
         public static final double BARGE_TUSK_POSITION = 0.5;
