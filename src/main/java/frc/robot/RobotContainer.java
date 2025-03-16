@@ -194,12 +194,16 @@ public class RobotContainer {
 
     public void configureDriverBindings ()
     {
+        driver.leftBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
+            .andThen(new MoveToPosition(0))
+            .andThen(new TuskMoveToPosition(Constants.EndEffector.GROUND_TUSK_POSITION))
+            .andThen(new IntakeAlgae()));
         // Score, wait 1s, zero ET
-        driver.rightBumper().onTrue(new Score().andThen(new WaitCommand(1)).andThen(new MoveToPosition(0)).andThen(new ZeroElevator()).andThen(new ZeroTusk()));
+        driver.rightBumper().onTrue(new Score().withTimeout(1).andThen(new ZeroTusk()).andThen(new MoveToPosition(0)).andThen(new ZeroElevator()));
 
         driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
-        driver.b().onTrue(new Score()); // Eject (AKA Score)
+        driver.b().onTrue(new Score().withTimeout(1)); // Eject (AKA Score)
 
         driver.x().onTrue(endEffector.runOnce(() -> endEffector.togglePassive()));
 
@@ -237,26 +241,27 @@ public class RobotContainer {
         // Processor
         operator.x().and(()->operator.leftBumper().getAsBoolean())
             .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0])
-            .andThen(new TuskMoveToPosition(Constants.EndEffector.PROCESSOR_TUSK_POSITION)));
+            .alongWith(new TuskMoveToPosition(Constants.EndEffector.PROCESSOR_TUSK_POSITION)));
 
-        // Algae High
+        // Algae Low
         operator.a().and(()->operator.leftBumper().getAsBoolean())
             .onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
-            // .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]))
+            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]))
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
             .andThen(new IntakeAlgae())); // add zero elevator and tusk
 
-        // Algae Low
+        // Algae High
         operator.b().and(()->operator.leftBumper().getAsBoolean())
             .onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
-            // .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[2]))
+            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[2]))
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
             .andThen(new IntakeAlgae())); // add zero elevator and tusk
         
         // Barge
         operator.y().and(()->operator.leftBumper().getAsBoolean())
-            .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3])
-            .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION)));
+            .onTrue(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION)
+            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3])
+            .alongWith(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION))));
         
         // Zero ET
         operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()));

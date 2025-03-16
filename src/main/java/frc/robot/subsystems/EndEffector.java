@@ -21,6 +21,7 @@ public class EndEffector extends SubsystemBase
     private Canandcolor backCanandcolor;
     
     private boolean passiveOn;
+    private boolean algaeIn;
     private double desiredPosition;
     
     private EndEffector ()
@@ -34,6 +35,7 @@ public class EndEffector extends SubsystemBase
 
         passiveOn = true;
         desiredPosition = 0;
+        algaeIn = false;
     }
 
     private void config ()
@@ -176,6 +178,16 @@ public class EndEffector extends SubsystemBase
     public boolean getPassive ()
     {
         return passiveOn;
+    }
+
+    public void setAlgaeIn(boolean val)
+    {
+        algaeIn = val;
+    }
+
+    public boolean algaeIn ()
+    {
+        return algaeIn;
     }
 
     public static EndEffector getInstance ()

@@ -302,7 +302,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         );
         // LimelightHelpers.SetIMUMode(Constants.Vision.kCamera1Name);
         LimelightHelpers.PoseEstimate EELimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera1Name);
-        LimelightHelpers.PoseEstimate intakeLimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera2Name);
+        LimelightHelpers.PoseEstimate intakeLimelightEstimate = null; //LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Vision.kCamera2Name);
 
 
        // Only run vision updates if we see a tag

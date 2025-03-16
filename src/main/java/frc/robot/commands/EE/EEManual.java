@@ -41,6 +41,10 @@ public class EEManual extends Command {
         {
             EndEffector.getInstance().setMainSpeed( 0);
         }
+        else if (EndEffector.getInstance().algaeIn())
+        {
+            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.ALGAE_HOLD_SPEED);
+        }
         else
         {
             EndEffector.getInstance().setMainSpeed(

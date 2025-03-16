@@ -15,6 +15,10 @@ public class TuskMoveToPosition extends Command {
 
     public void execute() {
         EndEffector.getInstance().moveToPosition(position);
+        if (EndEffector.getInstance().algaeIn())
+        {
+            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.ALGAE_HOLD_SPEED);
+        }
     }
 
     public boolean isFinished() {

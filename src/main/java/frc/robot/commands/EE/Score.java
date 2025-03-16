@@ -11,7 +11,9 @@ public class Score extends Command {
     }
 
     public void execute () {
-        EndEffector.getInstance().setMainSpeed(Constants.EndEffector.OUTTAKE_SPEED);
+        EndEffector.getInstance().setMainSpeed(
+            EndEffector.getInstance().algaeIn() ? 
+            Constants.EndEffector.ALGAE_SCORE_SPEED : Constants.EndEffector.CORAL_SCORE_SPEED);
     }
 
     public boolean isFinished () {
@@ -21,5 +23,6 @@ public class Score extends Command {
     public void end (boolean interrupted) {
         EndEffector.getInstance().setMainSpeed(0);
         EndEffector.getInstance().setPassive(true);
+        EndEffector.getInstance().setAlgaeIn(false);
     }
 }
