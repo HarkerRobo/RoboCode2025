@@ -15,10 +15,12 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.util.FlippingUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -269,7 +271,10 @@ public class RobotContainer {
         // Zero DT
         operator.button(7).onTrue(
             drivetrain.runOnce(() -> {System.out.println("home"); drivetrain.seedFieldCentric();})
-            .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
+            .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(
+                (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) ? 
+                FlippingUtil.flipFieldPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))) : 
+                new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
         
     }
 
