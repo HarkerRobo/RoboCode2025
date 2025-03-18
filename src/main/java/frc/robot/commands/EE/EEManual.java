@@ -3,11 +3,16 @@ package frc.robot.commands.EE;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.EndEffector;
+import harkerrobolib.util.MathUtil;
 
 public class EEManual extends Command {
+    private boolean holdPos;
+
     public EEManual () {
         addRequirements(EndEffector.getInstance());
+        holdPos = false;
     }
 
     public void execute () {
@@ -17,14 +22,17 @@ public class EEManual extends Command {
 
     private void runTusk() {
         if (RobotContainer.getInstance().getDriver().getRightDPadState()) {
-            EndEffector.getInstance().setTuskPower(0.15);
+            EndEffector.getInstance().setTuskVoltage(Constants.EndEffector.kG + 0.5);
+            holdPos = true;
         }
         else if (RobotContainer.getInstance().getDriver().getLeftDPadState())
         {
-            EndEffector.getInstance().setTuskPower(-0.15);
+            EndEffector.getInstance().setTuskVoltage(Constants.EndEffector.kG - 0.5);
+            holdPos = true;
         }
-        else {
-            EndEffector.getInstance().setTuskPower(0);
+        else if (holdPos) {
+            EndEffector.getInstance().moveToPosition(EndEffector.getInstance().getTuskPosition());
+            holdPos = false;
         }
     }
 
@@ -57,10 +65,5 @@ public class EEManual extends Command {
     public boolean isFinished ()
     {
         return false;
-    }
-
-    public void end (boolean interrupted)
-    {
-        EndEffector.getInstance().setMainSpeed(0);
     }
 }

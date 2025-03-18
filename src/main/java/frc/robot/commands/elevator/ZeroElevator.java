@@ -18,8 +18,8 @@ public class ZeroElevator extends Command {
     }
 
     public void end(boolean interrupted) {
-        Elevator.getInstance().setVoltage(0);
         Elevator.getInstance().setSensorPosition(0);
+        Elevator.getInstance().moveToPosition(0);
     }
 
 }

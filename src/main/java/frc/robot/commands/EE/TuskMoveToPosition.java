@@ -27,7 +27,6 @@ public class TuskMoveToPosition extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        EndEffector.getInstance().setTuskVoltage(0);
     }
 
 }

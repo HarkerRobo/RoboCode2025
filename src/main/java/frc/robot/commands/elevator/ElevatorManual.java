@@ -31,9 +31,4 @@ public class ElevatorManual extends Command {
     public boolean isFinished() {
         return false;
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        Elevator.getInstance().setElevatorPower(0);
-    }
 }

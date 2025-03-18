@@ -185,6 +185,11 @@ public class Elevator extends SubsystemBase
         return master.getStatorCurrent().getValueAsDouble() >= Constants.Elevator.ELEVATOR_STALLING_CURRENT;
     }
 
+    public boolean isExtended()
+    {
+        return getPosition() > Constants.Elevator.ELEVATOR_EXTENDED_HIGHT;
+    }
+
     public static Elevator getInstance() 
     {
         if (instance == null) {

@@ -80,9 +80,6 @@ public class Constants {
         /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
         public static final Rotation2d kRedAlliancePerspectiveRotation = Rotation2d.k180deg;
 
-        public static final double MAX_TRANSLATION_SPEED = 1.0; // m/s
-        public static final double MAX_ROTATION_SPEED = 1.0; // rad/s
-
         public static final double xAlignKP = 1.0; // Forward/backward control gain
         public static final double xAlignKI = 0; // Integral gain
         public static final double xAlignKD = 0; // Derivative gain for smoothing
@@ -265,9 +262,11 @@ public class Constants {
 
         public static final double ELEVATOR_STALLING_CURRENT = 50;
 
+        public static final double ELEVATOR_EXTENDED_HIGHT = 3;
+
         public static final double ELEVATOR_GEAR_RATIO = 6.22;
 
-        public static final double[] CORAL_HEIGHTS = { 0, 1.45, 2.85, 4.82 }; // rotations
+        public static final double[] CORAL_HEIGHTS = { 0.5, 1.45, 2.85, 4.82 }; // rotations
         public static final double[] ALGAE_HEIGHTS = { 0, 0.856, 2.25, 4.82};
 
 
@@ -302,8 +301,8 @@ public class Constants {
 
         public static final double ALGAE_HOLD_SPEED = 0.1;
 
-        public static final double TUSK_STALLING_CURRENT = 50;
-        public static final double MAIN_STALLING_CURRENT = 50;
+        public static final double TUSK_STALLING_CURRENT = 30;
+        public static final double MAIN_STALLING_CURRENT = 30;
 
         public static final double TUSK_ZERO_SPEED = -0.15;
         public static final double TUSK_GEAR_RATIO = 62.5;
@@ -313,12 +312,13 @@ public class Constants {
         public static final double GROUND_TUSK_POSITION = 0.566; // TODO
         public static final double PROCESSOR_TUSK_POSITION = 0.45; // TODO
         public static final double BARGE_TUSK_POSITION = 0.05;
+        public static final double ALGAE_HOLD_POSITION = 0.22;
 
-        public static final double kP = 55.0;
+        public static final double kP = 55.0; // TODO increase
         public static final double kI = 0;
-        public static final double kD = 0;
+        public static final double kD = 0; // add?
 
-        public static final double kG = 5.0;
+        public static final double kG = 0;
     }
 
     public static final class Climb {

@@ -17,6 +17,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.FlippingUtil;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -66,12 +67,13 @@ public class RobotContainer {
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDeadband(MaxSpeed * 0.02).withRotationalDeadband(MaxAngularRate * 0.01) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-            // .withMaximumAcceleration(MaxSpeed * 0.5)
-            // .withMaximumAngularAcceleration(MaxAngularRate * 0.5);
-    private final SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric()
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
+    private final SlewRateLimiter driveLimiter = new SlewRateLimiter(MaxSpeed * 0.5);
+    private final SlewRateLimiter rotLimiter = new SlewRateLimiter(MaxAngularRate * 0.5);
+    private final SlewRateLimiter driveLimiterExtended = new SlewRateLimiter(MaxSpeedSlow * 0.5);
+    private final SlewRateLimiter rotLimiterExtended = new SlewRateLimiter(MaxAngularRateSlow * 0.5);
 
     private final Telemetry logger = new Telemetry();
 
@@ -106,52 +108,11 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-
-
         elevator.setDefaultCommand(new ElevatorManual());
 
         endEffector.setDefaultCommand(new EEManual());
 
         climb.setDefaultCommand(new ClimbManual());
-
-        // -- old commands before we changed them --
-        // reset the field-centric heading on button b press
-        // driver.b().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
-        // .andThen(drivetrain.runOnce(() -> drivetrain.resetPose(new Pose2d(new Translation2d(3.20992500, 4.03309382), new Rotation2d(0))))));
-        // // driver.rightBumper().onTrue(new Score()
-        // //         .andThen(new MoveToPosition(0)
-        // //                 .andThen(new ZeroElevator())));
-
-        // // driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
-
-        // // driver.x().onTrue(new ScoreManual().raceWith(new WaitCommand(0.5))
-        // //         .andThen(new ScoreManual().alongWith(elevator.run( () -> elevator.setVoltage(1.2)))).raceWith(new WaitCommand(2))
-        // //         .andThen(new ZeroElevator()));
-
-        // // driver.y().onTrue(new IntakeCoralActive());
-
-        // // driver.leftBumper().onTrue(new IntakeAlgae());
-
-        // // operator.x().onTrue(new MoveToPosition(0).andThen(new ZeroElevator()));
-        // // operator.y().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
-        // // operator.b().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
-        // // operator.a().onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]));
-
-        // // operator.leftBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0]));
-        // // operator.rightBumper().onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]));
-
-        // // // operator.getLeftDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Left"));
-        // // // operator.getUpDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Algae"));
-        // // // operator.getRightDPad().whileTrue(new DriveToPoseCommand(drivetrain, "Right"));
-
-
-
-        // Run SysId routines when holding back/start and X/Y.
-        // Note that each routine should be run exactly once in a single log.
-        // driver.back().and(driver.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        // driver.back().and(driver.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        // driver.start().and(driver.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        // driver.start().and(driver.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         drivetrain.registerTelemetry(logger::telemeterizeDrive);
         logger.telemeterize(elevator, endEffector);
@@ -164,10 +125,13 @@ public class RobotContainer {
                 drivetrain.applyRequest(() -> {
                     
                     boolean slow = driver.getLeftTriggerAxis() > 0.5;
-                    return drive.withVelocityX(-driver.getLeftY() * (slow ? MaxSpeedSlow : MaxSpeed)) // Drive forward with negative Y (forward)
-                                .withVelocityY(-driver.getLeftX() * (slow ? MaxSpeedSlow : MaxSpeed)) // Drive left with negative X (left)
-                                .withRotationalRate(-driver.getRightX()-driver.getRightX() * (slow ? MaxAngularRateSlow : MaxAngularRate)) // Drive counterclockwise with negative X (left)
-                                .withDeadband(slow ? MaxSpeedSlow * 0.02 : MaxSpeed * 0.01);
+                    double velocityX = -driver.getLeftY() * (slow ? MaxSpeedSlow : MaxSpeed);
+                    double velocityY = -driver.getLeftX() * (slow ? MaxSpeedSlow : MaxSpeed);
+                    double rotRate = -driver.getRightX()-driver.getRightX() * (slow ? MaxAngularRateSlow : MaxAngularRate);
+
+                    return drive.withVelocityX(elevator.isExtended() ? driveLimiterExtended.calculate(velocityX) : driveLimiter.calculate(velocityX)) // Drive forward with negative Y (forward)
+                                .withVelocityY(elevator.isExtended() ? driveLimiterExtended.calculate(velocityY) : driveLimiter.calculate(velocityY)) // Drive left with negative X (left)
+                                .withRotationalRate(elevator.isExtended() ? rotLimiterExtended.calculate(rotRate) : rotLimiter.calculate(rotRate));// Drive counterclockwise with negative X (left)
                 }
         ));
 
@@ -199,9 +163,14 @@ public class RobotContainer {
         driver.leftBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
             .andThen(new MoveToPosition(0))
             .andThen(new TuskMoveToPosition(Constants.EndEffector.GROUND_TUSK_POSITION))
-            .andThen(new IntakeAlgae()));
+            .andThen(new IntakeAlgae())
+            .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)));
         // Score, wait 1s, zero ET
-        driver.rightBumper().onTrue(new Score().withTimeout(0.5).andThen(new TuskMoveToPosition(0)).andThen(new ZeroTusk()).andThen(new MoveToPosition(0.5)).andThen(new ZeroElevator()));
+        driver.rightBumper().onTrue(
+            new Score().withTimeout(0.5)
+            .andThen(new TuskMoveToPosition(0))
+            .andThen(new ZeroTusk())
+            .andThen(new MoveToPosition(0)));
 
         driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
@@ -219,7 +188,8 @@ public class RobotContainer {
 
         // L1
         operator.x().and(()->!operator.leftBumper().getAsBoolean())
-            .onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])
+            .onTrue(new MoveToPosition(0)
+            .andThen(new Score().withTimeout(1).alongWith(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])))
             );
 
         // L4
@@ -250,20 +220,26 @@ public class RobotContainer {
             .onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
             .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]))
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
-            .andThen(new IntakeAlgae())); // add zero elevator and tusk
+            .andThen(new IntakeAlgae())
+            .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION))
+            .andThen(new MoveToPosition(0)));
 
         // Algae High
         operator.b().and(()->operator.leftBumper().getAsBoolean())
             .onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
             .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[2]))
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
-            .andThen(new IntakeAlgae())); // add zero elevator and tusk
+            .andThen(new IntakeAlgae())
+            .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION))
+            .andThen(new MoveToPosition(0)));
         
         // Barge
         operator.y().and(()->operator.leftBumper().getAsBoolean())
             .onTrue(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION)
-            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3])
-            .alongWith(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION))));
+            .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION))
+            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3] * 0.5)) // halfway up
+            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3])) // then scores while moving rest of the way
+            .alongWith(new Score().withTimeout(1)));
         
         // Zero ET
         operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()));
