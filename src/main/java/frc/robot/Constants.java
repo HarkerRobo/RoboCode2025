@@ -258,7 +258,7 @@ public class Constants {
 
         public static final double STATOR_CURRENT_LIMIT = 90;
         public static final double SUPPLY_CURRENT_LIMIT = 90;
-        public static final double FORWARD_SOFT_LIMIT = 4.75; // otations
+        public static final double FORWARD_SOFT_LIMIT = 4.82; // otations
         public static final double REVERSE_SOFT_LIMIT = -0.1; // rotations
 
         public static final double ZERO_SPEED = -0.1;
@@ -267,8 +267,8 @@ public class Constants {
 
         public static final double ELEVATOR_GEAR_RATIO = 6.22;
 
-        public static final double[] CORAL_HEIGHTS = { 0, 1.45, 2.85, 4.75 }; // rotations
-        public static final double[] ALGAE_HEIGHTS = { 0, 0.856, 2.25, 4.75};
+        public static final double[] CORAL_HEIGHTS = { 0, 1.45, 2.85, 4.82 }; // rotations
+        public static final double[] ALGAE_HEIGHTS = { 0, 0.856, 2.25, 4.82};
 
 
         public static final double MM_CRUISE_VELOCITY = 40; // rps
@@ -293,7 +293,7 @@ public class Constants {
 
         public static final double INTAKE_ALGAE_SPEED = 0.2;
         public static final double INTAKE_CORAL_SPEED = -0.2;
-        public static final double INTAKE_CORAL_SLOW_SPEED = -0.1;
+        public static final double INTAKE_CORAL_SLOW_SPEED = -0.15;
         
         public static final double CORAL_SCORE_SPEED = -0.2;
         public static final double ALGAE_SCORE_SPEED = -1.0;
@@ -311,14 +311,14 @@ public class Constants {
 
         public static final double REEF_TUSK_POSITION = 0.243; // TODO
         public static final double GROUND_TUSK_POSITION = 0.566; // TODO
-        public static final double PROCESSOR_TUSK_POSITION = 0.346; // TODO
+        public static final double PROCESSOR_TUSK_POSITION = 0.45; // TODO
         public static final double BARGE_TUSK_POSITION = 0.05;
 
-        public static final double kP = 30.0;
+        public static final double kP = 55.0;
         public static final double kI = 0;
         public static final double kD = 0;
 
-        public static final double kG = 0.7;
+        public static final double kG = 5.0;
     }
 
     public static final class Climb {

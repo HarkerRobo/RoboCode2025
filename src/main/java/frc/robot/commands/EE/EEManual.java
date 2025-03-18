@@ -17,11 +17,11 @@ public class EEManual extends Command {
 
     private void runTusk() {
         if (RobotContainer.getInstance().getDriver().getRightDPadState()) {
-            EndEffector.getInstance().setTuskPower(0.1);
+            EndEffector.getInstance().setTuskPower(0.15);
         }
         else if (RobotContainer.getInstance().getDriver().getLeftDPadState())
         {
-            EndEffector.getInstance().setTuskPower(-0.1);
+            EndEffector.getInstance().setTuskPower(-0.15);
         }
         else {
             EndEffector.getInstance().setTuskPower(0);

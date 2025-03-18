@@ -94,7 +94,7 @@ public class RobotContainer {
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
         NamedCommands.registerCommand("ElevatorL4",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
-        NamedCommands.registerCommand("Score", new Score());
+        NamedCommands.registerCommand("Score", new Score().withTimeout(1));
         NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0));
 
         autoChooser = AutoBuilder.buildAutoChooser("auton1");
@@ -167,7 +167,7 @@ public class RobotContainer {
                     return drive.withVelocityX(-driver.getLeftY() * (slow ? MaxSpeedSlow : MaxSpeed)) // Drive forward with negative Y (forward)
                                 .withVelocityY(-driver.getLeftX() * (slow ? MaxSpeedSlow : MaxSpeed)) // Drive left with negative X (left)
                                 .withRotationalRate(-driver.getRightX()-driver.getRightX() * (slow ? MaxAngularRateSlow : MaxAngularRate)) // Drive counterclockwise with negative X (left)
-                                .withDeadband(slow ? MaxSpeedSlow * 0.03 : MaxSpeed * 0.05);
+                                .withDeadband(slow ? MaxSpeedSlow * 0.02 : MaxSpeed * 0.01);
                 }
         ));
 
@@ -201,7 +201,7 @@ public class RobotContainer {
             .andThen(new TuskMoveToPosition(Constants.EndEffector.GROUND_TUSK_POSITION))
             .andThen(new IntakeAlgae()));
         // Score, wait 1s, zero ET
-        driver.rightBumper().onTrue(new Score().withTimeout(1).andThen(new ZeroTusk()).andThen(new MoveToPosition(0)).andThen(new ZeroElevator()));
+        driver.rightBumper().onTrue(new Score().withTimeout(0.5).andThen(new TuskMoveToPosition(0)).andThen(new ZeroTusk()).andThen(new MoveToPosition(0.5)).andThen(new ZeroElevator()));
 
         driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
