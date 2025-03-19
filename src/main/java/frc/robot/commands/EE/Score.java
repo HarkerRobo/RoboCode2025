@@ -1,13 +1,22 @@
 package frc.robot.commands.EE;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.EndEffector;
 
 public class Score extends Command {
 
+    Timer timer;
     public Score () {
+        timer = new Timer();
+        timer.start();
         addRequirements(EndEffector.getInstance());
+    }
+
+    public void initialize ()
+    {
+        timer.reset();
     }
 
     public void execute () {
@@ -17,7 +26,8 @@ public class Score extends Command {
     }
 
     public boolean isFinished () {
-        return false; // return (!EndEffector.getInstance().isFrontTriggered() && !EndEffector.getInstance().isBackTriggered());
+        return timer.hasElapsed(1);
+        // return false; // return (!EndEffector.getInstance().isFrontTriggered() && !EndEffector.getInstance().isBackTriggered());
     }
 
     public void end (boolean interrupted) {

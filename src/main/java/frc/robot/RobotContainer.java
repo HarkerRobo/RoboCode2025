@@ -70,10 +70,12 @@ public class RobotContainer {
             .withDeadband(MaxSpeed * 0.02).withRotationalDeadband(MaxAngularRate * 0.01) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
-    private final SlewRateLimiter driveLimiter = new SlewRateLimiter(MaxSpeed * 0.5);
-    private final SlewRateLimiter rotLimiter = new SlewRateLimiter(MaxAngularRate * 0.5);
-    private final SlewRateLimiter driveLimiterExtended = new SlewRateLimiter(MaxSpeedSlow * 0.5);
-    private final SlewRateLimiter rotLimiterExtended = new SlewRateLimiter(MaxAngularRateSlow * 0.5);
+    private final SlewRateLimiter xLimiter = new SlewRateLimiter(MaxSpeed*1.5);
+    private final SlewRateLimiter yLimiter = new SlewRateLimiter(MaxSpeed*1.5);
+    private final SlewRateLimiter rotLimiter = new SlewRateLimiter(MaxAngularRate*1.5);
+    private final SlewRateLimiter xLimiterExtended = new SlewRateLimiter(MaxSpeedSlow*1.5);
+    private final SlewRateLimiter yLimiterExtended = new SlewRateLimiter(MaxSpeedSlow*1.5);
+    private final SlewRateLimiter rotLimiterExtended = new SlewRateLimiter(MaxAngularRateSlow*1.5);
 
     private final Telemetry logger = new Telemetry();
 
@@ -127,10 +129,10 @@ public class RobotContainer {
                     boolean slow = driver.getLeftTriggerAxis() > 0.5;
                     double velocityX = -driver.getLeftY() * (slow ? MaxSpeedSlow : MaxSpeed);
                     double velocityY = -driver.getLeftX() * (slow ? MaxSpeedSlow : MaxSpeed);
-                    double rotRate = -driver.getRightX()-driver.getRightX() * (slow ? MaxAngularRateSlow : MaxAngularRate);
+                    double rotRate = -driver.getRightX() * (slow ? MaxAngularRateSlow : MaxAngularRate);
 
-                    return drive.withVelocityX(elevator.isExtended() ? driveLimiterExtended.calculate(velocityX) : driveLimiter.calculate(velocityX)) // Drive forward with negative Y (forward)
-                                .withVelocityY(elevator.isExtended() ? driveLimiterExtended.calculate(velocityY) : driveLimiter.calculate(velocityY)) // Drive left with negative X (left)
+                    return drive.withVelocityX(elevator.isExtended() ? xLimiterExtended.calculate(velocityX) : xLimiter.calculate(velocityX)) // Drive forward with negative Y (forward)
+                                .withVelocityY(elevator.isExtended() ? yLimiterExtended.calculate(velocityY) : yLimiter.calculate(velocityY)) // Drive left with negative X (left)
                                 .withRotationalRate(elevator.isExtended() ? rotLimiterExtended.calculate(rotRate) : rotLimiter.calculate(rotRate));// Drive counterclockwise with negative X (left)
                 }
         ));
@@ -167,14 +169,15 @@ public class RobotContainer {
             .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)));
         // Score, wait 1s, zero ET
         driver.rightBumper().onTrue(
-            new Score().withTimeout(0.5)
+            new Score()//.withTimeout(0.5)
             .andThen(new TuskMoveToPosition(0))
             .andThen(new ZeroTusk())
             .andThen(new MoveToPosition(0)));
 
         driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
-        driver.b().onTrue(new Score().withTimeout(1)); // Eject (AKA Score)
+        driver.b().onTrue(new Score()//.withTimeout(1)); // Eject (AKA Score)
+        );
 
         driver.x().onTrue(endEffector.runOnce(() -> endEffector.togglePassive()));
 
@@ -189,7 +192,8 @@ public class RobotContainer {
         // L1
         operator.x().and(()->!operator.leftBumper().getAsBoolean())
             .onTrue(new MoveToPosition(0)
-            .andThen(new Score().withTimeout(1).alongWith(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])))
+            .andThen(new Score().withTimeout(1))
+            .andThen(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0]))
             );
 
         // L4
@@ -213,7 +217,8 @@ public class RobotContainer {
         // Processor
         operator.x().and(()->operator.leftBumper().getAsBoolean())
             .onTrue(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[0])
-            .alongWith(new TuskMoveToPosition(Constants.EndEffector.PROCESSOR_TUSK_POSITION)));
+            .andThen(new TuskMoveToPosition(Constants.EndEffector.PROCESSOR_TUSK_POSITION))
+            );
 
         // Algae Low
         operator.a().and(()->operator.leftBumper().getAsBoolean())
@@ -235,11 +240,12 @@ public class RobotContainer {
         
         // Barge
         operator.y().and(()->operator.leftBumper().getAsBoolean())
-            .onTrue(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION)
-            .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION))
-            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3] * 0.5)) // halfway up
+            .onTrue(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION)
+            // .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3] * 0.75))
+            // .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION))
             .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3])) // then scores while moving rest of the way
-            .alongWith(new Score().withTimeout(1)));
+            .andThen(new Score())
+            );
         
         // Zero ET
         operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()));

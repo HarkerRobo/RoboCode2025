@@ -301,17 +301,17 @@ public class Constants {
 
         public static final double ALGAE_HOLD_SPEED = 0.1;
 
-        public static final double TUSK_STALLING_CURRENT = 30;
-        public static final double MAIN_STALLING_CURRENT = 30;
+        public static final double TUSK_STALLING_CURRENT = 50;
+        public static final double MAIN_STALLING_CURRENT = 50;
 
         public static final double TUSK_ZERO_SPEED = -0.15;
         public static final double TUSK_GEAR_RATIO = 62.5;
         public static final double TUSK_MAX_ERROR = 0.1;
 
         public static final double REEF_TUSK_POSITION = 0.243; // TODO
-        public static final double GROUND_TUSK_POSITION = 0.566; // TODO
-        public static final double PROCESSOR_TUSK_POSITION = 0.45; // TODO
-        public static final double BARGE_TUSK_POSITION = 0.05;
+        public static final double GROUND_TUSK_POSITION = 0.466; // TODO
+        public static final double PROCESSOR_TUSK_POSITION = 0.35; // TODO
+        public static final double BARGE_TUSK_POSITION = 0.15;
         public static final double ALGAE_HOLD_POSITION = 0.22;
 
         public static final double kP = 55.0; // TODO increase
