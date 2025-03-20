@@ -66,7 +66,7 @@ public class Constants {
         // public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1,1.0, 0.1);
 
         public static final PathConstraints constraints = new PathConstraints(
-        2.0, 2.0,
+        3.0, 3.0,
             Units.degreesToRadians(360), Units.degreesToRadians(540));
     }
 

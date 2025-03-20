@@ -72,10 +72,10 @@ public class RobotContainer {
 
     private final SlewRateLimiter xLimiter = new SlewRateLimiter(MaxSpeed*1.5);
     private final SlewRateLimiter yLimiter = new SlewRateLimiter(MaxSpeed*1.5);
-    private final SlewRateLimiter rotLimiter = new SlewRateLimiter(MaxAngularRate*1.5);
+    // private final SlewRateLimiter rotLimiter = new SlewRateLimiter(MaxAngularRate*2);
     private final SlewRateLimiter xLimiterExtended = new SlewRateLimiter(MaxSpeedSlow*1.5);
     private final SlewRateLimiter yLimiterExtended = new SlewRateLimiter(MaxSpeedSlow*1.5);
-    private final SlewRateLimiter rotLimiterExtended = new SlewRateLimiter(MaxAngularRateSlow*1.5);
+    // private final SlewRateLimiter rotLimiterExtended = new SlewRateLimiter(MaxAngularRateSlow*1.5);
 
     private final Telemetry logger = new Telemetry();
 
@@ -101,7 +101,11 @@ public class RobotContainer {
         NamedCommands.registerCommand("Score", new Score().withTimeout(1));
         NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0));
 
-        autoChooser = AutoBuilder.buildAutoChooser("auton1");
+        autoChooser = new SendableChooser<>();
+        autoChooser.setDefaultOption("auton1", AutoBuilder.buildAuto("auton1"));
+        autoChooser.addOption("auton1", AutoBuilder.buildAuto("auton1"));
+        autoChooser.addOption("auton2", AutoBuilder.buildAuto("auton2"));
+        autoChooser.addOption("test", AutoBuilder.buildAuto("test"));
         SmartDashboard.putData("Auton Chooser", autoChooser);
 
         SignalLogger.start();
@@ -133,7 +137,7 @@ public class RobotContainer {
 
                     return drive.withVelocityX(elevator.isExtended() ? xLimiterExtended.calculate(velocityX) : xLimiter.calculate(velocityX)) // Drive forward with negative Y (forward)
                                 .withVelocityY(elevator.isExtended() ? yLimiterExtended.calculate(velocityY) : yLimiter.calculate(velocityY)) // Drive left with negative X (left)
-                                .withRotationalRate(elevator.isExtended() ? rotLimiterExtended.calculate(rotRate) : rotLimiter.calculate(rotRate));// Drive counterclockwise with negative X (left)
+                                .withRotationalRate(rotRate);// Drive counterclockwise with negative X (left)
                 }
         ));
 
@@ -170,6 +174,7 @@ public class RobotContainer {
         // Score, wait 1s, zero ET
         driver.rightBumper().onTrue(
             new Score()//.withTimeout(0.5)
+            .andThen(new WaitCommand(0.5)) // TODO TEST
             .andThen(new TuskMoveToPosition(0))
             .andThen(new ZeroTusk())
             .andThen(new MoveToPosition(0)));
@@ -192,8 +197,8 @@ public class RobotContainer {
         // L1
         operator.x().and(()->!operator.leftBumper().getAsBoolean())
             .onTrue(new MoveToPosition(0)
-            .andThen(new Score().withTimeout(1))
-            .andThen(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0]))
+            .andThen(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])
+            .alongWith(new Score()))
             );
 
         // L4
@@ -243,8 +248,8 @@ public class RobotContainer {
             .onTrue(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION)
             // .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3] * 0.75))
             // .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION))
-            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3])) // then scores while moving rest of the way
-            .andThen(new Score())
+            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3]) // then scores while moving rest of the way
+            .alongWith(new Score()))
             );
         
         // Zero ET
