@@ -54,12 +54,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "RC to D"
@@ -94,12 +88,6 @@
           "type": "path",
           "data": {
             "pathName": "D to RC"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
           }
         },
         {

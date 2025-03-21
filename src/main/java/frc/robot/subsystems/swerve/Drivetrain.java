@@ -217,9 +217,9 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
                                     .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())),
                     new PPHolonomicDriveController(
                             // PID constants for translation
-                            new PIDConstants(10, 0, 0),
+                            new PIDConstants(25, 0, 0),//(50, 12, 0),
                             // PID constants for rotation
-                            new PIDConstants(7, 0, 0)),
+                            new PIDConstants(15, 0, 0)),//(30, 5, 0)),
                     config,
                     // Assume the path needs to be flipped for Red vs Blue, this is normally the
                     // case
@@ -315,7 +315,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             SmartDashboard.putNumber("Drive/bestEstimateY", bestEstimate.pose.getY());
             SmartDashboard.putNumber("Drive/bestEstimateYaw", bestEstimate.pose.getRotation().getDegrees());
             if (bestEstimate != null && bestEstimate.tagCount > 0) {
-                if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist < 2.0 && bestEstimate.rawFiducials[0].ambiguity < 0.5)) {
+                if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist < 3.0 && bestEstimate.rawFiducials[0].ambiguity < 0.6)) {
                     addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
                 }
             }

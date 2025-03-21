@@ -54,6 +54,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoralActive"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 1.0
@@ -94,6 +100,12 @@
           "type": "path",
           "data": {
             "pathName": "K to LC"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoralActive"
           }
         },
         {

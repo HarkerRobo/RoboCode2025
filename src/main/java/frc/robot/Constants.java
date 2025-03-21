@@ -66,7 +66,7 @@ public class Constants {
         // public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1,1.0, 0.1);
 
         public static final PathConstraints constraints = new PathConstraints(
-        3.0, 3.0,
+        3.0, 2.0,
             Units.degreesToRadians(360), Units.degreesToRadians(540));
     }
 
@@ -299,7 +299,7 @@ public class Constants {
 
         public static final double REVERSE_INTAKE_SPEED = 0.1;
 
-        public static final double ALGAE_HOLD_SPEED = 0.1;
+        public static final double ALGAE_HOLD_SPEED = 0.15;
 
         public static final double TUSK_STALLING_CURRENT = 50;
         public static final double MAIN_STALLING_CURRENT = 50;
@@ -311,7 +311,8 @@ public class Constants {
         public static final double REEF_TUSK_POSITION = 0.243; // TODO
         public static final double GROUND_TUSK_POSITION = 0.466; // TODO
         public static final double PROCESSOR_TUSK_POSITION = 0.35; // TODO
-        public static final double BARGE_TUSK_POSITION = 0.15;
+        public static final double BARGE_TUSK_POSITION1 = 0.15;
+        public static final double BARGE_TUSK_POSITION2 = 0.07;
         public static final double ALGAE_HOLD_POSITION = 0.22;
 
         public static final double kP = 55.0; // TODO increase

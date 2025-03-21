@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.EE.IntakeAlgae;
+import frc.robot.commands.EE.IntakeCoralActive;
 import frc.robot.commands.EE.EEManual;
 import frc.robot.commands.EE.Score;
 import frc.robot.commands.EE.TuskMoveToPosition;
@@ -100,12 +101,13 @@ public class RobotContainer {
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
         NamedCommands.registerCommand("Score", new Score().withTimeout(1));
         NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0));
+        NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive());
 
-        autoChooser = new SendableChooser<>();
-        autoChooser.setDefaultOption("auton1", AutoBuilder.buildAuto("auton1"));
-        autoChooser.addOption("auton1", AutoBuilder.buildAuto("auton1"));
-        autoChooser.addOption("auton2", AutoBuilder.buildAuto("auton2"));
-        autoChooser.addOption("test", AutoBuilder.buildAuto("test"));
+        autoChooser = AutoBuilder.buildAutoChooser();
+        // autoChooser.setDefaultOption("auton1", AutoBuilder.buildAuto("auton1"));
+        // autoChooser.addOption("auton1", AutoBuilder.buildAuto("auton1"));
+        // autoChooser.addOption("auton2", AutoBuilder.buildAuto("auton2"));
+        // autoChooser.addOption("test", AutoBuilder.buildAuto("test"));
         SmartDashboard.putData("Auton Chooser", autoChooser);
 
         SignalLogger.start();
@@ -245,11 +247,13 @@ public class RobotContainer {
         
         // Barge
         operator.y().and(()->operator.leftBumper().getAsBoolean())
-            .onTrue(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION)
+            .onTrue(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION1)
             // .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3] * 0.75))
             // .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION))
-            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3]) // then scores while moving rest of the way
-            .alongWith(new Score()))
+            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3])) // then scores while moving rest of the way
+            .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION2))
+            .andThen(new Score())
+            .andThen(new MoveToPosition(0))
             );
         
         // Zero ET
