@@ -54,6 +54,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoralActive"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "RC to D"
@@ -88,6 +94,12 @@
           "type": "path",
           "data": {
             "pathName": "D to RC"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoralActive"
           }
         },
         {

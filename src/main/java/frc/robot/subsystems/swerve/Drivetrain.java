@@ -217,9 +217,9 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
                                     .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())),
                     new PPHolonomicDriveController(
                             // PID constants for translation
-                            new PIDConstants(25, 0, 0),//(50, 12, 0),
+                            new PIDConstants(25, 0, 0),//(50, 12, 0), // increase kP and kD?
                             // PID constants for rotation
-                            new PIDConstants(15, 0, 0)),//(30, 5, 0)),
+                            new PIDConstants(15, 0, 0)),//(30, 5, 0)), // increase kP and kD?
                     config,
                     // Assume the path needs to be flipped for Red vs Blue, this is normally the
                     // case
@@ -315,18 +315,12 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             SmartDashboard.putNumber("Drive/bestEstimateY", bestEstimate.pose.getY());
             SmartDashboard.putNumber("Drive/bestEstimateYaw", bestEstimate.pose.getRotation().getDegrees());
             if (bestEstimate != null && bestEstimate.tagCount > 0) {
-                if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist < 3.0 && bestEstimate.rawFiducials[0].ambiguity < 0.6)) {
-                    addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
-                }
+                addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
+                // if (bestEstimate.tagCount >= 2 || (bestEstimate.avgTagDist < 3.0 && bestEstimate.rawFiducials[0].ambiguity < 0.6)) {
+                //     addVisionMeasurement(bestEstimate.pose, bestEstimate.timestampSeconds, Constants.Vision.kTagStdDevs);
+                // }
             }
         }
-        // Switch to only one limelight for pose estimation
-        // LimelightHelpers.PoseEstimate lowerLimelightEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.LimelightConstants.lowerLimelightName);
-
-        // if (lowerLimelightEstimate != null && lowerLimelightEstimate.tagCount > 0) {
-        //     m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 0.7));
-        //     m_poseEstimator.addVisionMeasurement(lowerLimelightEstimate.pose, lowerLimelightEstimate.timestampSeconds);
-        // }
 
     }
 

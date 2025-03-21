@@ -311,9 +311,8 @@ public class Constants {
         public static final double REEF_TUSK_POSITION = 0.243; // TODO
         public static final double GROUND_TUSK_POSITION = 0.466; // TODO
         public static final double PROCESSOR_TUSK_POSITION = 0.35; // TODO
-        public static final double BARGE_TUSK_POSITION1 = 0.15;
-        public static final double BARGE_TUSK_POSITION2 = 0.07;
-        public static final double ALGAE_HOLD_POSITION = 0.22;
+        public static final double BARGE_TUSK_POSITION = 0.07;
+        public static final double ALGAE_HOLD_POSITION = 0.15;
 
         public static final double kP = 55.0; // TODO increase
         public static final double kI = 0;

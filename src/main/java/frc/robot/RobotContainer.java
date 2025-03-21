@@ -104,10 +104,6 @@ public class RobotContainer {
         NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive());
 
         autoChooser = AutoBuilder.buildAutoChooser();
-        // autoChooser.setDefaultOption("auton1", AutoBuilder.buildAuto("auton1"));
-        // autoChooser.addOption("auton1", AutoBuilder.buildAuto("auton1"));
-        // autoChooser.addOption("auton2", AutoBuilder.buildAuto("auton2"));
-        // autoChooser.addOption("test", AutoBuilder.buildAuto("test"));
         SmartDashboard.putData("Auton Chooser", autoChooser);
 
         SignalLogger.start();
@@ -175,7 +171,7 @@ public class RobotContainer {
             .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)));
         // Score, wait 1s, zero ET
         driver.rightBumper().onTrue(
-            new Score()//.withTimeout(0.5)
+            new Score()
             .andThen(new WaitCommand(0.5)) // TODO TEST
             .andThen(new TuskMoveToPosition(0))
             .andThen(new ZeroTusk())
@@ -234,6 +230,7 @@ public class RobotContainer {
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
             .andThen(new IntakeAlgae())
             .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION))
+            .andThen(new WaitCommand(0.5)) // TODO
             .andThen(new MoveToPosition(0)));
 
         // Algae High
@@ -243,17 +240,14 @@ public class RobotContainer {
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
             .andThen(new IntakeAlgae())
             .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION))
+            .andThen(new WaitCommand(0.5)) // TODO
             .andThen(new MoveToPosition(0)));
         
         // Barge
         operator.y().and(()->operator.leftBumper().getAsBoolean())
-            .onTrue(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION1)
-            // .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3] * 0.75))
-            // .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION))
-            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3])) // then scores while moving rest of the way
-            .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION2))
-            .andThen(new Score())
-            .andThen(new MoveToPosition(0))
+            .onTrue(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)
+            .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[3]))
+            .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION))
             );
         
         // Zero ET

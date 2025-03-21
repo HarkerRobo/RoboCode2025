@@ -26,8 +26,7 @@ public class Score extends Command {
     }
 
     public boolean isFinished () {
-        return timer.hasElapsed(1);
-        // return false; // return (!EndEffector.getInstance().isFrontTriggered() && !EndEffector.getInstance().isBackTriggered());
+        return EndEffector.getInstance().algaeIn() ? timer.hasElapsed(1) : (!EndEffector.getInstance().isFrontTriggered() && !EndEffector.getInstance().isBackTriggered());
     }
 
     public void end (boolean interrupted) {
