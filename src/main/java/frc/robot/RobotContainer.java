@@ -255,7 +255,7 @@ public class RobotContainer {
             );
         
         // Zero ET
-        operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()).andThen(new IntakeCoralActive()));
+        operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()));
 
         // Zero DT
         operator.button(7).onTrue(
