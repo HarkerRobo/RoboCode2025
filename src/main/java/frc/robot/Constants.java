@@ -238,12 +238,12 @@ public class Constants {
     public static final class Elevator {
         public static final double MAX_ERROR = 0.05; // TODO rotations
 
-        public static final double kP = 10;
+        public static final double kP = 10; //10;
         public static final double kI = 0;
         public static final double kD = 0.2;
 
         public static final double kG = 0.42279;
-        public static final double kV = 0.59985;
+        public static final double kV = 0.4; // 0.59985;
         public static final double kS = 0.19926;
 
         public static final InvertedValue MASTER_INVERTED = InvertedValue.Clockwise_Positive;
@@ -266,8 +266,8 @@ public class Constants {
 
         public static final double ELEVATOR_GEAR_RATIO = 6.22;
 
-        public static final double[] CORAL_HEIGHTS = { 0.5, 1.45, 2.85, 4.82 }; // rotations
-        public static final double[] ALGAE_HEIGHTS = { 0, 0.856, 2.25, 4.82};
+        public static final double[] CORAL_HEIGHTS = { 0.5 + 0.04, 1.45, 2.85, 4.82 }; // rotations
+        public static final double[] ALGAE_HEIGHTS = { 0, 0.856 -0.05, 2.2, 4.82};
 
 
         public static final double MM_CRUISE_VELOCITY = 40; // rps
@@ -291,7 +291,7 @@ public class Constants {
         public static final double PROXIMITY_LIMIT_BACK = 0.08;
 
         public static final double INTAKE_ALGAE_SPEED = 0.2;
-        public static final double INTAKE_CORAL_SPEED = -0.2;
+        public static final double INTAKE_CORAL_SPEED = -0.25;
         public static final double INTAKE_CORAL_SLOW_SPEED = -0.15;
         
         public static final double CORAL_SCORE_SPEED = -0.2;
@@ -308,11 +308,13 @@ public class Constants {
         public static final double TUSK_GEAR_RATIO = 62.5;
         public static final double TUSK_MAX_ERROR = 0.1;
 
-        public static final double REEF_TUSK_POSITION = 0.243; // TODO
+        public static final double REEF_TUSK_POSITION = 0.15; // TODO
         public static final double GROUND_TUSK_POSITION = 0.466; // TODO
-        public static final double PROCESSOR_TUSK_POSITION = 0.35; // TODO
+        public static final double PROCESSOR_TUSK_POSITION = 0.35 - 0.03;
         public static final double BARGE_TUSK_POSITION = 0.07;
         public static final double ALGAE_HOLD_POSITION = 0.15;
+        public static final double TUSK_QUASIZERO_POSITION = 0.02;
+
 
         public static final double kP = 55.0; // TODO increase
         public static final double kI = 0;

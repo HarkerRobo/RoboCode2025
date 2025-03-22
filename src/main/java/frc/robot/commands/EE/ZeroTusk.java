@@ -19,7 +19,7 @@ public class ZeroTusk extends Command {
 
     public void end(boolean interrupted) {
         EndEffector.getInstance().setTuskSensorPosition(0);
-        EndEffector.getInstance().moveToPosition(0);
+        EndEffector.getInstance().moveToPosition(Constants.EndEffector.TUSK_QUASIZERO_POSITION);
     }
 
 }

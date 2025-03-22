@@ -197,6 +197,8 @@ public class RobotContainer {
             .onTrue(new MoveToPosition(0)
             .andThen(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])
             .alongWith(new Score()))
+            .andThen(new WaitCommand(0.5))
+            .andThen(new MoveToPosition(0))
             );
 
         // L4
@@ -229,9 +231,10 @@ public class RobotContainer {
             .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[1]))
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
             .andThen(new IntakeAlgae())
-            .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION))
             .andThen(new WaitCommand(0.5)) // TODO
-            .andThen(new MoveToPosition(0)));
+            .andThen(new MoveToPosition(0)
+            .alongWith(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)))
+            );
 
         // Algae High
         operator.b().and(()->operator.leftBumper().getAsBoolean())
@@ -239,9 +242,10 @@ public class RobotContainer {
             .andThen(new MoveToPosition(Constants.Elevator.ALGAE_HEIGHTS[2]))
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
             .andThen(new IntakeAlgae())
-            .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION))
             .andThen(new WaitCommand(0.5)) // TODO
-            .andThen(new MoveToPosition(0)));
+            .andThen(new MoveToPosition(0)
+            .alongWith(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)))
+            );
         
         // Barge
         operator.y().and(()->operator.leftBumper().getAsBoolean())
@@ -251,7 +255,7 @@ public class RobotContainer {
             );
         
         // Zero ET
-        operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()));
+        operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()).andThen(new IntakeCoralActive()));
 
         // Zero DT
         operator.button(7).onTrue(
