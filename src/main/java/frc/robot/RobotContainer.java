@@ -184,6 +184,7 @@ public class RobotContainer {
 
         driver.x().onTrue(endEffector.runOnce(() -> endEffector.togglePassive()));
 
+        driver.y().onTrue(new IntakeCoralActive());
 
     }
 

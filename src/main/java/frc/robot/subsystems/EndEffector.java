@@ -7,6 +7,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.reduxrobotics.sensors.canandcolor.Canandcolor;
+import com.reduxrobotics.sensors.canandcolor.CanandcolorSettings;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -28,10 +29,11 @@ public class EndEffector extends SubsystemBase
     {
         mainMotor = new TalonFX(Constants.EndEffector.MAIN_ID, Constants.CAN_CHAIN);
         tuskMotor = new TalonFX(Constants.EndEffector.TUSK_ID, Constants.CAN_CHAIN);
-        config();
-
+    
         frontCanandcolor = new Canandcolor(Constants.EndEffector.FRONT_CANANDCOLOR_ID);
         backCanandcolor = new Canandcolor(Constants.EndEffector.BACK_CANANDCOLOR_ID);
+
+        config();
 
         passiveOn = true;
         desiredPosition = 0;
@@ -76,6 +78,13 @@ public class EndEffector extends SubsystemBase
         tuskConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         tuskMotor.getConfigurator().apply(tuskConfig);
+        
+        CanandcolorSettings canandcolorSettings = new CanandcolorSettings();
+        canandcolorSettings.setProximityFramePeriod(Constants.EndEffector.CANANDCOLOR_PROXIMITY_TIME_PERIOD);
+        
+        frontCanandcolor.setSettings(canandcolorSettings);
+        backCanandcolor.setSettings(canandcolorSettings);
+
     }
 
     /**

@@ -60,7 +60,9 @@ public class Constants {
         // The standard deviations of our vision estimated poses, which affect
         // correction rate
         // (Fake values. Experiment and determine estimation noise on an actual robot.)
-        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(0.1, 0.1, 0.5);
+        public static final double linTagStdDevs = 0.1;
+        public static final double angTagStdDevs = 999999;
+        public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(0.1, 0.1, 99999);
         public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.05, 0.05, 0.1);
         // public static final Matrix<N3, N1> kTagStdDevs = VecBuilder.fill(1.0, 0.5, 0.5);
         // public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1,1.0, 0.1);
@@ -287,7 +289,7 @@ public class Constants {
 
         public static final double STATOR_CURRENT_LIMIT = 80;
 
-        public static final double PROXIMITY_LIMIT_FRONT = 0.19;
+        public static final double PROXIMITY_LIMIT_FRONT = 0.195;
         public static final double PROXIMITY_LIMIT_BACK = 0.08;
 
         public static final double INTAKE_ALGAE_SPEED = 0.2;
@@ -299,7 +301,7 @@ public class Constants {
 
         public static final double REVERSE_INTAKE_SPEED = 0.1;
 
-        public static final double ALGAE_HOLD_SPEED = 0.15;
+        public static final double ALGAE_HOLD_SPEED = 0.175;
 
         public static final double TUSK_STALLING_CURRENT = 50;
         public static final double MAIN_STALLING_CURRENT = 50;
@@ -314,6 +316,8 @@ public class Constants {
         public static final double BARGE_TUSK_POSITION = 0.07;
         public static final double ALGAE_HOLD_POSITION = 0.15;
         public static final double TUSK_QUASIZERO_POSITION = 0.02;
+
+        public static final double CANANDCOLOR_PROXIMITY_TIME_PERIOD = 0.005;
 
 
         public static final double kP = 55.0; // TODO increase
