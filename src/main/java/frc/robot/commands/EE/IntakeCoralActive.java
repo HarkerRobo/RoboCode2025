@@ -30,6 +30,7 @@ public class IntakeCoralActive extends Command {
     }
 
     public void end (boolean interrupted) {
+        EndEffector.getInstance().setMainSpeed(Constants.EndEffector.REVERSE_INTAKE_SPEED);
         EndEffector.getInstance().setMainSpeed(0);
     }
 }

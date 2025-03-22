@@ -20,13 +20,19 @@ public class Score extends Command {
     }
 
     public void execute () {
-        EndEffector.getInstance().setMainSpeed(
-            EndEffector.getInstance().algaeIn() ? 
-            Constants.EndEffector.ALGAE_SCORE_SPEED : Constants.EndEffector.CORAL_SCORE_SPEED);
+        if (EndEffector.getInstance().algaeIn())
+        {
+            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.ALGAE_SCORE_SPEED);
+            EndEffector.getInstance().moveToPosition(Constants.EndEffector.REEF_TUSK_POSITION);
+        }
+        else
+        {
+            EndEffector.getInstance().setMainSpeed(Constants.EndEffector.CORAL_SCORE_SPEED);
+        }
     }
 
     public boolean isFinished () {
-        return EndEffector.getInstance().algaeIn() ? timer.hasElapsed(1) : (!EndEffector.getInstance().isFrontTriggered() && !EndEffector.getInstance().isBackTriggered());
+        return EndEffector.getInstance().algaeIn() ? timer.hasElapsed(0.5) : (!EndEffector.getInstance().isFrontTriggered() && !EndEffector.getInstance().isBackTriggered());
     }
 
     public void end (boolean interrupted) {

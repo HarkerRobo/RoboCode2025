@@ -99,9 +99,9 @@ public class RobotContainer {
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
         NamedCommands.registerCommand("ElevatorL4",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
-        NamedCommands.registerCommand("Score", new Score().withTimeout(1));
+        NamedCommands.registerCommand("Score", new Score());
         NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0));
-        NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive());
+        NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive().andThen(new WaitCommand(0.5)));
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auton Chooser", autoChooser);
@@ -172,10 +172,11 @@ public class RobotContainer {
         // Score, wait 1s, zero ET
         driver.rightBumper().onTrue(
             new Score()
-            .andThen(new WaitCommand(0.5)) // TODO TEST
+            // .andThen(new WaitCommand(0.5)) // TODO TEST
             .andThen(new TuskMoveToPosition(0))
             .andThen(new ZeroTusk())
-            .andThen(new MoveToPosition(0)));
+            .andThen(new MoveToPosition(0))
+            .andThen(endEffector.runOnce(() -> endEffector.setPassive(true))));
 
         driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
@@ -183,13 +184,11 @@ public class RobotContainer {
         );
 
         driver.x().onTrue(endEffector.runOnce(() -> endEffector.togglePassive()));
-
-        driver.y().onTrue(new IntakeCoralActive());
-
     }
 
     private void configureOperatorBindings ()
-    {
+    {   
+        operator.rightBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(true)));
 
         // Levels when left bumper is not pressed
 
@@ -256,7 +255,7 @@ public class RobotContainer {
             );
         
         // Zero ET
-        operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()));
+        operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()).andThen(endEffector.runOnce(() -> endEffector.setAlgaeIn(false))));
 
         // Zero DT
         operator.button(7).onTrue(

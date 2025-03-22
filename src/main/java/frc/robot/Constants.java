@@ -268,11 +268,11 @@ public class Constants {
 
         public static final double ELEVATOR_GEAR_RATIO = 6.22;
 
-        public static final double[] CORAL_HEIGHTS = { 0.5 + 0.04, 1.45, 2.85, 4.82 }; // rotations
+        public static final double[] CORAL_HEIGHTS = { 0.5 + 0.2, 1.45, 2.85, 4.82 }; // rotations
         public static final double[] ALGAE_HEIGHTS = { 0, 0.856 -0.05, 2.2, 4.82};
 
 
-        public static final double MM_CRUISE_VELOCITY = 40; // rps
+        public static final double MM_CRUISE_VELOCITY = 60; // rps
         public static final double MM_ACCELERATION = 60; // rps/s
         public static final double MM_JERK = 240; // rps/s/s
 
@@ -289,7 +289,7 @@ public class Constants {
 
         public static final double STATOR_CURRENT_LIMIT = 80;
 
-        public static final double PROXIMITY_LIMIT_FRONT = 0.195;
+        public static final double PROXIMITY_LIMIT_FRONT = 0.19;
         public static final double PROXIMITY_LIMIT_BACK = 0.08;
 
         public static final double INTAKE_ALGAE_SPEED = 0.2;
@@ -317,7 +317,7 @@ public class Constants {
         public static final double ALGAE_HOLD_POSITION = 0.15;
         public static final double TUSK_QUASIZERO_POSITION = 0.02;
 
-        public static final double CANANDCOLOR_PROXIMITY_TIME_PERIOD = 0.005;
+        public static final double CANANDCOLOR_PROXIMITY_TIME_PERIOD = 0.001;
 
 
         public static final double kP = 55.0; // TODO increase

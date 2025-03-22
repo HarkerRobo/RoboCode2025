@@ -55,7 +55,7 @@ public class EndEffector extends SubsystemBase
         mainConfig.CurrentLimits.StatorCurrentLimit = Constants.EndEffector.STATOR_CURRENT_LIMIT;
         mainConfig.CurrentLimits.StatorCurrentLimitEnable = true;
         
-        mainConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        mainConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         TalonFXConfiguration tuskConfig = new TalonFXConfiguration();
 
