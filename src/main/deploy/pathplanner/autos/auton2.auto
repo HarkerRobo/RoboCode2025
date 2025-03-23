@@ -17,12 +17,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "IntakeCoralActive"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "start2 to E"

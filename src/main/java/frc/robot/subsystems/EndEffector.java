@@ -79,11 +79,11 @@ public class EndEffector extends SubsystemBase
 
         tuskMotor.getConfigurator().apply(tuskConfig);
         
-        CanandcolorSettings canandcolorSettings = new CanandcolorSettings();
-        canandcolorSettings.setProximityFramePeriod(Constants.EndEffector.CANANDCOLOR_PROXIMITY_TIME_PERIOD);
+        // CanandcolorSettings canandcolorSettings = new CanandcolorSettings();
+        // canandcolorSettings.setProximityFramePeriod(Constants.EndEffector.CANANDCOLOR_PROXIMITY_TIME_PERIOD);
         
-        frontCanandcolor.setSettings(canandcolorSettings);
-        backCanandcolor.setSettings(canandcolorSettings);
+        // frontCanandcolor.setSettings(canandcolorSettings);
+        // backCanandcolor.setSettings(canandcolorSettings);
 
     }
 

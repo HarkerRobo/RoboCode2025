@@ -25,12 +25,11 @@ public class IntakeCoralActive extends Command {
     }
 
     public boolean isFinished () {
-        SmartDashboard.putBoolean("coralActive", false);
         return EndEffector.getInstance().isBackTriggered() && EndEffector.getInstance().isFrontTriggered();
     }
 
     public void end (boolean interrupted) {
-        EndEffector.getInstance().setMainSpeed(Constants.EndEffector.REVERSE_INTAKE_SPEED);
+        SmartDashboard.putBoolean("coralActive", false);
         EndEffector.getInstance().setMainSpeed(0);
     }
 }
