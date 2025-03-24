@@ -92,16 +92,16 @@ public class RobotContainer {
 
     public RobotContainer() {
         NamedCommands.registerCommand("ZeroElevator", new ZeroElevator());
-        NamedCommands.registerCommand("ZeroTusk", new ZeroTusk());
+        NamedCommands.registerCommand("ZeroTusk", new ZeroTusk().asProxy());
         NamedCommands.registerCommand("ElevatorL2",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]));
         NamedCommands.registerCommand("ElevatorL3",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
         NamedCommands.registerCommand("ElevatorL4",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
-        NamedCommands.registerCommand("Score", new Score());
+        NamedCommands.registerCommand("Score", new Score().asProxy());
         NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0));
-        NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive().andThen(new WaitCommand(0.5)));
+        NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive().asProxy());
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auton Chooser", autoChooser);
