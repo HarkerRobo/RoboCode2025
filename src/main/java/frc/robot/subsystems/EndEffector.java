@@ -113,6 +113,16 @@ public class EndEffector extends SubsystemBase
         return frontCanandcolor.getProximity() < Constants.EndEffector.PROXIMITY_LIMIT_FRONT;
     }
 
+    public double getFrontProximity()
+    {
+        return frontCanandcolor.getProximity();
+    }
+
+    public double getBackProximity()
+    {
+        return backCanandcolor.getProximity();
+    }
+
     public boolean isTuskStalling()
     {
         return tuskMotor.getStatorCurrent().getValueAsDouble() >= Constants.EndEffector.TUSK_STALLING_CURRENT;

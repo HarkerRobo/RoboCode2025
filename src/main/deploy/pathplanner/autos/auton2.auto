@@ -60,9 +60,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "IntakeCoralActive"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeCoralActive"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              }
+            ]
           }
         },
         {
@@ -109,9 +122,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "IntakeCoralActive"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeCoralActive"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              }
+            ]
           }
         },
         {

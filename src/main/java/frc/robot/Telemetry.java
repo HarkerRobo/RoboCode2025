@@ -41,9 +41,11 @@ public class Telemetry {
     private final NetworkTable endEffectorStateTable = defaultTable.getSubTable("EndEffectorState");
     private final BooleanPublisher frontCanandcolorHit = endEffectorStateTable.getBooleanTopic("EE Front Canandcolor Hit").publish();
     private final BooleanPublisher backCanandcolorHit = endEffectorStateTable.getBooleanTopic("EE Back Canandcolor Hit").publish();
+    private final DoublePublisher frontCanandcolorProximity = endEffectorStateTable.getDoubleTopic("Front Canandcolor Proximity").publish();
+    private final DoublePublisher backCanandcolorProximity = endEffectorStateTable.getDoubleTopic("Back Canandcolor Proximity").publish();
     private final DoublePublisher tuskPosition = endEffectorStateTable.getDoubleTopic("Tusk Position").publish();
     private final DoublePublisher tuskDesiredPosition = endEffectorStateTable.getDoubleTopic("Tusk Desired Position").publish();
-    private final DoublePublisher mainCurrent = endEffectorStateTable.getDoubleTopic("Main Current").publish();
+    private final DoublePublisher mainVelocity = endEffectorStateTable.getDoubleTopic("Main Velocity").publish();
     private final BooleanPublisher isMainStalling = endEffectorStateTable.getBooleanTopic("Is Main Stalling").publish();
     private final BooleanPublisher isAlgaeIn = endEffectorStateTable.getBooleanTopic("Is Algae In").publish();
     private final BooleanPublisher isPassive = endEffectorStateTable.getBooleanTopic("Is Passive On").publish();
@@ -88,10 +90,12 @@ public class Telemetry {
 
         frontCanandcolorHit.set(endEffector.isFrontTriggered());
         backCanandcolorHit.set(endEffector.isBackTriggered());
+        frontCanandcolorProximity.set(endEffector.getFrontProximity());
+        backCanandcolorProximity.set(endEffector.getBackProximity());
 
         tuskPosition.set(endEffector.getTuskPosition());
         tuskDesiredPosition.set(endEffector.getTuskDesiredPosition());
-        mainCurrent.set(endEffector.getMainMotorCurrent());
+        mainVelocity.set(endEffector.getMainSpeed());
         isMainStalling.set(endEffector.isMainStalling());
         isAlgaeIn.set(endEffector.algaeIn());
         isPassive.set(endEffector.getPassive());
