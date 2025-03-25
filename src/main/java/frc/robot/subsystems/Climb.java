@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -32,11 +33,17 @@ public class Climb extends SubsystemBase {
         
         masterConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
+        masterConfig.Slot0.kP = Constants.Climb.kP;
+
         master.getConfigurator().apply(masterConfig);
     }
 
-    public void setPower(double velocity) {
+    public void setDutyCycle(double velocity) {
         master.setControl(new DutyCycleOut(velocity));
+    }
+
+    public void setVelocity(double velocity) {
+        master.setControl(new VelocityVoltage(velocity));
     }
 
     public static Climb getInstance() {
