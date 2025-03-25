@@ -293,8 +293,8 @@ public class Constants {
         public static final double PROXIMITY_LIMIT_BACK = 0.08;
 
         public static final double INTAKE_ALGAE_SPEED = 0.2;
-        public static final double INTAKE_CORAL_SPEED = -0.15; //-0.25;
-        public static final double INTAKE_CORAL_SLOW_SPEED = -0.07; //-0.15;
+        public static final double INTAKE_CORAL_SPEED = -0.20; //-0.25;
+        public static final double INTAKE_CORAL_SLOW_SPEED = -0.10; //-0.15;
         
         public static final double CORAL_SCORE_SPEED = -0.2;
         public static final double ALGAE_SCORE_SPEED = -1.0;

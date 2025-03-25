@@ -100,7 +100,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("ElevatorL4",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
         NamedCommands.registerCommand("Score", new Score().asProxy());
-        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0));
+        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.05));
         NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive().asProxy());
 
         autoChooser = AutoBuilder.buildAutoChooser();
