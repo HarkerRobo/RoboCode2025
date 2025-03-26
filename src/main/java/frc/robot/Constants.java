@@ -46,7 +46,7 @@ public class Constants {
         
         public static final Transform3d kRobotToCam1 = new Transform3d(
                 new Translation3d(Units.inchesToMeters(5.472), Units.inchesToMeters(-10.5), Units.inchesToMeters(7.482)),
-                new Rotation3d(Units.degreesToRadians(180), Units.degreesToRadians(26.1), 0)); // new mount
+                new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(26.1), 0)); // new mount
 
         public static final String kCamera2Name = "limelight-upper";
         public static final Transform3d kRobotToCam2 = new Transform3d(
