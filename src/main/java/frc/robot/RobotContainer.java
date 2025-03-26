@@ -164,11 +164,11 @@ public class RobotContainer {
 
     public void configureDriverBindings ()
     {
-        driver.leftBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
-            .andThen(new MoveToPosition(0))
-            .andThen(new TuskMoveToPosition(Constants.EndEffector.GROUND_TUSK_POSITION))
-            .andThen(new IntakeAlgae())
-            .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)));
+        // driver.leftBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
+        //     .andThen(new MoveToPosition(0))
+        //     .andThen(new TuskMoveToPosition(Constants.EndEffector.GROUND_TUSK_POSITION))
+        //     .andThen(new IntakeAlgae())
+        //     .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)));
         // Score, wait 1s, zero ET
         driver.rightBumper().onTrue(
             new Score()

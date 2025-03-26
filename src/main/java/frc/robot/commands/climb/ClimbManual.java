@@ -14,9 +14,9 @@ public class ClimbManual extends Command {
         if (RobotContainer.getInstance().getDriver().getUpDPadState()) {
             Climb.getInstance().setVelocity(2);
         }
-        else if (RobotContainer.getInstance().getDriver().getDownDPadState())
+        else if (RobotContainer.getInstance().getDriver().getDownDPadState() || RobotContainer.getInstance().getDriver().leftBumper().getAsBoolean())
         {
-            Climb.getInstance().setVelocity(-1);
+            Climb.getInstance().setVelocity(-2);
         }
         else {
             Climb.getInstance().setDutyCycle(0);
