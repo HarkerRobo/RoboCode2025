@@ -334,7 +334,7 @@ public class Constants {
 
         public static final double CLIMB_GEAR_RATIO = 23.7;
 
-        public static final double kP = 1; // TODO
+        public static final double kP = 5; // TODO
 
         public static final double STATOR_CURRENT_LIMIT = 90; // TODO
 
