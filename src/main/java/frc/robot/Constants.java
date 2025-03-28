@@ -178,7 +178,7 @@ public class Constants {
 
         public static final double kDriveGearRatio = 7.14;
         public static final double kSteerGearRatio = 21.429;
-        public static final Distance kWheelRadius = Inches.of(4);
+        public static final Distance kWheelRadius = Inches.of(2);
 
         public static final boolean kInvertLeftSide = false;
         public static final boolean kInvertRightSide = true;
@@ -268,8 +268,8 @@ public class Constants {
 
         public static final double ELEVATOR_GEAR_RATIO = 6.22;
 
-        public static final double[] CORAL_HEIGHTS = { 0.5 + 0.2, 1.45, 2.85, 4.82 }; // rotations
-        public static final double[] ALGAE_HEIGHTS = { 0, 0.856 -0.05, 2.2, 4.82};
+        public static final double[] CORAL_HEIGHTS = { 0.5 + 0.6, 1.45, 2.85, 4.82 }; // rotations
+        public static final double[] ALGAE_HEIGHTS = { 0, 0.856 -0.05, 2.2 -0.05 , 4.82};
 
 
         public static final double MM_CRUISE_VELOCITY = 60; // rps
