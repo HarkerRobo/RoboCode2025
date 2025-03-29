@@ -128,7 +128,7 @@ public class RobotContainer {
                 // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(() -> {
                     
-                    boolean slow = driver.getLeftTriggerAxis() > 0.5;
+                    boolean slow = driver.getLeftTriggerAxis() > 0.3;
                     double velocityX = -driver.getLeftY() * (slow ? MaxSpeedSlow : MaxSpeed);
                     double velocityY = -driver.getLeftX() * (slow ? MaxSpeedSlow : MaxSpeed);
                     double rotRate = -driver.getRightX() * (slow ? MaxAngularRateSlow : MaxAngularRate);

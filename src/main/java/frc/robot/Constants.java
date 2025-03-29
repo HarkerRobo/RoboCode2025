@@ -68,7 +68,7 @@ public class Constants {
         // public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1,1.0, 0.1);
 
         public static final PathConstraints constraints = new PathConstraints(
-        3.0, 2.0,
+        4.0, 2.5,
             Units.degreesToRadians(360), Units.degreesToRadians(540));
     }
 
@@ -336,9 +336,9 @@ public class Constants {
 
         public static final double kP = 5; // TODO
 
-        public static final double STATOR_CURRENT_LIMIT = 90; // TODO
+        public static final double STATOR_CURRENT_LIMIT = 100; // TODO
 
-        public static final double SUPPLY_CURRENT_LIMIT = 90; // TODO
+        public static final double SUPPLY_CURRENT_LIMIT = 100; // TODO
 
         public static final double CLIMB_POSITION = 1.0;  // rotations // TODO
 
