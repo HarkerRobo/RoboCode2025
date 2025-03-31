@@ -12,7 +12,7 @@ public class ClimbManual extends Command {
 
     public void execute () {
         if (RobotContainer.getInstance().getDriver().getUpDPadState()) {
-            Climb.getInstance().setVelocity(2);
+            Climb.getInstance().setVelocity(1.5);
         }
         else if (RobotContainer.getInstance().getDriver().getDownDPadState() || RobotContainer.getInstance().getDriver().leftBumper().getAsBoolean())
         {

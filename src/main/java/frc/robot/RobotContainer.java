@@ -100,7 +100,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("ElevatorL4",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
         NamedCommands.registerCommand("Score", new Score().asProxy());
-        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.05));
+        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.5).andThen(new MoveToPosition(0.05)));
         NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive().asProxy());
 
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -175,6 +175,7 @@ public class RobotContainer {
             // .andThen(new WaitCommand(0.5)) // TODO TEST
             .andThen(new TuskMoveToPosition(0))
             .andThen(new ZeroTusk())
+            .andThen(new MoveToPosition(0.5))
             .andThen(new MoveToPosition(0))
             .andThen(endEffector.runOnce(() -> endEffector.setPassive(true))));
 

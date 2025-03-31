@@ -336,9 +336,9 @@ public class Constants {
 
         public static final double kP = 5; // TODO
 
-        public static final double STATOR_CURRENT_LIMIT = 100; // TODO
+        public static final double STATOR_CURRENT_LIMIT = 100 + 20; // TODO
 
-        public static final double SUPPLY_CURRENT_LIMIT = 100; // TODO
+        public static final double SUPPLY_CURRENT_LIMIT = 100 + 20; // TODO
 
         public static final double CLIMB_POSITION = 1.0;  // rotations // TODO
 
