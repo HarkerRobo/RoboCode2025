@@ -62,7 +62,7 @@ public class RobotContainer {
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second // max angular velocity
 
     private double MaxSpeedSlow = MaxSpeed * 0.3;
-    private double MaxAngularRateSlow = MaxAngularRate * 0.6;
+    private double MaxAngularRateSlow = MaxAngularRate * 1.0;
 
     private AlignDirection direction = AlignDirection.Left;
 
