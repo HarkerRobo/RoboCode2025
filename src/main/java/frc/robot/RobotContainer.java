@@ -62,7 +62,7 @@ public class RobotContainer {
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second // max angular velocity
 
     private double MaxSpeedSlow = MaxSpeed * 0.3;
-    private double MaxAngularRateSlow = MaxAngularRate * 0.6;
+    private double MaxAngularRateSlow = MaxAngularRate * 1.0;
 
     private AlignDirection direction = AlignDirection.Left;
 
@@ -91,16 +91,16 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
-        NamedCommands.registerCommand("ZeroElevator", new ZeroElevator());
+        NamedCommands.registerCommand("ZeroElevator", new ZeroElevator().asProxy());
         NamedCommands.registerCommand("ZeroTusk", new ZeroTusk().asProxy());
         NamedCommands.registerCommand("ElevatorL2",
-                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]));
+                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]).asProxy());
         NamedCommands.registerCommand("ElevatorL3",
-                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
+                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]).asProxy());
         NamedCommands.registerCommand("ElevatorL4",
-                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
+                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]).asProxy());
         NamedCommands.registerCommand("Score", new Score().asProxy());
-        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.5).andThen(new MoveToPosition(0.05)));
+        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.05).asProxy());
         NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive().asProxy());
 
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -175,8 +175,8 @@ public class RobotContainer {
             // .andThen(new WaitCommand(0.5)) // TODO TEST
             .andThen(new TuskMoveToPosition(0))
             .andThen(new ZeroTusk())
-            .andThen(new MoveToPosition(0.5))
-            .andThen(new MoveToPosition(0))
+            // .andThen(new MoveToPosition(0.5))
+            .andThen(new MoveToPosition(0.05))
             .andThen(endEffector.runOnce(() -> endEffector.setPassive(true))));
 
         driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
@@ -185,6 +185,8 @@ public class RobotContainer {
         );
 
         driver.x().onTrue(endEffector.runOnce(() -> endEffector.togglePassive()));
+
+        driver.a().onTrue(new MoveToPosition(0.05).andThen(new TuskMoveToPosition(0)));
     }
 
     private void configureOperatorBindings ()
