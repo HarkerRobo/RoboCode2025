@@ -47,12 +47,6 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "ZeroElevatorFast"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "J to LC"
@@ -104,12 +98,6 @@
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ZeroElevatorFast"
-                }
-              },
               {
                 "type": "path",
                 "data": {

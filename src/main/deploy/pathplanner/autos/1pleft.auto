@@ -47,12 +47,6 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "ZeroElevatorFast"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "J to 1pend"
