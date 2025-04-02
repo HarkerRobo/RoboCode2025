@@ -23,7 +23,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "start1 to J"
+                  "pathName": "start2 to E"
                 }
               }
             ]
@@ -49,7 +49,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "J to LC"
+                  "pathName": "E to RC"
                 }
               }
             ]
@@ -81,7 +81,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LC to K"
+                  "pathName": "RC to D"
                 }
               }
             ]
@@ -107,7 +107,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "K to LC"
+                  "pathName": "D to RC"
                 }
               }
             ]
@@ -139,7 +139,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LC to L"
+                  "pathName": "RC to C"
                 }
               }
             ]
@@ -165,7 +165,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "L to LC"
+                  "pathName": "C to RC"
                 }
               }
             ]
