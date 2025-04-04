@@ -90,6 +90,15 @@ public class RobotContainer {
 
     private final SendableChooser<Command> autoChooser;
 
+    Function<RobotContainer.AlignDirection, Command> setDirectionFactory = ((AlignDirection direction) ->
+        new Command() {
+            public void execute () {System.out.println(direction); RobotContainer.getInstance().setAlignDirection(direction);}
+            public boolean isFinished () {return true;}});
+
+    Command alignLeft = setDirectionFactory.apply(AlignDirection.Left);
+    Command alignAlgae = setDirectionFactory.apply(AlignDirection.Algae);
+    Command alignRight = setDirectionFactory.apply(AlignDirection.Right);
+
     public RobotContainer() {
         NamedCommands.registerCommand("ZeroElevator", new ZeroElevator());
         NamedCommands.registerCommand("ZeroTusk", new ZeroTusk().asProxy());
@@ -100,7 +109,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("ElevatorL4",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
         NamedCommands.registerCommand("Score", new Score().asProxy());
-        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.5).andThen(new MoveToPosition(0.05)));
+        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.05));
         NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive().asProxy());
 
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -139,15 +148,6 @@ public class RobotContainer {
                 }
         ));
 
-        Function<RobotContainer.AlignDirection, Command> setDirectionFactory = ((AlignDirection direction) ->
-        new Command() {
-            public void execute () {System.out.println(direction); RobotContainer.getInstance().setAlignDirection(direction);}
-            public boolean isFinished () {return true;}});
-
-        Command alignLeft = setDirectionFactory.apply(AlignDirection.Left);
-        Command alignAlgae = setDirectionFactory.apply(AlignDirection.Algae);
-        Command alignRight = setDirectionFactory.apply(AlignDirection.Right);
-
         operator.getLeftDPad().onTrue(alignLeft); 
         driver.button(7).onTrue(alignLeft);
         // driver left/right bottom button
@@ -175,9 +175,9 @@ public class RobotContainer {
             // .andThen(new WaitCommand(0.5)) // TODO TEST
             .andThen(new TuskMoveToPosition(0))
             .andThen(new ZeroTusk())
-            .andThen(new MoveToPosition(0.5))
-            .andThen(new MoveToPosition(0))
-            .andThen(endEffector.runOnce(() -> endEffector.setPassive(true))));
+            .andThen(new MoveToPosition(0.05))
+            .andThen(endEffector.runOnce(() -> endEffector.setPassive(true)))
+            .andThen(alignAlgae));
 
         driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
@@ -185,6 +185,15 @@ public class RobotContainer {
         );
 
         driver.x().onTrue(endEffector.runOnce(() -> endEffector.togglePassive()));
+
+        driver.a().onTrue(new MoveToPosition(0.05).andThen(new TuskMoveToPosition(0)).andThen(endEffector.runOnce(() -> endEffector.setAlgaeIn(false))));
+
+        driver.y().onTrue(new MoveToPosition(0)
+                .andThen(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])
+                .alongWith(new Score()))
+                .andThen(new WaitCommand(0.5))
+                .andThen(new MoveToPosition(0)));
+
     }
 
     private void configureOperatorBindings ()
@@ -192,16 +201,7 @@ public class RobotContainer {
         operator.rightBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(true)));
 
         // Levels when left bumper is not pressed
-
-        // L1
-        operator.x().and(()->!operator.leftBumper().getAsBoolean())
-            .onTrue(new MoveToPosition(0)
-            .andThen(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])
-            .alongWith(new Score()))
-            .andThen(new WaitCommand(0.5))
-            .andThen(new MoveToPosition(0))
-            );
-
+        
         // L4
         operator.y().and(()->!operator.leftBumper().getAsBoolean())
             .onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3])

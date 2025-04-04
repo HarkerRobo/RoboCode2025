@@ -23,7 +23,7 @@ public class AlignmentConstants {
     private static final double RIGHT_X_OFFSET = 0;
     private static final double ALGAE_X_OFFSET = 0;
     private static final double Y_CORAL_OFFSET = 0.07; //0.05;
-    private static final double Y_ALGAE_OFFSET = -0.05; //0.0;
+    private static final double Y_ALGAE_OFFSET = 0.0; //0.0;
     private static final Transform2d LEFT_OFFSET = new Transform2d(Y_CORAL_OFFSET, LEFT_X_OFFSET, new Rotation2d());
     private static final Transform2d RIGHT_OFFSET = new Transform2d(Y_CORAL_OFFSET, RIGHT_X_OFFSET, new Rotation2d());
     private static final Transform2d ALGAE_OFFSET = new Transform2d(Y_ALGAE_OFFSET, ALGAE_X_OFFSET, new Rotation2d());
