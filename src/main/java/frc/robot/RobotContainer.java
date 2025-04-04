@@ -186,7 +186,7 @@ public class RobotContainer {
 
         driver.x().onTrue(endEffector.runOnce(() -> endEffector.togglePassive()));
 
-        driver.a().onTrue(new MoveToPosition(0.05).andThen(new TuskMoveToPosition(0)));
+        driver.a().onTrue(new MoveToPosition(0.05).andThen(new TuskMoveToPosition(0)).andThen(endEffector.runOnce(() -> endEffector.setAlgaeIn(false))));
     }
 
     private void configureOperatorBindings ()
