@@ -109,7 +109,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("ElevatorL4",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
         NamedCommands.registerCommand("Score", new Score().asProxy());
-        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.05));
+        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.03));
         NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive().asProxy());
 
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -173,11 +173,11 @@ public class RobotContainer {
         driver.rightBumper().onTrue(
             new Score()
             // .andThen(new WaitCommand(0.5)) // TODO TEST
+            .andThen(alignAlgae)
             .andThen(new TuskMoveToPosition(0))
             .andThen(new ZeroTusk())
-            .andThen(new MoveToPosition(0.05))
-            .andThen(endEffector.runOnce(() -> endEffector.setPassive(true)))
-            .andThen(alignAlgae));
+            .andThen(new MoveToPosition(0))
+            .andThen(endEffector.runOnce(() -> endEffector.setPassive(true))));
 
         driver.rightTrigger().whileTrue(new DriveToPoseCommand(drivetrain));
 
@@ -186,13 +186,13 @@ public class RobotContainer {
 
         driver.x().onTrue(endEffector.runOnce(() -> endEffector.togglePassive()));
 
-        driver.a().onTrue(new MoveToPosition(0.05).andThen(new TuskMoveToPosition(0)).andThen(endEffector.runOnce(() -> endEffector.setAlgaeIn(false))));
+        driver.a().onTrue(new ZeroElevator().andThen(new ZeroTusk()).andThen(endEffector.runOnce(() -> endEffector.setAlgaeIn(false))));
 
-        driver.y().onTrue(new MoveToPosition(0)
+        driver.y().onTrue(new MoveToPosition(0.03)
                 .andThen(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])
                 .alongWith(new Score()))
                 .andThen(new WaitCommand(0.5))
-                .andThen(new MoveToPosition(0)));
+                .andThen(new MoveToPosition(0.03)));
 
     }
 
@@ -201,7 +201,7 @@ public class RobotContainer {
         operator.rightBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(true)));
 
         // Levels when left bumper is not pressed
-        
+
         // L4
         operator.y().and(()->!operator.leftBumper().getAsBoolean())
             .onTrue(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3])
@@ -233,7 +233,7 @@ public class RobotContainer {
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
             .andThen(new IntakeAlgae())
             .andThen(new WaitCommand(0.5)) // TODO
-            .andThen(new MoveToPosition(0)
+            .andThen(new MoveToPosition(0.03)
             .alongWith(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)))
             );
 
@@ -244,7 +244,7 @@ public class RobotContainer {
             .andThen(new TuskMoveToPosition(Constants.EndEffector.REEF_TUSK_POSITION))
             .andThen(new IntakeAlgae())
             .andThen(new WaitCommand(0.5)) // TODO
-            .andThen(new MoveToPosition(0)
+            .andThen(new MoveToPosition(0.03)
             .alongWith(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)))
             );
         
@@ -255,8 +255,8 @@ public class RobotContainer {
             .andThen(new TuskMoveToPosition(Constants.EndEffector.BARGE_TUSK_POSITION))
             );
         
-        // Zero ET
-        operator.button(8).onTrue(new ZeroElevator().andThen(new ZeroTusk()).andThen(endEffector.runOnce(() -> endEffector.setAlgaeIn(false))));
+        // Zero ET HARD
+        operator.button(8).onTrue(new MoveToPosition(0.03).andThen(new TuskMoveToPosition(0)).andThen(endEffector.runOnce(() -> endEffector.setAlgaeIn(false))));
 
         // Zero DT
         operator.button(7).onTrue(
