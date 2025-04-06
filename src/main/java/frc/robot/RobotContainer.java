@@ -109,7 +109,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("ElevatorL4",
                 new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
         NamedCommands.registerCommand("Score", new Score().asProxy());
-        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.03));
+        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.2).andThen(new MoveToPosition(0.03)));
         NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive().asProxy());
 
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -176,6 +176,7 @@ public class RobotContainer {
             .andThen(alignAlgae)
             .andThen(new TuskMoveToPosition(0))
             .andThen(new ZeroTusk())
+            .andThen(new MoveToPosition(0.5))
             .andThen(new MoveToPosition(0))
             .andThen(endEffector.runOnce(() -> endEffector.setPassive(true))));
 
@@ -191,7 +192,7 @@ public class RobotContainer {
         driver.y().onTrue(new MoveToPosition(0.03)
                 .andThen(new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[0])
                 .alongWith(new Score()))
-                .andThen(new WaitCommand(0.5))
+                .andThen(new WaitCommand(0.2))
                 .andThen(new MoveToPosition(0.03)));
 
     }
