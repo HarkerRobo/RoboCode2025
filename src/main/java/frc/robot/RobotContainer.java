@@ -148,13 +148,13 @@ public class RobotContainer {
                 }
         ));
 
-        operator.getLeftDPad().onTrue(alignLeft); 
+        // operator.getLeftDPad().onTrue(alignLeft); 
         driver.button(7).onTrue(alignLeft);
         // driver left/right bottom button
         
-        operator.getUpDPad().onTrue(alignAlgae);
+        // operator.getUpDPad().onTrue(alignAlgae);
   
-        operator.getRightDPad().onTrue(alignRight);
+        // operator.getRightDPad().onTrue(alignRight);
         driver.button(8).onTrue(alignRight);
 
         configureDriverBindings();
@@ -199,7 +199,7 @@ public class RobotContainer {
 
     private void configureOperatorBindings ()
     {   
-        operator.rightBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(true)));
+        // operator.rightBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(true)));
 
         // Levels when left bumper is not pressed
 
