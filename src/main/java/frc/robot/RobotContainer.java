@@ -33,6 +33,7 @@ import frc.robot.commands.EE.IntakeCoralActive;
 import frc.robot.commands.EE.EEManual;
 import frc.robot.commands.EE.Score;
 import frc.robot.commands.EE.TuskMoveToPosition;
+import frc.robot.commands.EE.TuskMoveToPositionSimple;
 import frc.robot.commands.EE.ZeroTusk;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.drivetrain.DriveToPoseCommand;
@@ -61,7 +62,7 @@ public class RobotContainer {
     private double MaxSpeed = Constants.Swerve.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second // max angular velocity
 
-    private double MaxSpeedSlow = MaxSpeed * 0.3;
+    private double MaxSpeedSlow = MaxSpeed * 0.5;
     private double MaxAngularRateSlow = MaxAngularRate * 1.0;
 
     private AlignDirection direction = AlignDirection.Left;
@@ -164,11 +165,6 @@ public class RobotContainer {
 
     public void configureDriverBindings ()
     {
-        // driver.leftBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
-        //     .andThen(new MoveToPosition(0))
-        //     .andThen(new TuskMoveToPosition(Constants.EndEffector.GROUND_TUSK_POSITION))
-        //     .andThen(new IntakeAlgae())
-        //     .andThen(new TuskMoveToPosition(Constants.EndEffector.ALGAE_HOLD_POSITION)));
         // Score, wait 1s, zero ET
         driver.rightBumper().onTrue(
             new Score()
@@ -199,7 +195,13 @@ public class RobotContainer {
 
     private void configureOperatorBindings ()
     {   
-        // operator.rightBumper().onTrue(endEffector.runOnce(() -> endEffector.setPassive(true)));
+        operator.rightBumper().and(()->operator.leftBumper().getAsBoolean()).onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
+            .andThen(new MoveToPosition(Constants.Elevator.ELEVATOR_GROUND_POSITION))
+            .andThen(new TuskMoveToPosition(Constants.EndEffector.GROUND_TUSK_POSITION))
+            .andThen(new IntakeAlgae())
+            .andThen(new TuskMoveToPositionSimple(Constants.EndEffector.ALGAE_HOLD_POSITION))
+            .andThen(new MoveToPosition(0))
+            );
 
         // Levels when left bumper is not pressed
 

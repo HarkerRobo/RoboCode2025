@@ -22,12 +22,12 @@ public class EEManual extends Command {
 
     private void runTusk() {
         if (RobotContainer.getInstance().getDriver().getRightDPadState()) {
-            EndEffector.getInstance().setTuskVoltage(Constants.EndEffector.kG + 0.5);
+            EndEffector.getInstance().setTuskVoltage(Constants.EndEffector.kG + 3.0);
             holdPos = true;
         }
         else if (RobotContainer.getInstance().getDriver().getLeftDPadState())
         {
-            EndEffector.getInstance().setTuskVoltage(Constants.EndEffector.kG - 0.5);
+            EndEffector.getInstance().setTuskVoltage(Constants.EndEffector.kG - 3.0);
             holdPos = true;
         }
         else if (holdPos) {

@@ -270,6 +270,7 @@ public class Constants {
 
         public static final double[] CORAL_HEIGHTS = { 0.5 + 0.6, 1.45, 2.85, 4.82 }; // rotations
         public static final double[] ALGAE_HEIGHTS = { 0, 0.856 -0.05, 2.2 -0.05 , 4.82};
+        public static final double ELEVATOR_GROUND_POSITION = 0.145;
 
 
         public static final double MM_CRUISE_VELOCITY = 60; // rps
@@ -292,7 +293,7 @@ public class Constants {
         public static final double PROXIMITY_LIMIT_FRONT = 0.19;
         public static final double PROXIMITY_LIMIT_BACK = 0.08;
 
-        public static final double INTAKE_ALGAE_SPEED = 0.2;
+        public static final double INTAKE_ALGAE_SPEED = 0.5; //0.2;
         public static final double INTAKE_CORAL_SPEED = -0.20; //-0.25;
         public static final double INTAKE_CORAL_SLOW_SPEED = -0.10; //-0.15;
         
@@ -301,17 +302,17 @@ public class Constants {
 
         public static final double REVERSE_INTAKE_SPEED = 0.1;
 
-        public static final double ALGAE_HOLD_SPEED = 0.175;
+        public static final double ALGAE_HOLD_SPEED = 0.6; //0.175;
 
         public static final double TUSK_STALLING_CURRENT = 50;
         public static final double MAIN_STALLING_CURRENT = 50;
 
         public static final double TUSK_ZERO_SPEED = -0.15;
         public static final double TUSK_GEAR_RATIO = 62.5;
-        public static final double TUSK_MAX_ERROR = 0.1;
+        public static final double TUSK_MAX_ERROR = 0.01;
 
         public static final double REEF_TUSK_POSITION = 0.15; // TODO
-        public static final double GROUND_TUSK_POSITION = 0.466; // TODO
+        public static final double GROUND_TUSK_POSITION = 0.415; // TODO
         public static final double PROCESSOR_TUSK_POSITION = 0.35 - 0.03;
         public static final double BARGE_TUSK_POSITION = 0.07;
         public static final double ALGAE_HOLD_POSITION = 0.15;

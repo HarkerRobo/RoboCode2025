@@ -45,7 +45,7 @@ public class Telemetry {
     private final DoublePublisher backCanandcolorProximity = endEffectorStateTable.getDoubleTopic("Back Canandcolor Proximity").publish();
     private final DoublePublisher tuskPosition = endEffectorStateTable.getDoubleTopic("Tusk Position").publish();
     private final DoublePublisher tuskDesiredPosition = endEffectorStateTable.getDoubleTopic("Tusk Desired Position").publish();
-    private final DoublePublisher mainVelocity = endEffectorStateTable.getDoubleTopic("Main Velocity").publish();
+    private final DoublePublisher mainCurrent = endEffectorStateTable.getDoubleTopic("Main Current").publish();
     private final BooleanPublisher isMainStalling = endEffectorStateTable.getBooleanTopic("Is Main Stalling").publish();
     private final BooleanPublisher isAlgaeIn = endEffectorStateTable.getBooleanTopic("Is Algae In").publish();
     private final BooleanPublisher isPassive = endEffectorStateTable.getBooleanTopic("Is Passive On").publish();
@@ -95,7 +95,7 @@ public class Telemetry {
 
         tuskPosition.set(endEffector.getTuskPosition());
         tuskDesiredPosition.set(endEffector.getTuskDesiredPosition());
-        mainVelocity.set(endEffector.getMainSpeed());
+        mainCurrent.set(endEffector.getMainMotorCurrent());
         isMainStalling.set(endEffector.isMainStalling());
         isAlgaeIn.set(endEffector.algaeIn());
         isPassive.set(endEffector.getPassive());
