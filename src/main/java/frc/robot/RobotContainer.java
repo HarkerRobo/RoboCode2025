@@ -195,6 +195,8 @@ public class RobotContainer {
 
     private void configureOperatorBindings ()
     {   
+        operator.rightBumper().and(()->!operator.leftBumper().getAsBoolean()).onTrue(endEffector.runOnce(() -> endEffector.setPassive(true)));
+        
         operator.rightBumper().and(()->operator.leftBumper().getAsBoolean()).onTrue(endEffector.runOnce(() -> endEffector.setPassive(false))
             .andThen(new MoveToPosition(Constants.Elevator.ELEVATOR_GROUND_POSITION))
             .andThen(new TuskMoveToPosition(Constants.EndEffector.GROUND_TUSK_POSITION))
