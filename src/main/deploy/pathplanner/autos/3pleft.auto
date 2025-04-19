@@ -17,19 +17,13 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
                   "pathName": "start1 to J"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ElevatorL4"
                 }
               }
             ]
@@ -49,15 +43,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ZeroElevatorFast"
-                }
-              },
               {
                 "type": "path",
                 "data": {
@@ -81,19 +69,13 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LC to K"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ElevatorL4"
+                  "pathName": "LC to L"
                 }
               }
             ]
@@ -113,19 +95,13 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "ZeroElevatorFast"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
-                  "pathName": "K to LC"
+                  "pathName": "L to LC"
                 }
               }
             ]
@@ -145,19 +121,13 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LC to L"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ElevatorL4"
+                  "pathName": "LC to K"
                 }
               }
             ]

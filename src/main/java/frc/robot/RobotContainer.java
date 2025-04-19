@@ -101,16 +101,16 @@ public class RobotContainer {
     Command alignRight = setDirectionFactory.apply(AlignDirection.Right);
 
     public RobotContainer() {
-        NamedCommands.registerCommand("ZeroElevator", new ZeroElevator());
+        NamedCommands.registerCommand("ZeroElevator", new ZeroElevator().asProxy());
         NamedCommands.registerCommand("ZeroTusk", new ZeroTusk().asProxy());
         NamedCommands.registerCommand("ElevatorL2",
-                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]));
+                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[1]).asProxy());
         NamedCommands.registerCommand("ElevatorL3",
-                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]));
+                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[2]).asProxy());
         NamedCommands.registerCommand("ElevatorL4",
-                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]));
+                new MoveToPosition(Constants.Elevator.CORAL_HEIGHTS[3]).asProxy());
         NamedCommands.registerCommand("Score", new Score().asProxy());
-        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.2).andThen(new MoveToPosition(0.03)));
+        NamedCommands.registerCommand("ZeroElevatorFast", new MoveToPosition(0.2).andThen(new MoveToPosition(0.03)).asProxy());
         NamedCommands.registerCommand("IntakeCoralActive", new IntakeCoralActive().asProxy());
 
         autoChooser = AutoBuilder.buildAutoChooser();

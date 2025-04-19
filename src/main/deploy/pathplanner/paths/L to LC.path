@@ -3,29 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.699,
-        "y": 4.457
+        "x": 3.511,
+        "y": 4.858
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.067359844672146,
-        "y": 4.331593080548755
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 5.8333806818181815,
-        "y": 5.28640625
-      },
-      "prevControl": {
-        "x": 5.971626037279428,
-        "y": 5.078107854198704
-      },
-      "nextControl": {
-        "x": 4.3485397239915,
-        "y": 7.5236603588518385
+        "x": 4.079266998622886,
+        "y": 4.366019910179028
       },
       "isLocked": false,
       "linkedName": null
@@ -33,11 +17,11 @@
     {
       "anchor": {
         "x": 1.326,
-        "y": 7.221
+        "y": 7.220894886363636
       },
       "prevControl": {
-        "x": 1.3693710412095303,
-        "y": 6.828647838421914
+        "x": 1.0561130983608884,
+        "y": 7.44349285566529
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,8 +33,19 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
+      "name": "ZeroElevatorTrigger",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ZeroElevatorFast"
+        }
+      }
+    },
+    {
       "name": "IntakeTrigger",
-      "waypointRelativePos": 1.6681318681318633,
+      "waypointRelativePos": 0.7043956043956017,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -73,10 +68,10 @@
     "rotation": -53.0
   },
   "reversed": false,
-  "folder": "Partner",
+  "folder": "Left",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -59.99999999999999
   },
   "useDefaultConstraints": true
 }
