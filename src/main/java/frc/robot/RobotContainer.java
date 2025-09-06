@@ -62,7 +62,7 @@ public class RobotContainer {
     private double MaxSpeed = Constants.Swerve.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second // max angular velocity
 
-    private double MaxSpeedSlow = MaxSpeed * 0.5;
+    private double MaxSpeedSlow = MaxSpeed * 0.3;
     private double MaxAngularRateSlow = MaxAngularRate * 1.0;
 
     private AlignDirection direction = AlignDirection.Left;
@@ -138,7 +138,8 @@ public class RobotContainer {
                 // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(() -> {
                     
-                    boolean slow = driver.getLeftTriggerAxis() > 0.3;
+                    boolean slow = true;
+                    //boolean slow = driver.getLeftTriggerAxis() > 0.3;
                     double velocityX = -driver.getLeftY() * (slow ? MaxSpeedSlow : MaxSpeed);
                     double velocityY = -driver.getLeftX() * (slow ? MaxSpeedSlow : MaxSpeed);
                     double rotRate = -driver.getRightX() * (slow ? MaxAngularRateSlow : MaxAngularRate);
